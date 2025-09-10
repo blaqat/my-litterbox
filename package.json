@@ -10,11 +10,15 @@
   },
   "dependencies": {
     "@astrojs/svelte": "^7.1.0",
+    "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
+    "phosphor-svelte": "^3.0.1",
     "svelte": "^5.38.7",
+    "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@astrojs/cloudflare": "^12.6.7"
+    "@astrojs/cloudflare": "^12.6.7",
+    "@tailwindcss/typography": "^0.5.16"
   }
 }

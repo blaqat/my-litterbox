@@ -1,0 +1,83 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-sea-pink-50: #fdf3f3;
+  --color-sea-pink-100: #fce7e8;
+  --color-sea-pink-200: #f8d3d6;
+  --color-sea-pink-300: #f09da4;
+  --color-sea-pink-400: #eb818c;
+  --color-sea-pink-500: #df5467;
+  --color-sea-pink-600: #ca344f;
+  --color-sea-pink-700: #aa2641;
+  --color-sea-pink-800: #8f223c;
+  --color-sea-pink-900: #7a2139;
+  --color-sea-pink-950: #440d1b;
+  --color-light-wisteria-50: #faf7fd;
+  --color-light-wisteria-100: #f3ecfb;
+  --color-light-wisteria-200: #e8dcf8;
+  --color-light-wisteria-300: #d7c1f1;
+  --color-light-wisteria-400: #c7a7ea;
+  --color-light-wisteria-500: #a572da;
+  --color-light-wisteria-600: #8e53ca;
+  --color-light-wisteria-700: #7940b0;
+  --color-light-wisteria-800: #673990;
+  --color-light-wisteria-900: #542f74;
+  --color-light-wisteria-950: #381754;
+  --color-malibu-50: #eff8ff;
+  --color-malibu-100: #dbeefe;
+  --color-malibu-200: #bfe2fe;
+  --color-malibu-300: #84c9fc;
+  --color-malibu-400: #61b5f9;
+  --color-malibu-500: #3c95f5;
+  --color-malibu-600: #2677ea;
+  --color-malibu-700: #1e62d7;
+  --color-malibu-800: #1f4fae;
+  --color-malibu-900: #1f4589;
+  --color-malibu-950: #172b54;
+  --color-harvest-gold-50: #fcfaea;
+  --color-harvest-gold-100: #f9f2c8;
+  --color-harvest-gold-200: #f5e393;
+  --color-harvest-gold-300: #efcd55;
+  --color-harvest-gold-400: #e8b627;
+  --color-harvest-gold-500: #d99f19;
+  --color-harvest-gold-600: #b97a13;
+  --color-harvest-gold-700: #955913;
+  --color-harvest-gold-800: #7c4617;
+  --color-harvest-gold-900: #6a3a19;
+  --color-harvest-gold-950: #3d1e0b;
+}
+
+/* Animations */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@utility animate-scroll-left {
+  animation: scroll-left 20s linear infinite;
+}
+
+@utility animate-scroll-right {
+  animation: scroll-right 20s linear infinite;
+}
+
+@utility animate-spin-slow {
+  animation: spin 8s linear infinite;
+}

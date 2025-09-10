@@ -1,72 +1,29 @@
 ---
 import catKnife from "@assets/cat-knife.png";
+import Layout from "../layouts/Layout.astro";
+import Overlay from "@components/TextOverlay.svelte";
 ---
 
 <head>
-  <title>404: Not Found</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <style>
-    :root {
-      --gray-10: hsl(258, 7%, 10%);
-      --gray-20: hsl(258, 7%, 20%);
-      --gray-30: hsl(258, 7%, 30%);
-      --gray-40: hsl(258, 7%, 40%);
-      --gray-50: hsl(40, 5%, 51%);
-      --gray-60: hsl(30, 7%, 60%);
-      --gray-70: hsl(258, 7%, 70%);
-      --gray-80: hsl(258, 7%, 80%);
-      --gray-90: hsl(258, 7%, 90%);
-      --black: #13151a;
-      --white: #fffdfb;
-      --accent-light: #e0ccfa;
-      --accent: #a767fb;
-    }
-
-    html {
-      background: var(--white);
-      color-scheme: light;
-      accent-color: var(--accent-light);
-    }
-
-    body {
-      background-color: var(--white);
-      color: var(--gray-50);
-      font-family: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-        "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-        "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-      line-height: 1.25;
-      margin: 0;
-    }
-
-    a {
-      color: var(--accent);
-    }
-
-    .center {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      width: 100vw;
-    }
-
-    h2 {
-      margin-bottom: 8px;
-      color: var(--gray-10);
-      font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      font-weight: 700;
-      margin-top: 1rem;
-      margin-bottom: 0;
-    }
-  </style>
+  <title>404 Not Found</title>
 </head>
 
-<body>
-  <main class="center">
-    <img src={catKnife.src} alt="Cat with a knife" height="200px" />
-    <h2>ermm... return from whereth you came :)</h2>
-    <h3>404 | this page does not exist...</h3>
-  </main>
-</body>
+<Layout>
+  <body class="m-0 font-mono">
+    <main class="flex flex-col items-center justify-center h-screen w-screen">
+      <img
+        src={catKnife.src}
+        alt="Cat with a knife"
+        width="250px"
+        class="hover:-rotate-8 transition"
+      />
+      <h2 class="font-sans text-2xl font-bold mt-[1rem] text-gray-900">
+        ermm... return from whereth you came :)
+      </h2>
+      <h3 class="text-lg text-gray-600 mt-3 font-bold">
+        404 - this page does not exist...
+      </h3>
+      <Overlay label="go away " color="text-yellow-700/5" />
+    </main>
+  </body>
+</Layout>

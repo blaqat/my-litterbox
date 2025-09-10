@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/MainLayout.astro";
+import Player from "../components/Player.svelte";
+import music from "../data/music.json";
+---
+
+<Layout pageTitle="Music">
+  <div class="grid gap-6 md:grid-cols-2 w-lg">
+    {music.map((song) => <Player client:load song={song} />)}
+  </div>
+</Layout>

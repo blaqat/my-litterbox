@@ -1,0 +1,11 @@
+---
+import Layout from "../layouts/MainLayout.astro";
+import * as thoughts from "../data/thoughts.md";
+---
+
+<Layout>
+  <h1>{thoughts.frontmatter.title}</h1>
+  <article class="prose lg:prose-lg prose-pink">
+    <thoughts></thoughts>
+  </article>
+</Layout>
