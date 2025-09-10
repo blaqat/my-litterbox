@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
+import Overlay from "@components/TextOverlay.svelte";
 import * as thoughts from "../data/thoughts.md";
 ---
 
 <Layout>
+  <Overlay label="WIP " color="text-harvest-gold-500/5" />
   <h1>{thoughts.frontmatter.title}</h1>
   <article class="prose lg:prose-lg prose-pink">
     <thoughts></thoughts>
