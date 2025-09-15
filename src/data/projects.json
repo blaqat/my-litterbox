@@ -6,7 +6,13 @@
     "description": "My personal website, built with Astro and Svelte, showcasing my programming and music projects. It's designed to be playful and barebones to reflect my personality.",
     "stack": ["Astro", "Svelte", "Tailwind", "Cloudflare"],
     "type": "Personal",
-    "view": "https://blaqat.net"
+    "view": "https://blaqat.net",
+    "images": [
+      {
+        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417223127317876786/Dia-Excalidraw_Whiteboard-Capture-041708.png?ex=68c9b364&is=68c861e4&hm=81978f235ec0e4f4c6cd89294ae1da51088f3fe36b80c7cbf1658250791853af&",
+        "alt": "Planning of this very page :0"
+      }
+    ]
   },
   {
     "name": "FiTR Skills Career Roadmaps",
@@ -16,7 +22,16 @@
     "description": "This was my **capstone project** for college. Collaborated on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
     "stack": ["Next.js", "Supabase", "Tailwind", "Typescript", "React"],
     "type": "School",
-    "images": []
+    "images": [
+      {
+        "src": "https://cdn.discordapp.com/attachments/1373315177570635837/1391588505963991070/recruiter_dashboard.mp4?ex=68c9630a&is=68c8118a&hm=78bb55f324ec02278895f0aef34745f82389b602b59d3cc70f79288583c3cf57&",
+        "alt": "Showing some of the pages and components of Applicant management I worked on"
+      },
+      {
+        "src": "https://media.discordapp.net/attachments/994519725742768208/1417208733351678093/Discord-Blu_-_Discord-Capture-041704.gif?ex=68c9a5fc&is=68c8547c&hm=8e2861457774d2f272a64950817a5678a7e1029adf3e11544ef4aac007d76a82&=&width=1600&height=1546",
+        "alt": "FiTR Skills - Showing redesign of skill selection card"
+      }
+    ]
   },
   {
     "name": "Rust Are We Secure Yet?",
@@ -43,7 +58,12 @@
     "description": "Engaged in customer discovery to identify market needs, testing the viability and user interaction level of AI and computer vision integrated solutions, enabling further research and potential development for the client.\nUsed Azure and OpenAI services to build a MVP in React/Tailwind/TS, managed communications via a Flask server, and enhanced digital experiences with Unity through a websocket client and blender animations.",
     "stack": ["Python", "Flask", "React", "OpenAI API", "Azure"],
     "type": "Work",
-    "images": []
+    "images": [
+      {
+        "src": "https://cdn.discordapp.com/attachments/1146497935924793414/1181814949396365454/Fishbowl_Demo_1.mp4?ex=68c990b0&is=68c83f30&hm=711352e7d983d3738448badaff52919678adf34d728fba1208654313bacd3086&",
+        "alt": "Fishbowl AI Assistant - Demo of the MVP"
+      }
+    ]
   },
   {
     "name": "RIT Senior Project Portal",
@@ -55,7 +75,20 @@
     "type": "Work",
     "github": "https://github.com/RIT-Software-Engineering/RIT-SE-Senior-Project",
     "view": "https://seniorproject.se.rit.edu/",
-    "images": []
+    "images": [
+      {
+        "src": "https://media.discordapp.net/attachments/994519725742768208/1417194847210832025/Discord-council_of_amity_-_Discord-Capture-041691.png?ex=68c9990d&is=68c8478d&hm=8bdef9ece32e6b710512549f606658546e7e160149084bcb13567adb28ff7c9f&=&format=webp&quality=lossless&width=3248&height=1408",
+        "alt": "QuestionMoodRating Component - Allowing students to rate their peers on various soft skills"
+      },
+      {
+        "src": "https://private-user-images.githubusercontent.com/70248258/349259693-c71ca0f0-4a88-423f-adc6-7ebf33c71a31.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTc5NjAyNjksIm5iZiI6MTc1Nzk1OTk2OSwicGF0aCI6Ii83MDI0ODI1OC8zNDkyNTk2OTMtYzcxY2EwZjAtNGE4OC00MjNmLWFkYzYtN2ViZjMzYzcxYTMxLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE1VDE4MTI0OVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI4NmI5MWRkNTI3OWFmNWY5YjA1N2U2NjE0NDYzYzA2MWQxYmY5NmRjY2YzZTcwYjQzYWI0N2ZkMjI5Y2UwOWImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.o5OzSzvV1ZSwYVhZVBTAmzW8vcvngob3h_oYI20unRs",
+        "alt": "Senior Project Portal - Coach final evaluation AI Summarization feature"
+      },
+      {
+        "src": "https://private-user-images.githubusercontent.com/70248258/349259232-62119932-6e06-40cf-850d-60f01dd5d92a.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTc5NjAzNjYsIm5iZiI6MTc1Nzk2MDA2NiwicGF0aCI6Ii83MDI0ODI1OC8zNDkyNTkyMzItNjIxMTk5MzItNmUwNi00MGNmLTg1MGQtNjBmMDFkZDVkOTJhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE1VDE4MTQyNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc2NmVjZjMyYTJkM2M5YTRkYjcwNDgxNmRjZmIzNmViMzJhMzFiNzA0MmY4ZDZjZTU4M2Q2MDcxOWM3MTk4MTImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.HVNBwC_vnLH_UuyNLjW_9XlLDMkqDkXwILapIfesJ3g",
+        "alt": "Senior Project Portal - Student view of Peer Evaluation Summary"
+      }
+    ]
   },
   {
     "name": "Bank Simulation",
@@ -89,7 +122,12 @@
     "stack": ["C", "STM32", "DAC"],
     "type": "School",
     "github": "https://github.com/blaqat/Classes/tree/main/2023-swen340-ComputingSystems/FP-MidiPlayer",
-    "images": []
+    "images": [
+      {
+        "src": "https://cdn.discordapp.com/attachments/1012947758681968702/1100005293531869314/IMG_0112.mov?ex=68c93bc3&is=68c7ea43&hm=1d8f05229ce05fe6046ab036141881aec0ce4964b65514bec52dc457bc80f571&",
+        "alt": "Demonstration of harry potter playing"
+      }
+    ]
   },
   {
     "name": "Webcheckers",
@@ -111,19 +149,45 @@
     "type": "Personal",
     "github": "https://github.com/blaqat/theme-generation",
     "view": "https://github.com/blaqat/zed-extensions",
-    "images": []
+    "images": [
+      {
+        "src": "https://cdn.discordapp.com/attachments/995403703894954060/1286787483044155464/terminal_sexy_to_zed.mp4?ex=68c920fb&is=68c7cf7b&hm=d8f62dce0f9fbe9064946ec002ea08dafdafdd600bdeb62c8d56f529d10744e9&",
+        "alt": "Theme Generator - converting terminal sexy themes into zed themes"
+      },
+      {
+        "src": "https://cdn.discordapp.com/attachments/518671807503532062/1266070775841161336/Zed_Preview-zed-themes-Capture-018480-converted.mp4?ex=68c9914b&is=68c83fcb&hm=c4e21d0ba3d1d976c15c7fad35db21f87126208d57dd12b6b893283ba43c7e16&",
+        "alt": "Theme Generator - testing wildcard override themes to change many colors at once"
+      }
+    ]
   },
   {
     "name": "Sonata",
     "start": "Dec 2023",
     "status": "Completed",
     "end": "Feb 2025",
-    "description": "Developed a Discord bot with natural language processing for text and voice interactions, featuring a flexible AI manager that supports integration with multiple AI models (e.g., OpenAI, Perplexity, Claude), a modular plugin system for additional add-ons,  and a custom function calling system for web searches and multimedia retrieval.\nSome add-ons I implemented were a chat history and personalized memory management system with encrypted serialized files, allowing the bot to retain context, manage conversation threads, note feelings about users, and persist data across sessions and servers for seamless user experience. Note: A lot of this functionality was made easier by providers over the years, but this was made prior to a lot of these advancements.",
+    "description": "#### a discord bot thats just like you :)\n\nDeveloped a Discord bot with natural language processing for text and voice interactions, featuring a flexible AI manager that supports integration with multiple AI models (e.g., OpenAI, Perplexity, Claude), a custom generic function calling system for web searches and multimedia retrieval, and a modular plugin system for additional add-ons features.\nA major plugin I created was a chat history and personalized memory management system with encrypted serialized files, allowing the bot to retain context, manage conversation threads, note feelings about users, and persist data across sessions and servers for seamless user experience.\n> Note:\n> This project existed to test the early AI tooling (2023), a lot of the tools have evolved to have features I made for the bot directly built in (e.g function calling)",
     "stack": ["Python", "Discord.py", "Cloudbased LLM Provider APIs"],
     "type": "Personal",
     "github": "https://github.com/blaqat/sonata",
     "view": "https://discord.com/oauth2/authorize?client_id=1187145990931763250",
-    "images": []
+    "images": [
+      {
+        "src": "https://dqy38fnwh4fqs.cloudfront.net/UHLKNQOGQKRDBLEFEPQA7OAQJODB/projects/sona-discord-bot89624963-bf12-4726-b3d5-8519ab0f9e07.webp",
+        "alt": "Sonata - What's you're perogative?"
+      },
+      {
+        "src": "https://media.discordapp.net/attachments/994519725742768208/1417204972805951588/Discord-talkings_Logcord..._I_guess.._-_Discord-Capture-041703.png?ex=68c9a27b&is=68c850fb&hm=911ad5f2e09e3809e898a81001da572a6cad765e36e0fefdf2f112de58dd1f29&=&format=webp&quality=lossless&width=1548&height=880",
+        "alt": "Sonata was used so much it's name was the third most used word in my friend group's discord server"
+      },
+      {
+        "src": "https://media.discordapp.net/attachments/994519725742768208/1417204619414736896/Discord-talkings_Logcord..._I_guess.._-_Discord-Capture-041701.png?ex=68c9a227&is=68c850a7&hm=3a4e2ee39ab9e04e8d142f1d0ebc833fdad1dfc5ad8e06db8cf4d16babcef972&=&format=webp&quality=lossless&width=2970&height=1860",
+        "alt": "Sonata - Showing off function calling at her little sister's request"
+      },
+      {
+        "src": "https://cdn.discordapp.com/attachments/975096682964455517/1242329709971378247/wsg.mp4?ex=68c98cf4&is=68c83b74&hm=a7f32dbc5f764d1843f9706eb01c0803cc40786bd338364d83fb73a080bec648&",
+        "alt": "Talking to sonata in vc"
+      }
+    ]
   },
   {
     "name": "Beepbox Bot",

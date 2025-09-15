@@ -78,17 +78,49 @@
       </article>
 
       {#if project.images && project.images.length}
-        <h3 class="mt-5 text-sm font-medium text-gray-700">Images</h3>
+        <h3 class="mt-5 text-sm font-medium text-gray-700">Media</h3>
         <div class="mt-2 grid gap-3 sm:grid-cols-3">
           {#each project.images as img}
-            <a href={img.src} target="_blank" class="block">
-              <img
-                class="w-full aspect-video object-cover rounded-lg border border-gray-300"
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-              />
-            </a>
+            {#if /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(img.src)}
+              <div class="block relative group">
+                <!-- svelte-ignore a11y_media_has_caption -->
+                <video
+                  class="w-full aspect-video rounded-lg border border-gray-300"
+                  src={img.src}
+                  controls
+                  preload="metadata"
+                  playsinline
+                  aria-label={img.alt || "Project video"}
+                  title={img.alt || "Project video"}
+                >
+                  Sorry, your browser doesn't support embedded videos.
+                </video>
+                <div
+                  class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-slate-300/40 border border-slate-300 text-slate-900 backdrop-blur-xl shadow-xs text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10"
+                >
+                  {img.alt}
+                </div>
+              </div>
+            {:else}
+              <a
+                href={img.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block relative group"
+              >
+                <img
+                  class="w-full aspect-video object-cover rounded-lg border border-gray-300"
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                />
+                <div
+                  class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-300/40 border border-slate-300 text-slate-900 backdrop-blur-xl shadow-xs text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10"
+                >
+                  {img.alt}
+                </div>
+              </a>
+            {/if}
           {/each}
         </div>
       {/if}
