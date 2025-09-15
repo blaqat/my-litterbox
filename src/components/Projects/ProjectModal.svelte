@@ -24,6 +24,7 @@
     class="fixed inset-0 z-50 flex items-center justify-center"
     role="dialog"
     aria-modal="true"
+    id="project-modal"
     on:click={onBackdrop}
     on:keydown={(e) => e.key === "Escape" && closeProject()}
     tabindex="-1"
@@ -50,14 +51,16 @@
           <p class="text-xs text-gray-500 flex items-center gap-2">
             <span>{duration(project)}</span>
             {#if project.status !== ProjectState.Completed}
-              <span
-                class="status-dot"
-                class:ongoing={project.status === ProjectState.Ongoing}
-                class:paused={project.status === ProjectState.Paused}
-                aria-label={project.status}
-                title={project.status}
-              ></span>
-              {project.status === ProjectState.Ongoing ? "Ongoing" : "Paused"}
+              <span class="-translate-x-1 transform font-medium">
+                <span
+                  class="status-dot"
+                  class:ongoing={project.status === ProjectState.Ongoing}
+                  class:paused={project.status === ProjectState.Paused}
+                  aria-label={project.status}
+                  title={project.status}
+                ></span>
+                {project.status === ProjectState.Ongoing ? "Ongoing" : "Paused"}
+              </span>
             {/if}
           </p>
         </div>

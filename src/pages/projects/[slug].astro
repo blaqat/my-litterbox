@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import ProjectsPage from "../../components/Projects/ProjectsPage.svelte";
+import ProjectModal from "../../components/Projects/ProjectModal.svelte";
+import projects from "../../data/projects.json";
+import { parseProjects } from "../../components/Projects/ProjectData";
+
+const parsed = parseProjects(JSON.stringify(projects));
+const { slug } = Astro.params;
+const exists = parsed.some((p) => p.slug === slug);
+if (!exists) {
+  return Astro.redirect("/projects");
+}
+---
+
+<Layout pageTitle="Projects">
+  <div class="mx-auto max-w-6xl px-4">
+    <ProjectsPage client:load projects={parsed} />
+    <ProjectModal client:load />
+    <noscript>
+      <p>
+        Project details require JavaScript. View all projects <a
+          href="/projects">here</a
+        >.
+      </p>
+    </noscript>
+  </div>
+</Layout>

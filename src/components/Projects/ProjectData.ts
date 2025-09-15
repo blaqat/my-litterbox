@@ -32,6 +32,7 @@ export type ProjectDate = `${Month} 20${number}${number}`;
 type ProjectDateRange = `${ProjectDate} - ${ProjectDate}` | `${ProjectDate} - `;
 
 export type Project = {
+  slug: string;
   name: string;
   start: ProjectDate;
   status: ProjectState;
@@ -43,6 +44,16 @@ export type Project = {
   view?: string;
   images: ProjectImage[];
 };
+
+export function slugify(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 export function parseProjectDate(date: ProjectDate): Date {
   const [month, year] = date.split(" ");
   return new Date(`${month} 1, ${year}`);
@@ -88,7 +99,12 @@ export function getProjectDuration(project: Project): ProjectDateRange {
 
 export function parseProjects(json: string): Project[] {
   const data = JSON.parse(json);
-  return data as Project[];
+  return (data as Omit<Project, "slug">[] & Partial<Project>[]).map(
+    (p: any) => ({
+      ...p,
+      slug: p.slug ?? slugify(p.name),
+    })
+  );
 }
 
 export function projectMatches(project: Project, search: string): boolean {

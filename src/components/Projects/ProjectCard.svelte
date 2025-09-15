@@ -17,6 +17,8 @@
   type="button"
   class="border-gray-300 group text-left w-full relative rounded-xl border bg-white p-4 transition cursor-pointer hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200 hover:scale-102 active:scale-99"
   on:click|stopPropagation={() => openProject(project)}
+  data-project-slug={project.slug}
+  aria-controls="project-modal"
 >
   <header class="flex items-start justify-between">
     <h3 class="font-semibold text-lg leading-tight pr-2">{project.name}</h3>

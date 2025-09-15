@@ -2,7 +2,9 @@
 import Layout from "../layouts/MainLayout.astro";
 import ProjectsPage from "@components/Projects/ProjectsPage.svelte";
 import ProjectModal from "@components/Projects/ProjectModal.svelte";
-import projects from "../data/projects.json";
+import rawProjects from "../data/projects.json";
+import { parseProjects } from "@components/Projects/ProjectData";
+const projects = parseProjects(JSON.stringify(rawProjects));
 ---
 
 <Layout pageTitle="Projects">

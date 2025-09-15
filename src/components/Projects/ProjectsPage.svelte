@@ -1,6 +1,7 @@
 <script lang="ts">
   import ProjectCard from "./ProjectCard.svelte";
   import { type Project, projectMatches as matches } from "./ProjectData";
+  import { initializeProjects } from "./projectStore";
   import { getSortedProjects } from "./ProjectData";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
 
@@ -16,6 +17,10 @@
   $: years = Object.keys(groups)
     .map((y) => parseInt(y))
     .sort((a, b) => b - a);
+
+  if (typeof window !== "undefined") {
+    queueMicrotask(() => initializeProjects(projects));
+  }
 </script>
 
 <div class="flex items-center justify-between gap-3 mb-4">
