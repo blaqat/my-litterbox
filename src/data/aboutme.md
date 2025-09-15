@@ -1,5 +1,5 @@
 ## About Me!
-Hello! My name is [**Aiden Green**](/contact), and I am a recent graduate of [**Rochester Institute of Technology**](https://www.rit.edu) seeking an entry-level position in **Software Engineering**.
+Hello! My name is [**Aiden Green**](/contact), and I am a recent graduate of [**Rochester Institute of Technology**](https://www.rit.edu) seeking an entry-level position in **Software Engineering**. ([View Resume](./aidengreenj-resume-fall-2025.pdf))
 
 ## Skills
 I possess a diverse range of programming skills, including: **Java**, **Python**, **Typescript**, **Rust**, and **C**. 
