@@ -1,12 +1,22 @@
 [
   {
-    "name": "This Website :3",
+    "name": "blaqat.net (this site :3)",
     "start": "Sep 2025",
     "status": "Ongoing",
     "description": "My personal website, built with Astro and Svelte, showcasing my programming and music projects. It's designed to be playful and barebones to reflect my personality.",
     "stack": ["Astro", "Svelte", "Tailwind", "Cloudflare"],
     "type": "Personal",
     "view": "https://blaqat.net"
+  },
+  {
+    "name": "FiTR Skills Career Roadmaps",
+    "start": "Mar 2025",
+    "status": "Completed",
+    "end": "Aug 2025",
+    "description": "This was my **capstone project** for college. Collaborated on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
+    "stack": ["Next.js", "Supabase", "Tailwind", "Typescript", "React"],
+    "type": "School",
+    "images": []
   },
   {
     "name": "Rust Are We Secure Yet?",
@@ -109,13 +119,7 @@
     "status": "Completed",
     "end": "Feb 2025",
     "description": "Developed a Discord bot with natural language processing for text and voice interactions, featuring a flexible AI manager that supports integration with multiple AI models (e.g., OpenAI, Perplexity, Claude), a modular plugin system for additional add-ons,  and a custom function calling system for web searches and multimedia retrieval.\nSome add-ons I implemented were a chat history and personalized memory management system with encrypted serialized files, allowing the bot to retain context, manage conversation threads, note feelings about users, and persist data across sessions and servers for seamless user experience. Note: A lot of this functionality was made easier by providers over the years, but this was made prior to a lot of these advancements.",
-    "stack": [
-      "Python",
-      "Discord.py",
-      "Cloudbase LLM Provider API",
-      "Typescript",
-      "Deno"
-    ],
+    "stack": ["Python", "Discord.py", "Cloudbased LLM Provider APIs"],
     "type": "Personal",
     "github": "https://github.com/blaqat/sonata",
     "view": "https://discord.com/oauth2/authorize?client_id=1187145990931763250",
@@ -126,7 +130,7 @@
     "start": "Aug 2020",
     "status": "Completed",
     "end": "Apr 2021",
-    "description": "I had been working on a project that involves creating a Discord bot using node.js. The bot can take a song link from https://www.beepbox.co/ or a shortened link that redirects to it, and convert it into a ReadableStream that can be played in Discord voice chats. The bot also has a queue system that shows the songs that are currently playing or waiting to be played.\n Another feature of the bot is that it can search for songs from Google Sheets that contain song submissions from users. The bot uses the Google Sheets API to parse through the sheets and find the links by Title, Artist Name, or other criteria. The bot then displays the results in a vertical list format for the user to choose from.\n Some of the challenges I faced while developing this project were reverse engineering existing code, parsing user input commands, and pulling data from websites with HTTP requests. I learned a lot from this project and I am proud of the outcome.",
+    "description": "I had been working on a project that involves creating a Discord bot using node.js. The bot can take a song link from https://www.beepbox.co/ or a shortened link that redirects to it, and convert it into a ReadableStream that can be played in Discord voice chats. The bot also has a queue system that shows the songs that are currently playing or waiting to be played.\nAnother feature of the bot is that it can search for songs from Google Sheets that contain song submissions from users. The bot uses the Google Sheets API to parse through the sheets and find the links by Title, Artist Name, or other criteria. The bot then displays the results in a vertical list format for the user to choose from.\nSome of the challenges I faced while developing this project were reverse engineering existing code, parsing user input commands, and pulling data from websites with HTTP requests. I learned a lot from this project and I am proud of the outcome.",
     "stack": ["Node.js", "Discord.js", "Google Sheets API", "Beepbox"],
     "type": "Personal",
     "images": [

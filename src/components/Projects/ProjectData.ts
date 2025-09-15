@@ -1,20 +1,3 @@
-//   {
-//     "name": "Rust Are We Secure Yet?",
-//     "start": "Aug 2024",
-//     "status": "Completed",
-//     "end": "Dec 2024",
-//     "description": "Researched on code vulnerabilities and how much the Rust language mitigates them by default to aid the writing of a related white paper. Categorized and analyzed CWEs based on Rust’s built-in protections.\nDeveloped a set of Python scripts and a Zola based static site to calculate, output, update, and finally display vulnerability metrics efficiently.",
-//     "stack": ["Python", "PostgreSQL", "Zola", "Rust", "MongoDB"],
-//     "type": "Work",
-//     "github": "https://github.com/VulnerabilityHistoryProject/rust-are-we-secure-yet",
-//     "view": "https://rust.vulnerabilityhistory.org/",
-//     "images": [
-//       {
-//         "src": "https://media.licdn.com/dms/image/v2/D4E2DAQGWOsFb8EaRgA/profile-treasury-image-shrink_800_800/B4EZVm7JmIGwAc-/0/1741188538529?e=1758502800&v=beta&t=1WwZHH2UpIiK_20xw6PhtV2R7CoKODePODD1BJHz_SU",
-//         "alt": "Rust Are We Secure Yet - Homepage"
-//       }
-//     ]
-//   },
 export enum ProjectCategory {
   Personal = "Personal",
   Work = "Work",
@@ -106,6 +89,22 @@ export function getProjectDuration(project: Project): ProjectDateRange {
 export function parseProjects(json: string): Project[] {
   const data = JSON.parse(json);
   return data as Project[];
+}
+
+export function projectMatches(project: Project, search: string): boolean {
+  const h = search.toLowerCase();
+  const projectString = [
+    project.name,
+    project.description,
+    project.type,
+    project.status,
+    getProjectDuration(project),
+    ...project.stack,
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  return projectString.includes(h);
 }
 
 export default { getProjectDuration, parseProjects };

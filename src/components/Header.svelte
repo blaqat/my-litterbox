@@ -84,14 +84,14 @@
     {#each [home, ...navigationItems] as item}
       <a
         href={item.href}
-        class="flex flex-col items-center justify-center gap-1 rounded-full p-2 text-gray-500 font-medium hover:bg-gray-300/50 w-16"
+        class="flex flex-col items-center justify-center gap-1 rounded-full p-2 text-gray-500 font-medium hover:bg-gray-300/20 hover:scale-103 w-16"
         class:selected={currentPath === item.href}
         aria-current={currentPath === item.href ? "page" : undefined}
       >
         {#if item.icon}
           <svelte:component
             this={getIconComponent(item.icon)}
-            class={`w-6 h-6 ${currentPath === item.href ? item.text : "text-gray-400"} ${currentPath === item.href ? item.fill : ""}`}
+            class={`w-6 h-6 ${currentPath === item.href ? item.text : "text-gray-500"} ${currentPath === item.href ? item.fill : ""}`}
             weight="fill"
           />
         {/if}
