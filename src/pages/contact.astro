@@ -8,8 +8,9 @@ import {
   GithubLogo,
   InstagramLogo,
 } from "phosphor-svelte";
-let pfp = null;
-// "https://media.licdn.com/dms/image/v2/D4E03AQGxTj6vV6FKvg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719427959823?e=1760572800&v=beta&t=NJLKTw4TTdIrUbVpWDTPTrUUnYR6GHvuI25WxO_w1sU";
+// let pfp = null;
+let pfp =
+  "https://media.licdn.com/dms/image/v2/D4E03AQGxTj6vV6FKvg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719427959823?e=1760572800&v=beta&t=NJLKTw4TTdIrUbVpWDTPTrUUnYR6GHvuI25WxO_w1sU";
 ---
 
 <Layout pageTitle="Contact">
@@ -19,8 +20,8 @@ let pfp = null;
     <span class="flex-col flex items-center text-center font-bold">
       <img
         src={pfp}
-        alt="HECK NO"
-        class="w-28 h-28 rounded-full object-cover shadow-lg"
+        alt="It's me!"
+        class="md:w-[228px] sm:w-[28] aspect-square rounded-full shadow-lg object-cover"
       />
       aiden green
     </span>
