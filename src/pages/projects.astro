@@ -4,10 +4,17 @@ import ProjectsPage from "@components/Projects/ProjectsPage.svelte";
 import ProjectModal from "@components/Projects/ProjectModal.svelte";
 import rawProjects from "../data/projects.json";
 import { parseProjects } from "@components/Projects/ProjectData";
+import SEO from "@components/SEO.astro";
 const projects = parseProjects(JSON.stringify(rawProjects));
 ---
 
 <Layout pageTitle="Projects">
+  <Fragment slot="head">
+    <SEO
+      title="Projects • blaqat"
+      description="Selected projects I've worked on across school, work, and personal time."
+    />
+  </Fragment>
   <div class="mx-auto max-w-6xl px-4">
     <ProjectsPage client:load projects={projects} />
     <ProjectModal client:load />

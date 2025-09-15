@@ -1,8 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Home from "@components/Home.astro";
+import SEO from "@components/SEO.astro";
 ---
 
 <Layout>
+  <Fragment slot="head">
+    <SEO
+      title="blaqat's litterbox"
+      description="Personal site of blaqat / aiden — projects, thoughts, and ways to get in touch."
+      image="/favicon.svg"
+    />
+  </Fragment>
   <Home />
 </Layout>

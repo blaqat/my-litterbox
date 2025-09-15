@@ -1,0 +1,52 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string; // absolute URL or path under /public
+  type?: "website" | "article" | string;
+  noIndex?: boolean;
+}
+
+const {
+  title = "blaqat's litterbox",
+  description = "Personal site of blaqat / aiden — projects, thoughts, and ways to get in touch.",
+  image = "/favicon.svg",
+  type = "website",
+  noIndex = false,
+} = Astro.props as Props;
+
+// Build absolute URLs for og:url and og:image. Works best when site is configured
+// or running behind SSR (Cloudflare adapter) where Astro.url is available.
+const pageUrl = Astro.url?.href ?? undefined;
+let imageUrl: string | undefined = undefined;
+try {
+  imageUrl = image.startsWith("http") ? image : new URL(image, Astro.url).href;
+} catch {
+  // Fallback to provided string if new URL fails (e.g., during static analysis)
+  imageUrl = image;
+}
+---
+
+<!-- Basic SEO -->
+<title>{title}</title>
+<meta name="description" content={description} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+{pageUrl && <link rel="canonical" href={pageUrl} />}
+
+<!-- Open Graph for Discord, Slack, etc. -->
+<meta property="og:site_name" content="blaqat's litterbox" />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{pageUrl && <meta property="og:url" content={pageUrl} />}
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+{imageUrl && <meta property="og:image:alt" content={`${title} – preview`} />}
+
+<!-- Twitter Card (also used by some clients) -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{imageUrl && <meta name="twitter:image" content={imageUrl} />}
+
+<!-- Nice touch for embeds and address bar coloring -->
+<meta name="theme-color" content="#e5e7eb" />
