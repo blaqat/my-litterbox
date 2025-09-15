@@ -138,7 +138,12 @@
     "stack": ["Java", "JavaScript", "Spark", "Freemarker"],
     "type": "School",
     "github": "https://github.com/blaqat/Classes/tree/main/2021-swen261-IntroToSE/FP-Webcheckers",
-    "images": []
+    "images": [
+      {
+        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417236792712757319/Google_Chrome-GAMETIME_Web_Checkers-Capture-041718.mp4?ex=68c9c01e&is=68c86e9e&hm=6bb2961c4f6dba346af0604582b73af97865c2da926a746f1802c398736fc536&",
+        "alt": "Gameplay Quick Showcase of Site"
+      }
+    ]
   },
   {
     "name": "Code Editor Theme Generator",

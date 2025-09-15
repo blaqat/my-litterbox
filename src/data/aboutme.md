@@ -11,6 +11,4 @@ I also have experience with web development frameworks such as [**Astro**](https
 Beyond programming, I have a passion for **composing music** for film and games. I have been **playing the piano** for over ten years and enjoy composing original pieces. One of my projects includes a [**Music Player Discord Bot**](/projects/beepbox-bot) that plays music from a niche music program called [**"Beepbox"**](https://beepbox.co) for a small community of users.
 
 ## Future Goals
-My main goal currently is to get experience under the guidance of experienced engineers in a professional setting to further develop my skills and grow as a software engineer.
-
-I am always looking for opportunities to use my skills to make a positive impact, and I am excited about the future possibilities!
+My main goal currently is to get experience under the guidance of experienced engineers in a professional setting to further develop my skills and grow as a software engineer. I am always looking for opportunities to use my skills to make a positive impact, and I am excited about the future possibilities!
