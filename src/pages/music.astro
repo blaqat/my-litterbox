@@ -1,12 +1,13 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
-import Player from "../components/Player.svelte";
+import Player from "@components/Player.svelte";
 import music from "../data/music.json";
-import Overlay from "@components/TextOverlay.svelte";
+import WIP from "@components/WIP.astro";
 ---
 
 <Layout pageTitle="Music">
-  <Overlay label="WIP " color="text-light-wisteria-500/5" />
+  <WIP />
+  Heres a couple things...
   <div class="grid gap-6 md:grid-cols-2 w-lg">
     {music.map((song) => <Player client:load song={song} />)}
   </div>
