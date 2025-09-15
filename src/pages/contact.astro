@@ -1,12 +1,20 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
+import {
+  Envelope,
+  XLogo,
+  DiscordLogo,
+  LinkedinLogo,
+  GithubLogo,
+  InstagramLogo,
+} from "phosphor-svelte";
 let pfp = null;
 // "https://media.licdn.com/dms/image/v2/D4E03AQGxTj6vV6FKvg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719427959823?e=1760572800&v=beta&t=NJLKTw4TTdIrUbVpWDTPTrUUnYR6GHvuI25WxO_w1sU";
 ---
 
 <Layout pageTitle="Contact">
   <div
-    class="flex flex-col sm:flex-row gap-6 items-center prose p-8 bg-slate-50/40 border-2 backdrop-blur-xs border-slate-200 shadow-lg rounded-lg"
+    class="flex flex-col sm:flex-row gap-6 items-center prose p-8 bg-slate-50/40 border-2 backdrop-blur-xs border-slate-200 rounded-lg"
   >
     <span class="flex-col flex items-center text-center font-bold">
       <img
@@ -14,34 +22,92 @@ let pfp = null;
         alt="HECK NO"
         class="w-28 h-28 rounded-full object-cover shadow-lg"
       />
-      aiden
+      aiden green
     </span>
 
-    <ul class="space-y-3">
-      <li>
-        <strong>Email:</strong>
-        <a href="mailto:aidengreenj@gmail.com">aidengreenj@gmail.com</a>
+    <ul class="space-y-3 not-prose w-full">
+      <li class="flex items-center gap-3">
+        <span
+          class="inline-flex items-center justify-center rounded-full border-slate-300 bg-white/70"
+        >
+          <Envelope size={18} weight="fill" />
+          :
+        </span>
+        <a
+          class="underline underline-offset-2 hover:no-underline"
+          href="mailto:aidengreenj@gmail.com">aidengreenj@gmail.com</a
+        >
       </li>
-      <li>
-        <strong>Twitter:</strong>
-        <a href="https://x.com/blaqat_ag">@blaqat_ag</a>
+      <li class="flex items-center gap-3">
+        <span
+          class="inline-flex items-center justify-center rounded-full border-slate-300 bg-white/70"
+        >
+          <LinkedinLogo size={18} weight="fill" />
+          :
+        </span>
+        <a
+          class="underline underline-offset-2 hover:no-underline"
+          href="https://www.linkedin.com/in/aidengreenj/"
+          target="_blank"
+          rel="noopener noreferrer">aidengreenj</a
+        >
       </li>
-      <li>
-        <strong>Discord:</strong>
-        <a href="https://discordapp.com/users/383851442341019658">blaqat</a>
+
+      <li class="flex items-center gap-3">
+        <span
+          class="inline-flex items-center justify-center rounded-full border-slate-300 bg-white/70"
+        >
+          <GithubLogo size={18} weight="fill" />
+          :
+        </span>
+        <a
+          class="underline underline-offset-2 hover:no-underline"
+          href="https://github.com/blaqat"
+          target="_blank"
+          rel="noopener noreferrer">blaqat</a
+        >
       </li>
-      <li>
-        <strong>Phone:</strong>
-        <span class="text-red-800">i will not answer calls</span>
+      <li class="flex items-center gap-3">
+        <span
+          class="inline-flex items-center justify-center rounded-full border-slate-300 bg-white/70"
+        >
+          <InstagramLogo size={18} weight="fill" />
+          :
+        </span>
+        <a
+          class="underline underline-offset-2 hover:no-underline"
+          href="https://instagram.com/blaqat_ag"
+          target="_blank"
+          rel="noopener noreferrer">@blaqat_ag</a
+        >
       </li>
-      <!-- 540‑220‑8663</li> -->
-      <li>
-        <strong>LinkedIn:</strong>
-        <a href="https://www.linkedin.com/in/aidengreenj/">aidengreenj</a>
+      <li class="flex items-center gap-3">
+        <span
+          class="inline-flex items-center justify-center rounded-full border-slate-300 bg-white/70"
+        >
+          <XLogo size={18} weight="fill" />
+          :
+        </span>
+        <a
+          class="underline underline-offset-2 hover:no-underline"
+          href="https://x.com/blaqat_ag"
+          target="_blank"
+          rel="noopener noreferrer">@blaqat_ag</a
+        >
       </li>
-      <li>
-        <strong>GitHub:</strong>
-        <a href="https:github.com/blaqat">blaqat</a>
+      <li class="flex items-center gap-3">
+        <span
+          class="inline-flex items-center justify-center rounded-full border-slate-300 bg-white/70"
+        >
+          <DiscordLogo size={18} weight="fill" />
+          :
+        </span>
+        <a
+          class="underline underline-offset-2 hover:no-underline"
+          href="https://discordapp.com/users/383851442341019658"
+          target="_blank"
+          rel="noopener noreferrer">blaqat</a
+        >
       </li>
     </ul>
   </div>
