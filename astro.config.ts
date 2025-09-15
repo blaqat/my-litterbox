@@ -10,6 +10,7 @@ export default defineConfig({
   integrations: [svelte()],
   output: "server",
   adapter: cloudflare(),
+  site: "https://blaqat.net",
   vite: {
     plugins: [tailwindcss()],
   },
