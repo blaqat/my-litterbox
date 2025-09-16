@@ -39,7 +39,7 @@
     >
       <button
         class="absolute right-3 top-3 p-1 text-gray-600 hover:text-gray-900"
-        on:click={closeProject}
+        on:click={() => closeProject()}
         aria-label="Close"
         title="Close"
       >
