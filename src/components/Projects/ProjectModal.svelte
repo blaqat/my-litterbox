@@ -74,7 +74,7 @@
         </span>
       </header>
 
-      <article class="mt-4 whitespace-pre-wrap text-gray-800 prose max-w-none">
+      <article class="mt-4 text-gray-800 prose max-w-none">
         {@html renderMarkdown(project.description)}
       </article>
 
