@@ -29,7 +29,7 @@
       },
       {
         "src": "https://media.discordapp.net/attachments/994519725742768208/1417208733351678093/Discord-Blu_-_Discord-Capture-041704.gif?ex=68c9a5fc&is=68c8547c&hm=8e2861457774d2f272a64950817a5678a7e1029adf3e11544ef4aac007d76a82&=&width=1600&height=1546",
-        "alt": "FiTR Skills - Showing redesign of skill selection card"
+        "alt": "Showing redesign of skill selection card"
       }
     ]
   },
@@ -61,7 +61,7 @@
     "images": [
       {
         "src": "https://cdn.discordapp.com/attachments/1146497935924793414/1181814949396365454/Fishbowl_Demo_1.mp4?ex=68c990b0&is=68c83f30&hm=711352e7d983d3738448badaff52919678adf34d728fba1208654313bacd3086&",
-        "alt": "Fishbowl AI Assistant - Demo of the MVP"
+        "alt": "Demo of the MVP"
       }
     ]
   },
@@ -77,16 +77,16 @@
     "view": "https://seniorproject.se.rit.edu/",
     "images": [
       {
+        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417303521858162718/349259693-c71ca0f0-4a88-423f-adc6-7ebf33c71a31.gif?ex=68c9fe43&is=68c8acc3&hm=7c58174e2faf736ffb23658018f1b9d43b28652b1ad1c12343a32a25fd4ded6f&",
+        "alt": "Coach final evaluation AI Summarization feature"
+      },
+      {
+        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417303777119047820/Dia-Student_View_for_Peer_Ev...-Capture-041730.png?ex=68c9fe80&is=68c8ad00&hm=569dc2cb421647bc12d0c0fd48be625b9477f970ae65cbdca5009ba0d4c9d242&",
+        "alt": "Student view of Peer Evaluation Summary"
+      },
+      {
         "src": "https://media.discordapp.net/attachments/994519725742768208/1417194847210832025/Discord-council_of_amity_-_Discord-Capture-041691.png?ex=68c9990d&is=68c8478d&hm=8bdef9ece32e6b710512549f606658546e7e160149084bcb13567adb28ff7c9f&=&format=webp&quality=lossless&width=3248&height=1408",
         "alt": "QuestionMoodRating Component - Allowing students to rate their peers on various soft skills"
-      },
-      {
-        "src": "https://private-user-images.githubusercontent.com/70248258/349259693-c71ca0f0-4a88-423f-adc6-7ebf33c71a31.gif?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTc5NjAyNjksIm5iZiI6MTc1Nzk1OTk2OSwicGF0aCI6Ii83MDI0ODI1OC8zNDkyNTk2OTMtYzcxY2EwZjAtNGE4OC00MjNmLWFkYzYtN2ViZjMzYzcxYTMxLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE1VDE4MTI0OVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTI4NmI5MWRkNTI3OWFmNWY5YjA1N2U2NjE0NDYzYzA2MWQxYmY5NmRjY2YzZTcwYjQzYWI0N2ZkMjI5Y2UwOWImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.o5OzSzvV1ZSwYVhZVBTAmzW8vcvngob3h_oYI20unRs",
-        "alt": "Senior Project Portal - Coach final evaluation AI Summarization feature"
-      },
-      {
-        "src": "https://private-user-images.githubusercontent.com/70248258/349259232-62119932-6e06-40cf-850d-60f01dd5d92a.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTc5NjAzNjYsIm5iZiI6MTc1Nzk2MDA2NiwicGF0aCI6Ii83MDI0ODI1OC8zNDkyNTkyMzItNjIxMTk5MzItNmUwNi00MGNmLTg1MGQtNjBmMDFkZDVkOTJhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE1VDE4MTQyNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc2NmVjZjMyYTJkM2M5YTRkYjcwNDgxNmRjZmIzNmViMzJhMzFiNzA0MmY4ZDZjZTU4M2Q2MDcxOWM3MTk4MTImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.HVNBwC_vnLH_UuyNLjW_9XlLDMkqDkXwILapIfesJ3g",
-        "alt": "Senior Project Portal - Student view of Peer Evaluation Summary"
       }
     ]
   },
@@ -153,15 +153,15 @@
     "stack": ["Rust", "Python", "TOML", "JSON"],
     "type": "Personal",
     "github": "https://github.com/blaqat/theme-generation",
-    "view": "https://github.com/blaqat/zed-extensions",
+    "view": "https://github.com/blaqat/zed-themes",
     "images": [
       {
         "src": "https://cdn.discordapp.com/attachments/995403703894954060/1286787483044155464/terminal_sexy_to_zed.mp4?ex=68c920fb&is=68c7cf7b&hm=d8f62dce0f9fbe9064946ec002ea08dafdafdd600bdeb62c8d56f529d10744e9&",
-        "alt": "Theme Generator - converting terminal sexy themes into zed themes"
+        "alt": "Converting terminal sexy themes into zed themes"
       },
       {
         "src": "https://cdn.discordapp.com/attachments/518671807503532062/1266070775841161336/Zed_Preview-zed-themes-Capture-018480-converted.mp4?ex=68c9914b&is=68c83fcb&hm=c4e21d0ba3d1d976c15c7fad35db21f87126208d57dd12b6b893283ba43c7e16&",
-        "alt": "Theme Generator - testing wildcard override themes to change many colors at once"
+        "alt": "Testing wildcard override themes to change many colors at once"
       }
     ]
   },
@@ -178,7 +178,7 @@
     "images": [
       {
         "src": "https://dqy38fnwh4fqs.cloudfront.net/UHLKNQOGQKRDBLEFEPQA7OAQJODB/projects/sona-discord-bot89624963-bf12-4726-b3d5-8519ab0f9e07.webp",
-        "alt": "Sonata - What's you're perogative?"
+        "alt": "What's Sona's perogative?"
       },
       {
         "src": "https://media.discordapp.net/attachments/994519725742768208/1417204972805951588/Discord-talkings_Logcord..._I_guess.._-_Discord-Capture-041703.png?ex=68c9a27b&is=68c850fb&hm=911ad5f2e09e3809e898a81001da572a6cad765e36e0fefdf2f112de58dd1f29&=&format=webp&quality=lossless&width=1548&height=880",
@@ -186,7 +186,7 @@
       },
       {
         "src": "https://media.discordapp.net/attachments/994519725742768208/1417204619414736896/Discord-talkings_Logcord..._I_guess.._-_Discord-Capture-041701.png?ex=68c9a227&is=68c850a7&hm=3a4e2ee39ab9e04e8d142f1d0ebc833fdad1dfc5ad8e06db8cf4d16babcef972&=&format=webp&quality=lossless&width=2970&height=1860",
-        "alt": "Sonata - Showing off function calling at her little sister's request"
+        "alt": "Showing off function calling at her little sister's request"
       },
       {
         "src": "https://cdn.discordapp.com/attachments/975096682964455517/1242329709971378247/wsg.mp4?ex=68c98cf4&is=68c83b74&hm=a7f32dbc5f764d1843f9706eb01c0803cc40786bd338364d83fb73a080bec648&",
@@ -205,7 +205,7 @@
     "images": [
       {
         "src": "https://media.licdn.com/dms/image/v2/D4E2DAQGYKd3cjhsXug/profile-treasury-image-shrink_1920_1920/profile-treasury-image-shrink_1920_1920/0/1689192152464?e=1758506400&v=beta&t=718CdE4D069ORJ3gfi0pjeYKuqVRNDEND1_Klf3VHRU",
-        "alt": "Beepbox Bot - Showing search artist command that pulls and filteres from a google sheet"
+        "alt": "Showing search artist command that pulls and filteres from a google sheet"
       }
     ]
   }
