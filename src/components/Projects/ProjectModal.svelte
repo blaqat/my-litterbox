@@ -107,7 +107,7 @@
                 href={img.src}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block relative group"
+                class="block relative group hover:scale-104"
               >
                 <img
                   class="w-full aspect-video object-cover rounded-lg border border-gray-300"

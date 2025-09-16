@@ -7,6 +7,7 @@
     "stack": ["Astro", "Svelte", "Tailwind", "Cloudflare"],
     "type": "Personal",
     "view": "https://blaqat.net",
+    "github": "https://github.com/blaqat/my-litterbox",
     "images": [
       {
         "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417223127317876786/Dia-Excalidraw_Whiteboard-Capture-041708.png?ex=68c9b364&is=68c861e4&hm=81978f235ec0e4f4c6cd89294ae1da51088f3fe36b80c7cbf1658250791853af&",
