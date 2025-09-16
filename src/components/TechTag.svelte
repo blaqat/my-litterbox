@@ -48,7 +48,7 @@
   {:else}
     <BracketsCurly size={14} class="icon-fallback" />
   {/if}
-  <span class="label">{name}</span>
+  <span class="whitespace-nowrap">{name}</span>
 </span>
 
 <style>
@@ -66,8 +66,5 @@
     width: 14px;
     height: 14px;
     border-radius: 2px;
-  }
-  .label {
-    white-space: nowrap;
   }
 </style>

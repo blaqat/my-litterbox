@@ -74,9 +74,7 @@
         </span>
       </header>
 
-      <article
-        class="mt-4 whitespace-pre-wrap text-gray-800 prose prose-sm max-w-none"
-      >
+      <article class="mt-4 whitespace-pre-wrap text-gray-800 prose max-w-none">
         {@html renderMarkdown(project.description)}
       </article>
 
@@ -118,7 +116,7 @@
                   loading="lazy"
                 />
                 <div
-                  class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-slate-300/40 border border-slate-300 text-slate-900 backdrop-blur-xl shadow-xs text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10"
+                  class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-slate-300/40 border border-slate-300 text-slate-900 backdrop-blur-xl shadow-xs text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10 max-w-full"
                 >
                   {img.alt}
                 </div>
@@ -139,7 +137,9 @@
         </div>
         {#if project.github || project.view}
           <div>
-            <h3 class="text-sm font-medium text-gray-700">Links</h3>
+            <h3 class="text-sm font-medium text-gray-700 -translate-x-1">
+              Links
+            </h3>
             <div class="mt-2 flex items-center gap-3">
               {#if project.github}
                 <a
