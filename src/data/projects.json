@@ -10,7 +10,7 @@
     "github": "https://github.com/blaqat/my-litterbox",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417223127317876786/Dia-Excalidraw_Whiteboard-Capture-041708.png?ex=68c9b364&is=68c861e4&hm=81978f235ec0e4f4c6cd89294ae1da51088f3fe36b80c7cbf1658250791853af&",
+        "src": "/media/site-plan.png",
         "alt": "Planning of this very page :0"
       }
     ]
@@ -20,16 +20,16 @@
     "start": "Mar 2025",
     "status": "Completed",
     "end": "Aug 2025",
-    "description": "This was my **capstone project** for college. Collaborated on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
+    "description": "This was my **capstone project**. Collaborated on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
     "stack": ["Next.js", "Supabase", "Tailwind", "Typescript", "React"],
     "type": "School",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/1373315177570635837/1391588505963991070/recruiter_dashboard.mp4?ex=68c9630a&is=68c8118a&hm=78bb55f324ec02278895f0aef34745f82389b602b59d3cc70f79288583c3cf57&",
+        "src": "/media/fitr-recruiter.mp4",
         "alt": "Some components of recruiter dashboard I designed and implemented"
       },
       {
-        "src": "https://media.discordapp.net/attachments/994519725742768208/1417208733351678093/Discord-Blu_-_Discord-Capture-041704.gif?ex=68c9a5fc&is=68c8547c&hm=8e2861457774d2f272a64950817a5678a7e1029adf3e11544ef4aac007d76a82&=&width=1600&height=1546",
+        "src": "/media/fitr-redesign.gif",
         "alt": "Showing redesign of skill selection card"
       }
     ]
@@ -61,7 +61,7 @@
     "type": "Work",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/1146497935924793414/1181814949396365454/Fishbowl_Demo_1.mp4?ex=68c990b0&is=68c83f30&hm=711352e7d983d3738448badaff52919678adf34d728fba1208654313bacd3086&",
+        "src": "https://music.blaqat.net/Fishbowl_Demo_1.mp4",
         "alt": "Demo of the MVP"
       }
     ]
@@ -78,16 +78,12 @@
     "view": "https://seniorproject.se.rit.edu/",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417303521858162718/349259693-c71ca0f0-4a88-423f-adc6-7ebf33c71a31.gif?ex=68c9fe43&is=68c8acc3&hm=7c58174e2faf736ffb23658018f1b9d43b28652b1ad1c12343a32a25fd4ded6f&",
+        "src": "/media/portal-coach.gif",
         "alt": "Coach final evaluation AI Summarization feature"
       },
       {
-        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417303777119047820/Dia-Student_View_for_Peer_Ev...-Capture-041730.png?ex=68c9fe80&is=68c8ad00&hm=569dc2cb421647bc12d0c0fd48be625b9477f970ae65cbdca5009ba0d4c9d242&",
+        "src": "/media/portal-student.png",
         "alt": "Student view of Peer Evaluation Summary"
-      },
-      {
-        "src": "https://media.discordapp.net/attachments/994519725742768208/1417194847210832025/Discord-council_of_amity_-_Discord-Capture-041691.png?ex=68c9990d&is=68c8478d&hm=8bdef9ece32e6b710512549f606658546e7e160149084bcb13567adb28ff7c9f&=&format=webp&quality=lossless&width=3248&height=1408",
-        "alt": "QuestionMoodRating Component - Allowing students to rate their peers on various soft skills"
       }
     ]
   },
@@ -125,7 +121,7 @@
     "github": "https://github.com/blaqat/Classes/tree/main/2023-swen340-ComputingSystems/FP-MidiPlayer",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/1012947758681968702/1100005293531869314/IMG_0112.mov?ex=68c93bc3&is=68c7ea43&hm=1d8f05229ce05fe6046ab036141881aec0ce4964b65514bec52dc457bc80f571&",
+        "src": "/media/harrypotter.mp4",
         "alt": "Demonstration of harry potter playing"
       }
     ]
@@ -141,7 +137,7 @@
     "github": "https://github.com/blaqat/Classes/tree/main/2021-swen261-IntroToSE/FP-Webcheckers",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/994519725742768208/1417236792712757319/Google_Chrome-GAMETIME_Web_Checkers-Capture-041718.mp4?ex=68c9c01e&is=68c86e9e&hm=6bb2961c4f6dba346af0604582b73af97865c2da926a746f1802c398736fc536&",
+        "src": "/media/webcheckers.mp4",
         "alt": "Gameplay Quick Showcase of Site"
       }
     ]
@@ -157,11 +153,11 @@
     "view": "https://github.com/blaqat/zed-themes",
     "images": [
       {
-        "src": "https://cdn.discordapp.com/attachments/995403703894954060/1286787483044155464/terminal_sexy_to_zed.mp4?ex=68c920fb&is=68c7cf7b&hm=d8f62dce0f9fbe9064946ec002ea08dafdafdd600bdeb62c8d56f529d10744e9&",
+        "src": "/media/sub-terminal-sexy.mp4",
         "alt": "Converting terminal sexy themes into zed themes"
       },
       {
-        "src": "https://cdn.discordapp.com/attachments/518671807503532062/1266070775841161336/Zed_Preview-zed-themes-Capture-018480-converted.mp4?ex=68c9914b&is=68c83fcb&hm=c4e21d0ba3d1d976c15c7fad35db21f87126208d57dd12b6b893283ba43c7e16&",
+        "src": "/media/sub-overrides.mp4",
         "alt": "Testing wildcard override themes to change many colors at once"
       }
     ]
@@ -182,15 +178,15 @@
         "alt": "What's Sona's perogative?"
       },
       {
-        "src": "https://media.discordapp.net/attachments/994519725742768208/1417204972805951588/Discord-talkings_Logcord..._I_guess.._-_Discord-Capture-041703.png?ex=68c9a27b&is=68c850fb&hm=911ad5f2e09e3809e898a81001da572a6cad765e36e0fefdf2f112de58dd1f29&=&format=webp&quality=lossless&width=1548&height=880",
+        "src": "/media/sona.png",
         "alt": "Sonata was used so much it's name was the third most used word in my friend group's discord server"
       },
       {
-        "src": "https://media.discordapp.net/attachments/994519725742768208/1417204619414736896/Discord-talkings_Logcord..._I_guess.._-_Discord-Capture-041701.png?ex=68c9a227&is=68c850a7&hm=3a4e2ee39ab9e04e8d142f1d0ebc833fdad1dfc5ad8e06db8cf4d16babcef972&=&format=webp&quality=lossless&width=2970&height=1860",
+        "src": "/media/sona-auri.png",
         "alt": "Showing off function calling at her little sister's request"
       },
       {
-        "src": "https://cdn.discordapp.com/attachments/975096682964455517/1242329709971378247/wsg.mp4?ex=68c98cf4&is=68c83b74&hm=a7f32dbc5f764d1843f9706eb01c0803cc40786bd338364d83fb73a080bec648&",
+        "src": "/media/wsg.mp4",
         "alt": "Talking to sonata in vc"
       }
     ]

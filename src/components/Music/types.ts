@@ -1,26 +1,42 @@
 export type LinkMap = Record<string, string>;
 
-export type MusicStatus = "wip" | "complete" | "dropped" | "planned" | string;
-export type MusicType = "single" | "collection" | string;
+export enum MusicStatus {
+  WIP = "wip",
+  Complete = "complete",
+  Dropped = "dropped",
+  Planned = "planned",
+}
+
+export enum MusicInstrument {
+  Beepbox = "beepbox",
+  Piano = "piano",
+  DAW = "daw",
+  Misc = "misc",
+}
+
+export enum MusicType {
+  Single = "single",
+  Collection = "collection",
+}
 
 export interface BaseMusicItem {
   name: string;
   start?: string;
   end?: string;
   status?: MusicStatus;
-  instrument?: string;
+  instrument?: MusicInstrument;
   artist?: string[];
   description?: string;
   links?: LinkMap;
 }
 
 export interface Single extends BaseMusicItem {
-  type?: "single"; // optional in some data rows
+  type?: MusicType.Single;
   url: string;
 }
 
 export interface Collection extends BaseMusicItem {
-  type: "collection";
+  type: MusicType.Collection;
   songs: Single[];
 }
 
@@ -32,8 +48,8 @@ export interface QueueTrack {
   description?: string;
   links?: LinkMap;
   artist?: string[];
-  instrument?: string;
-  parentCollection?: string; // for display
+  instrument?: MusicInstrument;
+  parentCollection?: string;
 }
 
 export function isCollection(item: MusicItem): item is Collection {
