@@ -4,12 +4,14 @@ import music from "../data/music.json";
 import MusicList from "@components/Music/MusicList.svelte";
 import SearchableList from "@components/Music/SearchableList.svelte";
 import MusicModal from "@components/Music/MusicModal.svelte";
+import WIP from "@components/WIP.astro";
 ---
 
 <Layout pageTitle="Music">
-  <div class="max-w-3xl mx-auto w-full">
+  <WIP />
+  <!-- <div class="max-w-3xl mx-auto w-full">
     <SearchableList client:load items={music} />
   </div>
 
-  <MusicModal client:load />
+  <MusicModal client:load /> -->
 </Layout>
