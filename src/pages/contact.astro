@@ -7,6 +7,7 @@ import {
   LinkedinLogo,
   GithubLogo,
   InstagramLogo,
+  FilePdf,
 } from "phosphor-svelte";
 import Mobile from "@components/DeviceType/Mobile.svelte";
 // let pfp = null;
@@ -25,6 +26,19 @@ let pfp =
         class="md:w-[228px] sm:w-[28] aspect-square rounded-full shadow-lg object-cover"
       />
       Aiden Green
+
+      <a
+        href="/aidengreenj-resume-fall-2025.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="View Aiden Green resume (PDF)"
+        class="not-prose inline-flex items-center gap-2 rounded-md px-3 hover:scale-105 hover:shadow-lg bg-slate-50/40 border-2 backdrop-blur-xs border-slate-300 no-underline transition-all duration-200 hover:border-slate-400"
+      >
+        <span class="inline-flex items-center gap-2 text-slate-600 font-medium">
+          <FilePdf size={16} class="inline-block" weight="bold" />
+          <span>Resume</span>
+        </span>
+      </a>
     </span>
 
     <ul class="space-y-3 not-prose w-full">
