@@ -92,11 +92,16 @@
     "start": "Mar 2024",
     "status": "Completed",
     "end": "Apr 2024",
-    "description": "Developed a FreeRTOS-based real-time simulation of a bank environment, leveraging a multifunction shield on a STM32 microcontroller for displaying and managing customer queues and teller operations on an LCD. Implemented a multithreaded system using FreeRTOS tasks, queues, and semaphore handlers for dynamic customer queuing and secure data handling.",
+    "description": "Developed a FreeRTOS-based real-time simulation of a bank environment, leveraging a multifunction shield on a STM32 microcontroller for displaying and managing customer queues and teller operations on an LCD. Implemented a multithreaded system using FreeRTOS tasks, queues, and semaphore handlers for dynamic customer queuing and secure data handling.\n\n---\n# Project Report\n### **Analysis / Design**\n- This project aims to use a multithreaded Real Time Operating System to simulate the workflow of a typical banking environment.\n - I used `FreeRTOS` and its Task, Queue, and Semaphore handler to run the project using multiple threads. A Queue provides a thread-safe system for customer generation, Tasks handle spawning new threads, and Semaphores create mutexes allowing for safe modification operations such as printing to USART or modifying the global statistics struct.\n- In each Task, when the Task completes its current operation, it yields to the OS, which allows the system to context switch to the next preempted Task.\n\n ### **Project Results**\n- The system successfully runs the simulation in a multithreaded manner with the correct breaks and pauses for customer or teller downtime, and 0 idle hooks read.\n\n ### **Challenges and Learnings**\n- **Learning a new way to run the project:**\n  - Previously, I was using PlatformIO. After many struggles and hardships, I decided to drop that setup and try to figure out how to do it in a more STM32 idiomatic way. I now use STM32’s CLI products to run and build the project, with slight modifications to the generated Makefile MX creates to ensure everything is built correctly.\n- **Learning how to do delays in Tasks correctly:**\n  - At first, my intuition was to just have an infinite loop that doesn’t run if a time condition hasn’t been met, but this was blocking and holding the Tasks.\n  - Later, I learned that using Task delay methods like `TaskDelay` pauses the Task for the exact amount of time and does not hold the Task up. This lets the system switch to a different Task. This was a lot easier to implement and much more functional.",
     "stack": ["C", "STM32", "FreeRTOS"],
     "type": "School",
     "github": "https://github.com/blaqat/Classes/tree/main/2024-swen563-RealTimeEmbeddedSystems/P3-Bank",
-    "images": []
+    "images": [
+      {
+        "src": "https://img.notionusercontent.com/s3/prod-files-secure%2F6dc985a3-ee71-4359-becb-2aa4a2af5847%2Fa38c8579-0c43-458d-b0bf-445245c8fcb0%2FNeovide-Neovide-Capture-010934.png/size/w=1960?exp=1758134269&sig=ayrIvI1bJgDdYdueNd5pHiICJoOwzLPV_Gj9tIRAe58&id=40ee67c8-602a-4923-864e-5f20c1e75983&table=block&userId=1893b560-8628-4415-afed-d39eeb444999",
+        "alt": "Bank Simulation Demo"
+      }
+    ]
   },
   {
     "name": "Forth Evaluator",
