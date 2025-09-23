@@ -17,7 +17,7 @@ export function parseMusicQueries(): MusicQueryParams {
   const urlParams = new URLSearchParams(window.location.search);
   return {
     q: urlParams.get("q") || undefined,
-    p: urlParams.get("p") || undefined,
+    p: urlParams.get("s") || undefined,
     c: urlParams.get("c") || undefined,
   };
 }
@@ -69,7 +69,7 @@ export function findSongsByIds(
 export function generatePlaylistUrl(songIds: string[]): string {
   const baseUrl = window.location.origin + window.location.pathname;
   const params = new URLSearchParams();
-  params.set("p", songIds.join(","));
+  params.set("s", songIds.join(","));
   return `${baseUrl}?${params.toString()}`;
 }
 
@@ -100,14 +100,12 @@ export function generateSearchUrl(query: string): string {
  * Get song IDs from a MusicItem (handles both singles and collections)
  */
 export function getSongIds(item: MusicItem): string[] {
-  if (item.type === MusicType.Single) {
-    return item.url ? [urlToSongId(item.url)] : [];
-  } else if (item.type === MusicType.Collection) {
+  if (item.type === MusicType.Collection) {
     return item.songs
       .filter((song) => song.url)
       .map((song) => urlToSongId(song.url!));
   }
-  return [];
+  return item.url ? [urlToSongId(item.url)] : [];
 }
 
 /**
