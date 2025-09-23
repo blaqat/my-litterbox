@@ -81,6 +81,7 @@
     mouse_is_over_child = true;
     onmouseover?.();
   }
+
   function unhover() {
     mouse_is_over_child = false;
     onmouseleave?.();
@@ -91,6 +92,7 @@
       controller.queue.currentIndex % controller.queue.songs.length
     ]
   );
+
   let isplaying = $derived(
     forcePlay ||
       (controller.queue.isPlaying && matchesPlaying(song, nowPlaying))
@@ -425,7 +427,7 @@
         class="w-full min-w-0 max-w-full overflow-x-auto px-2 py-2 rounded-lg pr-[25%] md:pr-[33%]"
       >
         <div
-          class="grid grid-flow-col gap-2 md:auto-cols-[33.33%] auto-cols-[50%]"
+          class="grid grid-flow-col gap-2 md:auto-cols-[50%] auto-cols-[70%]"
           in:slide={{ duration: 100 }}
           out:slide={{ duration: 100 }}
         >
