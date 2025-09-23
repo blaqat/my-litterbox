@@ -1,8 +1,6 @@
 ---
 import blaqatLogo from "@assets/blaqat.svg";
 import navigationItems from "@data/NavigationItems";
-import Desktop from "@components/DeviceType/Desktop.svelte";
-import Mobile from "@components/DeviceType/Mobile.svelte";
 import { Content as AboutMe } from "@data/aboutme.mdx";
 import Header from "@components/Header.svelte";
 ---
@@ -27,8 +25,12 @@ import Header from "@components/Header.svelte";
     </div>
   </div>
 
-  <Desktop>
-    <div class="flex min-h-screen justify-center items-start py-8">
+  <span class="hidden md:block max-md:landscape:hidden">
+    <div class="flex
+    min-h-screen
+    justify-center
+    items-start
+    py-8">
       <div
         class="bg-slate-50/40 flex flex-col items-center border-2 border-slate-200 p-8 shadow-2xl shadow-slate-400 max-w-3xl w-full mx-4 rounded"
       >
@@ -60,9 +62,9 @@ import Header from "@components/Header.svelte";
         </div>
       </div>
     </div>
-  </Desktop>
+  </span>
 
-  <Mobile>
+  <span class="block md:hidden max-md:landscape:block">
     <div class="min-h-screen pt-3 pb-40">
       <div class="flex flex-col items-center px-4">
         <img src={blaqatLogo.src} alt="cat logo" class="w-24 h-24 -mb-1" />
@@ -78,5 +80,5 @@ import Header from "@components/Header.svelte";
         </div>
       </div>
     </div>
-  </Mobile>
+  </span>
 </main>
