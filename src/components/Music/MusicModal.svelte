@@ -218,6 +218,7 @@
           </div>
         </section>
       {/if}
+      <div class="h-10"></div>
 
       {#if song.url}
         <div class="flex items-center gap-2 absolute bottom-3 right-4">

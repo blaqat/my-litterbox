@@ -79,7 +79,7 @@
   )}
   {@const parent = nowPlaying?.parentRefData}
   <div
-    class="fixed bottom-0 right-0 left-0 flex justify-center z-51 mb-3 px-4"
+    class="fixed bottom-0 right-0 left-0 flex justify-center z-50 mb-3 px-4"
     class:bottom-22={Device.lt_md}
     class:justify-end={Device.lt_md && collapsed}
   >
