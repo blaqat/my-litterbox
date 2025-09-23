@@ -4,12 +4,18 @@
   import { type MusicItem, MusicType } from "./types";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
   import { matchesQuery, sortByDate } from "./utils";
-  import { swapQueue } from "./MusicData.svelte";
+  import { swapQueue, play, queue, playSong } from "./MusicData.svelte";
   import { onMount } from "svelte";
+  import {
+    parseMusicQueries,
+    findSongsByIds,
+    songIdToUrlPattern,
+    type MusicQueryParams,
+  } from "./MusicQueries";
 
   let { music }: { music: MusicItem[] } = $props();
   let query = $state("");
-  let sorted = sortByDate(music);
+  let sorted = $state(sortByDate(music));
   let filtered = $derived(
     sorted
       .filter((item) => matchesQuery(item, query))
@@ -28,7 +34,67 @@
 
   onMount(() => {
     swapQueue();
+    handleQueryParameters();
   });
+
+  function handleQueryParameters() {
+    const queries = parseMusicQueries();
+
+    // Handle search query parameter
+    if (queries.q) {
+      query = queries.q;
+    }
+
+    // Handle playlist parameter
+    if (queries.p) {
+      const songIds = queries.p.split(",").filter(Boolean);
+      // Create a flat list of all singles from the music collection
+      const allSingles = sorted
+        .flatMap((item) =>
+          item.type === MusicType.Single ? [item] : item.songs
+        )
+        .filter((song) => song.url);
+
+      const foundSongs = findSongsByIds(songIds, allSingles);
+      if (foundSongs.length > 0) {
+        // Create a temporary music items array for swapQueue
+        const playlistItems: MusicItem[] = foundSongs.map((song) => ({
+          ...song,
+          type: MusicType.Single,
+        }));
+        sorted = playlistItems;
+        swapQueue(playlistItems, false);
+      }
+    }
+
+    // Handle continue parameter (song,time)
+    if (queries.c) {
+      const [songId, timeStr] = queries.c.split(",");
+      const timeSeconds = parseInt(timeStr, 10);
+
+      if (songId && !isNaN(timeSeconds)) {
+        const allSingles = sorted
+          .flatMap((item) =>
+            item.type === MusicType.Single ? [item] : item.songs
+          )
+          .filter((song) => song.url);
+
+        const foundSongs = findSongsByIds([songId], allSingles);
+        if (foundSongs.length > 0) {
+          const songIndex = queue.songs.findIndex(
+            (s) => s.url === foundSongs[0].url
+          );
+          if (songIndex >= 0) {
+            play(songIndex);
+            // Set the time after a brief delay to ensure the audio is loaded
+            setTimeout(() => {
+              queue.time = timeSeconds;
+            }, 100);
+          }
+        }
+      }
+    }
+  }
 </script>
 
 <div class="flex items-center justify-between gap-3 mb-6">

@@ -21,7 +21,13 @@
     SoundcloudLogo,
     Link,
     X,
+    Copy,
   } from "phosphor-svelte";
+  import {
+    getSongIds,
+    generatePlaylistUrl,
+    copyToClipboard,
+  } from "./MusicQueries";
 
   let {
     song,
@@ -50,6 +56,26 @@
 
   const onplay = controller.playSong;
   const onpause = () => controller.pause();
+
+  let copyFeedback = $state("");
+
+  async function handleCopyPlaylist() {
+    if (!song) return;
+
+    const songIds = getSongIds(song);
+    if (songIds.length === 0) return;
+
+    const url = generatePlaylistUrl(songIds);
+    const success = await copyToClipboard(url);
+
+    if (success) {
+      copyFeedback = "Copied!";
+      setTimeout(() => (copyFeedback = ""), 2000);
+    } else {
+      copyFeedback = "Failed to copy";
+      setTimeout(() => (copyFeedback = ""), 2000);
+    }
+  }
 
   function renderMarkdown(md: string) {
     return marked(md);
@@ -194,7 +220,17 @@
       {/if}
 
       {#if song.url}
-        <div class="ml-auto absolute bottom-3 right-4">
+        <div class="flex items-center gap-2 absolute bottom-3 right-4">
+          <!-- Copy playlist link button -->
+          <button
+            class="rounded-full p-2 hover:scale-110 hover:shadow-lg bg-slate-50/40 border border-slate-300 text-slate-600 backdrop-blur-xs transition-all duration-200 hover:border-blue-400 hover:bg-blue-100/50 hover:text-blue-800 active:scale-95"
+            onclick={handleCopyPlaylist}
+            title="Copy playlist link"
+            tabindex="0"
+          >
+            <Copy size={16} weight="bold" />
+          </button>
+
           <!-- Play button -->
           <button
             class="rounded-full {'p-3 hover:scale-110'} hover:shadow-lg {isplaying
@@ -219,6 +255,15 @@
               <Pause size={20} aria-label="Play" weight="fill" />
             {/if}
           </button>
+
+          <!-- Copy feedback -->
+          {#if copyFeedback}
+            <div
+              class="absolute -top-8 right-0 bg-black/80 text-white text-xs px-2 py-1 rounded"
+            >
+              {copyFeedback}
+            </div>
+          {/if}
         </div>
       {/if}
     </div>

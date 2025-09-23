@@ -32,7 +32,10 @@ export const queue = $state({
   volume: 1,
 });
 
-export function swapQueue(items: MusicItem[] | undefined = undefined) {
+export function swapQueue(
+  items: MusicItem[] | undefined = undefined,
+  sort: boolean = true
+) {
   // Handle Reset to full list
   if (items === undefined) {
     let oldPlaying = queue.songs[queue.currentIndex];
@@ -50,7 +53,7 @@ export function swapQueue(items: MusicItem[] | undefined = undefined) {
   }
 
   let oldPlaying = queue.songs[queue.currentIndex];
-  const newSongs = sortByDate(items)
+  const newSongs = (sort ? sortByDate(items) : items)
     .map((item) => {
       if (item.type === MusicType.Collection) {
         item.songs = item.songs.map((song, i) => ({

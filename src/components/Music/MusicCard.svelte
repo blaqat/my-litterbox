@@ -22,9 +22,15 @@
     WaveSine,
     Link,
     Pause,
+    Copy,
   } from "phosphor-svelte";
   import controller from "./MusicData.svelte";
   import MusicModal from "./MusicModal.svelte";
+  import {
+    getSongIds,
+    generatePlaylistUrl,
+    copyToClipboard,
+  } from "./MusicQueries";
 
   let {
     song,
@@ -47,8 +53,29 @@
   let mouse_is_over_child = $state(false);
   let collection_is_opened = $state(false);
   let collectionScrollContainer: HTMLDivElement | undefined = $state();
+  let copyFeedback = $state("");
 
-  const links = Object.entries(song.links ?? {}) as [LinkLocation, string][];
+  async function handleCopyPlaylist(e: Event) {
+    e.stopPropagation();
+
+    const songIds = getSongIds(song);
+    if (songIds.length === 0) return;
+
+    const url = generatePlaylistUrl(songIds);
+    const success = await copyToClipboard(url);
+
+    if (success) {
+      copyFeedback = "Copied!";
+      setTimeout(() => (copyFeedback = ""), 2000);
+    } else {
+      copyFeedback = "Failed to copy";
+      setTimeout(() => (copyFeedback = ""), 2000);
+    }
+  }
+
+  const links = $derived(
+    Object.entries(song.links ?? {}) as [LinkLocation, string][]
+  );
 
   function hover() {
     mouse_is_over_child = true;
@@ -295,7 +322,21 @@
             {/each}
           </div>
         </div>
-        <div class="ml-auto absolute bottom-3 right-4">
+        <div class="flex items-center gap-2 absolute bottom-3 right-4">
+          <!-- Copy playlist link button for collections -->
+          {#if song.type === MusicType.Collection}
+            <button
+              class="rounded-full p-2 hover:scale-110 hover:shadow-lg bg-slate-50/40 border border-slate-300 text-slate-600 backdrop-blur-xs transition-all duration-200 hover:border-blue-400 hover:bg-blue-100/50 hover:text-blue-800 active:scale-95"
+              onclick={handleCopyPlaylist}
+              onmouseenter={hover}
+              onmouseleave={unhover}
+              title="Copy playlist link"
+              tabindex="0"
+            >
+              <Copy size={mini ? 14 : 16} weight="bold" />
+            </button>
+          {/if}
+
           <!-- Play button -->
           {#if song.type === MusicType.Collection || !!song.url}
             <button
@@ -332,6 +373,15 @@
                 <Pause size={mini ? 15 : 20} aria-label="Play" weight="fill" />
               {/if}
             </button>
+          {/if}
+
+          <!-- Copy feedback -->
+          {#if copyFeedback}
+            <div
+              class="absolute -top-8 right-0 bg-black/80 text-white text-xs px-2 py-1 rounded z-10"
+            >
+              {copyFeedback}
+            </div>
           {/if}
         </div>
       </footer>
