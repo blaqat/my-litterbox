@@ -105,7 +105,7 @@
           </div>
         {:else}
           <div
-            class="mx-2 text-light-wisteria-950 flex items-center sm:truncate md:min-w-max md:truncate"
+            class="mx-2 text-light-wisteria-950 flex items-center truncate md:min-w-max"
           >
             <p class="font-medium truncate">{nowPlaying?.name}</p>
           </div>
