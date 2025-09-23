@@ -4,8 +4,9 @@ import { swapQueue } from "./MusicData.svelte";
 
 export interface MusicQueryParams {
   q?: string; // Search query
-  p?: string; // Playlist of song URLs
+  s?: string; // Playlist of song URLs
   c?: string; // Continue song at time (song_url,time_seconds)
+  o?: string; // Open modal for specific song URL ID
 }
 
 /**
@@ -17,8 +18,9 @@ export function parseMusicQueries(): MusicQueryParams {
   const urlParams = new URLSearchParams(window.location.search);
   return {
     q: urlParams.get("q") || undefined,
-    p: urlParams.get("s") || undefined,
+    s: urlParams.get("s") || undefined,
     c: urlParams.get("c") || undefined,
+    o: urlParams.get("o") || undefined,
   };
 }
 
@@ -61,6 +63,41 @@ export function findSongsByIds(
       return allSongs.find((song) => song.url && song.url.includes(pattern));
     })
     .filter(Boolean) as RefdSingle[];
+}
+
+/**
+ * Find a single song by its URL ID from the music list
+ */
+export function findSongById(
+  songId: string,
+  musicList: MusicItem[]
+): MusicItem | null {
+  // First, create a flat list of all singles from the music collection
+  const allSongs = musicList
+    .flatMap((item) => (item.type === MusicType.Single ? [item] : item.songs))
+    .filter((song) => song.url);
+
+  const foundSongs = findSongsByIds([songId], allSongs);
+  if (foundSongs.length > 0) {
+    // Return the original song from the music list (could be the song itself or the parent collection)
+    const foundSong = foundSongs[0];
+
+    // Check if this song is part of a collection
+    for (const item of musicList) {
+      if (item.type === MusicType.Collection) {
+        const songInCollection = item.songs.find(
+          (s) => s.url === foundSong.url && s.name === foundSong.name
+        );
+        if (songInCollection) {
+          return songInCollection; // Return the song from the collection
+        }
+      } else if (item.url === foundSong.url && item.name === foundSong.name) {
+        return item; // Return the standalone song
+      }
+    }
+  }
+
+  return null;
 }
 
 /**

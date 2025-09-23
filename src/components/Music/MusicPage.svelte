@@ -1,21 +1,30 @@
 <script lang="ts">
-  import MusicModal from "./MusicModal.svelte";
   import MusicGrid from "./MusicGrid.svelte";
+  import MusicModal from "./MusicModal.svelte";
   import { type MusicItem, MusicType } from "./types";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
-  import { matchesQuery, sortByDate } from "./utils";
-  import { swapQueue, play, queue, playSong } from "./MusicData.svelte";
+  import { matchesQuery, sortByDate, matchesPlaying } from "./utils";
+  import { swapQueue, play, queue, pause } from "./MusicData.svelte";
   import { onMount } from "svelte";
   import {
     parseMusicQueries,
     findSongsByIds,
-    songIdToUrlPattern,
-    type MusicQueryParams,
+    findSongById,
   } from "./MusicQueries";
 
   let { music }: { music: MusicItem[] } = $props();
   let query = $state("");
   let sorted = $state(sortByDate(music));
+  let modalOpen = $state(false);
+  let modalSong = $state<MusicItem | null>(null);
+
+  // Derive currently playing song and modal force play state
+  let playingModal = $derived(
+    modalSong &&
+      queue.isPlaying &&
+      queue.songs[queue.currentIndex % queue.songs.length]?.name ===
+        modalSong?.name
+  );
   let filtered = $derived(
     sorted
       .filter((item) => matchesQuery(item, query))
@@ -46,8 +55,8 @@
     }
 
     // Handle playlist parameter
-    if (queries.p) {
-      const songIds = queries.p.split(",").filter(Boolean);
+    if (queries.s) {
+      const songIds = queries.s.split(",").filter(Boolean);
       // Create a flat list of all singles from the music collection
       const allSingles = sorted
         .flatMap((item) =>
@@ -85,13 +94,21 @@
             (s) => s.url === foundSongs[0].url
           );
           if (songIndex >= 0) {
-            play(songIndex);
-            // Set the time after a brief delay to ensure the audio is loaded
+            play(songIndex, timeSeconds);
             setTimeout(() => {
-              queue.time = timeSeconds;
-            }, 250);
+              pause();
+            }, 100);
           }
         }
+      }
+    }
+
+    // Handle open modal parameter
+    if (queries.o) {
+      const songToOpen = findSongById(queries.o, music);
+      if (songToOpen) {
+        modalSong = songToOpen;
+        modalOpen = true;
       }
     }
   }
@@ -124,3 +141,13 @@
 
 <MusicGrid songs={filtered.length !== 0 ? filtered : sorted} />
 <div class="pb-35"></div>
+
+<MusicModal
+  song={modalSong}
+  isOpen={modalOpen}
+  onClose={() => {
+    modalOpen = false;
+    modalSong = null;
+  }}
+  forcePlay={playingModal || undefined}
+/>
