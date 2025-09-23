@@ -42,6 +42,7 @@ export function swapQueue(items: MusicItem[] | undefined = undefined) {
     );
     if (playingIndex === -1) {
       console.warn("Current song not in full list, resetting to start");
+      queue.currentIndex = -1;
     } else {
       queue.currentIndex = playingIndex;
     }
@@ -100,7 +101,7 @@ export function playSong(item: MusicItem) {
   const isCollection = item.type === MusicType.Collection;
   let song = !isCollection ? item : item.songs[0];
   const index = queue.songs.findIndex(
-    (s) => s.url === song.url && s.name === song.name
+    (s) => s?.url === song.url && s.name === song.name
   );
   if (
     isCollection &&
