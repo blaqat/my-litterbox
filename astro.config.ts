@@ -12,6 +12,7 @@ export default defineConfig({
   output: "server",
   adapter: cloudflare(),
   site: "https://blaqat.net",
+  devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
   },

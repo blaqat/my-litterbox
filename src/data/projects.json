@@ -20,7 +20,7 @@
     "start": "Mar 2025",
     "status": "Completed",
     "end": "Aug 2025",
-    "description": "This was my **capstone project**. Collaborated on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
+    "description": "This was my **capstone project**. Collaborated with 6 other SWEN seniors on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
     "stack": ["Next.js", "Supabase", "Tailwind", "Typescript", "React"],
     "type": "School",
     "images": [

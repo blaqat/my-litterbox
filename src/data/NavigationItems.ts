@@ -1,4 +1,4 @@
-import { Envelope, Folder, MusicNotes, Lightbulb } from "phosphor-svelte";
+import { Envelope, Folder, MusicNotes, Cloud } from "phosphor-svelte";
 
 export type NavigationItem = {
   href: string;
@@ -45,7 +45,7 @@ export const navigationItems: NavigationItem[] = [
     hover: "hover:bg-harvest-gold-200",
     text: "text-harvest-gold-900",
     fill: "fill-harvest-gold-500",
-    icon: Lightbulb,
+    icon: Cloud,
   },
 ];
 

@@ -1,4 +1,14 @@
-export type LinkMap = Record<string, string>;
+import type { ProjectDate } from "@components/Projects/ProjectData";
+
+export type LinkLocation =
+  | "spotify"
+  | "youtube"
+  | "bandcamp"
+  | "apple"
+  | "soundcloud"
+  | "beepbox";
+
+export type LinkMap = Record<LinkLocation, string>;
 
 export enum MusicStatus {
   WIP = "wip",
@@ -21,19 +31,23 @@ export enum MusicType {
 
 export interface BaseMusicItem {
   name: string;
-  start?: string;
-  end?: string;
-  status?: MusicStatus;
-  instrument?: MusicInstrument;
+  start?: ProjectDate;
+  end?: ProjectDate;
+  status: MusicStatus;
+  instrument: MusicInstrument;
   artist?: string[];
   description?: string;
   links?: LinkMap;
 }
 
 export interface Single extends BaseMusicItem {
-  type?: MusicType.Single;
+  type: MusicType.Single;
   url: string;
 }
+
+export type RefdSingle = Single & {
+  parentRefData?: { name: string; index: number; total: number };
+};
 
 export interface Collection extends BaseMusicItem {
   type: MusicType.Collection;
@@ -42,31 +56,6 @@ export interface Collection extends BaseMusicItem {
 
 export type MusicItem = Single | Collection;
 
-export interface QueueTrack {
-  name: string;
-  url: string;
-  description?: string;
-  links?: LinkMap;
-  artist?: string[];
-  instrument?: MusicInstrument;
-  parentCollection?: string;
-}
-
 export function isCollection(item: MusicItem): item is Collection {
   return (item as Collection).songs !== undefined;
-}
-
-export function toQueueTrack(
-  item: Single,
-  parentCollection?: string
-): QueueTrack {
-  return {
-    name: item.name,
-    url: item.url,
-    description: item.description,
-    links: item.links,
-    artist: item.artist,
-    instrument: item.instrument,
-    parentCollection,
-  };
 }

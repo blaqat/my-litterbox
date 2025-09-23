@@ -1,3 +1,7 @@
-<span class="hidden md:block max-md:landscape:hidden">
+<script>
+  import { Device } from "@lib/device.svelte";
+</script>
+
+{#if Device.md}
   <slot />
-</span>
+{/if}

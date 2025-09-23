@@ -29,9 +29,9 @@ type Month =
   | "Nov"
   | "Dec";
 export type ProjectDate = `${Month} 20${number}${number}`;
-type ProjectDateRange =
+export type ProjectDateRange =
   | `${ProjectDate} - ${ProjectDate}`
-  | `${ProjectDate} - WIP`;
+  | `${ProjectDate} - `;
 
 export type Project = {
   slug: string;
@@ -91,7 +91,7 @@ export function getSortedProjects(projects: Project[]): {
 
 export function getProjectDuration(project: Project): ProjectDateRange {
   if (project.status !== ProjectState.Completed) {
-    return `${project.start} - WIP`;
+    return `${project.start} - `;
   } else if (!project.end) {
     throw new Error("Completed project must have an end date");
   } else {

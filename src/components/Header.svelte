@@ -9,7 +9,7 @@
     Envelope,
     Folder,
     MusicNotes,
-    Lightbulb,
+    Cloud,
     House,
     Question,
   } from "phosphor-svelte";
@@ -32,7 +32,7 @@
     Envelope,
     Folder,
     MusicNotes,
-    Lightbulb,
+    Cloud,
     House,
   };
 

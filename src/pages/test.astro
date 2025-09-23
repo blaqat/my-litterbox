@@ -1,5 +1,6 @@
 ---
 import Layout from "@layouts/MainLayout.astro";
+import TestComponent from "@components/test.svelte";
 ---
 
 <Layout>
@@ -15,4 +16,8 @@ import Layout from "@layouts/MainLayout.astro";
       >.
     </p>
   </article>
+  {
+    /** Hydrate on client so svelte/reactivity MediaQuery can evaluate viewport */
+  }
+  <TestComponent client:only="svelte" />
 </Layout>

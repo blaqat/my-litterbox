@@ -3,12 +3,10 @@
   import { ProjectState, ProjectCategory, type Project } from "./ProjectData";
   import { marked } from "marked";
   import TechTag from "@components/TechTag.svelte";
-  import { GithubLogo, X } from "phosphor-svelte";
+  import { GithubLogo, Link, X } from "phosphor-svelte";
   import { getProjectDuration as duration } from "@components/Projects/ProjectData";
 
-  let project: Project | null;
-  $: $activeProject;
-  $: project = $activeProject;
+  let project = $derived($activeProject);
 
   function onBackdrop(e: MouseEvent) {
     if ((e.target as HTMLElement).dataset.backdrop === "1") closeProject();
@@ -25,8 +23,8 @@
     role="dialog"
     aria-modal="true"
     id="project-modal"
-    on:click={onBackdrop}
-    on:keydown={(e) => e.key === "Escape" && closeProject()}
+    onclick={onBackdrop}
+    onkeydown={(e) => e.key === "Escape" && closeProject()}
     tabindex="-1"
   >
     <div
@@ -39,12 +37,13 @@
     >
       <button
         class="absolute right-3 top-3 p-1 text-gray-600 hover:text-gray-900"
-        on:click={() => closeProject()}
+        onclick={() => closeProject()}
         aria-label="Close"
         title="Close"
       >
         <X size={16} weight="bold" />
       </button>
+
       <header class="flex items-start justify-between gap-4 pr-8">
         <div>
           <h2 class="text-xl font-semibold">{project.name}</h2>
@@ -65,10 +64,16 @@
           </p>
         </div>
         <span
-          class="badge"
-          class:badge-personal={project.type === ProjectCategory.Personal}
-          class:badge-work={project.type === ProjectCategory.Work}
-          class:badge-school={project.type === ProjectCategory.School}
+          class="shrink-0 text-xs px-2 py-1 rounded-lg border font-medium"
+          class:bg-malibu-100={project.type === ProjectCategory.Personal}
+          class:border-malibu-300={project.type === ProjectCategory.Personal}
+          class:text-malibu-900={project.type === ProjectCategory.Personal}
+          class:bg-harvest-gold-100={project.type === ProjectCategory.Work}
+          class:border-harvest-gold-300={project.type === ProjectCategory.Work}
+          class:text-harvest-gold-900={project.type === ProjectCategory.Work}
+          class:bg-orange-100={project.type === ProjectCategory.School}
+          class:border-orange-300={project.type === ProjectCategory.School}
+          class:text-orange-900={project.type === ProjectCategory.School}
         >
           {project.type}
         </span>
@@ -131,7 +136,7 @@
           <h3 class="text-sm font-medium text-gray-700">Stack</h3>
           <div class="mt-2 flex gap-2 flex-wrap text-sm">
             {#each project.stack as tech}
-              <TechTag name={tech} />
+              <TechTag name={tech} dark />
             {/each}
           </div>
         </div>
@@ -140,23 +145,29 @@
             <h3 class="text-sm font-medium text-gray-700 -translate-x-1">
               Links
             </h3>
+
             <div class="mt-2 flex items-center gap-3">
               {#if project.github}
                 <a
-                  class="inline-flex items-center justify-center rounded-full border border-gray-300 p-1.5 hover:border-gray-500"
-                  target="_blank"
                   href={project.github}
+                  class="inline-flex items-center justify-center rounded-full border p-1.5 hover:border-gray-500 text-slate-700 hover:bg-slate-200 hover:scale-110 hover:shadow-md bg-slate-50/40 backdrop-blur-xs border-slate-300 no-underline transition-all duration-200 active:scale-95"
+                  target="_blank"
                   aria-label="Open GitHub"
+                  title="Open GitHub"
                 >
-                  <GithubLogo size={16} />
+                  <GithubLogo size={16} weight="duotone" />
                 </a>
               {/if}
               {#if project.view}
                 <a
-                  class="text-sm underline underline-offset-2 hover:no-underline"
+                  href={project.view}
+                  class="inline-flex items-center justify-center rounded-full border p-1.5 hover:border-malibu-500 text-slate-700 hover:scale-110 hover:shadow-md bg-slate-50/40 backdrop-blur-xs border-slate-300 no-underline transition-all duration-200 active:scale-95 hover:text-malibu-900 hover:bg-malibu-100"
                   target="_blank"
-                  href={project.view}>View</a
+                  aria-label="View Project"
+                  title="View Project"
                 >
+                  <Link size={16} weight="duotone" />
+                </a>
               {/if}
             </div>
           </div>
@@ -167,27 +178,6 @@
 {/if}
 
 <style>
-  .badge {
-    font-size: 0.75rem;
-    padding: 0.125rem 0.5rem;
-    border-radius: 0.375rem;
-    border: 1px solid #e5e7eb;
-  }
-  .badge-personal {
-    background: var(--color-malibu-100);
-    color: var(--color-malibu-900);
-    border-color: var(--color-malibu-300);
-  }
-  .badge-work {
-    background: var(--color-harvest-gold-100);
-    color: var(--color-harvest-gold-900);
-    border-color: var(--color-harvest-gold-300);
-  }
-  .badge-school {
-    background: #ffe7d6;
-    color: #7a3410;
-    border-color: #febf8e;
-  }
   .status-dot {
     width: 0.5rem;
     height: 0.5rem;

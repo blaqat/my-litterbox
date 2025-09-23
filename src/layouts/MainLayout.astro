@@ -2,8 +2,9 @@
 import { ClientRouter, fade } from "astro:transitions";
 import "../styles/global.css";
 import Header from "@components/Header.svelte";
+import Player from "@components/Music/Player.svelte";
 import SEO from "@components/SEO.astro";
-import FloatingPlayer from "@components/Music/FloatingPlayer.svelte";
+import { Device } from "@lib/device.svelte";
 
 export interface Props {
   pageTitle?: string;
@@ -46,11 +47,11 @@ const { pageTitle } = Astro.props;
       >
       </div>
     </div>
+    <Player client:only desktop={Device.gt_sm} />
     <main class="flex-1 p-6 max-w-4xl mx-auto">
       {pageTitle && <h1 class="text-2xl font-bold mb-4">{pageTitle}</h1>}
       <slot />
     </main>
-    <FloatingPlayer client:only />
   </body>
 </html>
 

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Cloud, BracketsCurly, Code, Cpu, Brain } from "phosphor-svelte";
 
-  export let name: string;
+  // export let name: string;
+  let { dark = false, name }: { dark?: boolean; name: string } = $props();
 
   const devicons: Record<string, string> = {
     Astro: "astro",
@@ -39,10 +40,10 @@
     return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${slug}/${slug}-original.svg`;
   }
 
-  $: url = iconUrl(name);
+  let url = $state(iconUrl(name));
 </script>
 
-<span class="tag">
+<span class="tag" class:bg-[#f3f4f6]={!dark} class:bg-white={dark}>
   {#if url}
     <img class="icon" src={url} alt={name + " icon"} loading="lazy" />
   {:else}
@@ -59,7 +60,6 @@
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
     border-radius: 9999px;
-    background: #f3f4f6;
     border: 1px solid #e5e7eb;
   }
   .icon {

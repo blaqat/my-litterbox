@@ -1,17 +1,9 @@
 ---
 import Layout from "../layouts/MainLayout.astro";
-import music from "../data/music.json";
-import MusicList from "@components/Music/MusicList.svelte";
-import SearchableList from "@components/Music/SearchableList.svelte";
-import MusicModal from "@components/Music/MusicModal.svelte";
-import WIP from "@components/WIP.astro";
+import music from "@data/music.json";
+import MusicPage from "@components/Music/MusicPage.svelte";
 ---
 
 <Layout pageTitle="Music">
-  <WIP />
-  <!-- <div class="max-w-3xl mx-auto w-full">
-    <SearchableList client:load items={music} />
-  </div>
-
-  <MusicModal client:load /> -->
+  <MusicPage {music} client:load />
 </Layout>
