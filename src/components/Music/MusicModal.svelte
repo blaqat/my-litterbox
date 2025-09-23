@@ -112,25 +112,7 @@
       </button>
 
       <!-- Header -->
-      <header class="flex items-center justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-semibold">{song.name}</h2>
-          <p class="text-xs text-gray-500 flex items-center gap-2 mt-0.5">
-            <span>{getMusicDuration(song)}</span>
-            {#if song.status !== MusicStatus.Complete}
-              <span class="-translate-x-1 font-medium">
-                <span
-                  class="status-dot"
-                  class:ongoing={song.status === MusicStatus.WIP}
-                  class:dropped={song.status === MusicStatus.Dropped}
-                  class:planned={song.status === MusicStatus.Planned}
-                >
-                </span>
-                {song.status}
-              </span>
-            {/if}
-          </p>
-        </div>
+      <header class="flex gap-3 items-center">
         <div
           class="text-gray-400 shrink-0 mt-0.5 border rounded-lg p-1"
           class:bg-malibu-100={song.instrument === MusicInstrument.Piano}
@@ -156,6 +138,24 @@
           {:else}
             <MusicNote size={18} />
           {/if}
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold">{song.name}</h2>
+          <p class="text-xs text-gray-500 flex items-center gap-2 mt-0.5">
+            <span>{getMusicDuration(song)}</span>
+            {#if song.status !== MusicStatus.Complete}
+              <span class="-translate-x-1 font-medium">
+                <span
+                  class="status-dot"
+                  class:ongoing={song.status === MusicStatus.WIP}
+                  class:dropped={song.status === MusicStatus.Dropped}
+                  class:planned={song.status === MusicStatus.Planned}
+                >
+                </span>
+                {song.status}
+              </span>
+            {/if}
+          </p>
         </div>
       </header>
 
@@ -218,53 +218,55 @@
           </div>
         </section>
       {/if}
-      <div class="h-10"></div>
 
       {#if song.url}
-        <div class="flex items-center gap-2 absolute bottom-3 right-4">
-          <!-- Copy playlist link button -->
-          <button
-            class="rounded-full p-2 hover:scale-110 hover:shadow-lg bg-slate-50/40 border border-slate-300 text-slate-600 backdrop-blur-xs transition-all duration-200 hover:border-blue-400 hover:bg-blue-100/50 hover:text-blue-800 active:scale-95"
-            onclick={handleCopyPlaylist}
-            title="Copy playlist link"
-            tabindex="0"
-          >
-            <Copy size={16} weight="bold" />
-          </button>
-
-          <!-- Play button -->
-          <button
-            class="rounded-full {'p-3 hover:scale-110'} hover:shadow-lg {isplaying
-              ? 'border-light-wisteria-400 bg-light-wisteria-200 text-light-wisteria-800'
-              : 'bg-slate-50/40 border-slate-300 text-slate-600'} 
-            border backdrop-blur-xs no-underline transition-all duration-200 hover:border-light-wisteria-400 hover:bg-light-wisteria-300/50 hover:text-light-wisteria-800 active:scale-95"
-            onclick={(e) => {
-              e.stopPropagation();
-              if (!isplaying) {
-                onplay(song);
-              } else {
-                onpause();
-              }
-            }}
-            tabindex="0"
-          >
-            {#if !isplaying}
-              <span class="flex items-center gap-2">
-                <Play size={20} aria-label="Play" weight="fill" />
-              </span>
-            {:else}
-              <Pause size={20} aria-label="Play" weight="fill" />
-            {/if}
-          </button>
-
-          <!-- Copy feedback -->
-          {#if copyFeedback}
-            <div
-              class="absolute -top-8 right-0 bg-black/80 text-white text-xs px-2 py-1 rounded"
+        <!-- Sticky buttons container -->
+        <div class="sticky bottom-0 flex justify-end pt-4 pb-2 -mx-6 px-6">
+          <div class="flex items-center gap-2">
+            <!-- Copy playlist link button -->
+            <button
+              class="rounded-full p-2 hover:scale-110 hover:shadow-lg bg-slate-50/40 border border-slate-300 text-slate-600 backdrop-blur-xs transition-all duration-200 hover:border-blue-400 hover:bg-blue-100/50 hover:text-blue-800 active:scale-95"
+              onclick={handleCopyPlaylist}
+              title="Copy playlist link"
+              tabindex="0"
             >
-              {copyFeedback}
-            </div>
-          {/if}
+              <Copy size={16} weight="bold" />
+            </button>
+
+            <!-- Play button -->
+            <button
+              class="rounded-full {'p-3 hover:scale-110'} hover:shadow-lg {isplaying
+                ? 'border-light-wisteria-400 bg-light-wisteria-200 text-light-wisteria-800'
+                : 'bg-slate-50/40 border-slate-300 text-slate-600'} 
+              border backdrop-blur-xs no-underline transition-all duration-200 hover:border-light-wisteria-400 hover:bg-light-wisteria-300/50 hover:text-light-wisteria-800 active:scale-95"
+              onclick={(e) => {
+                e.stopPropagation();
+                if (!isplaying) {
+                  onplay(song);
+                } else {
+                  onpause();
+                }
+              }}
+              tabindex="0"
+            >
+              {#if !isplaying}
+                <span class="flex items-center gap-2">
+                  <Play size={20} aria-label="Play" weight="fill" />
+                </span>
+              {:else}
+                <Pause size={20} aria-label="Play" weight="fill" />
+              {/if}
+            </button>
+
+            <!-- Copy feedback -->
+            {#if copyFeedback}
+              <div
+                class="absolute -top-8 right-0 bg-black/80 text-white text-xs px-2 py-1 rounded"
+              >
+                {copyFeedback}
+              </div>
+            {/if}
+          </div>
         </div>
       {/if}
     </div>
