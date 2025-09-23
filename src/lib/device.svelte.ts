@@ -1,7 +1,5 @@
-// src/lib/device.ts
 import { MediaQuery } from "svelte/reactivity";
 
-// Tailwind v3 defaults (NOTE: parentheses around queries!)
 const smM = new MediaQuery("min-width: 640px", false);
 const mdM = new MediaQuery("min-width: 768px", false);
 const lgM = new MediaQuery("min-width: 1024px", false);

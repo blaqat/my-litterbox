@@ -118,12 +118,17 @@ export function playSong(item: MusicItem) {
   play(index);
 }
 
-export function play(index: number) {
+export function play(index: number, time: number = 0) {
   queue.isPlaying = true;
   if (queue.currentIndex === index) return;
   queue.currentIndex = index;
-  queue.time = 0;
+  queue.time = time;
   // console.log("playing", queue.songs[queue.currentIndex].name);
+}
+
+export function init(index: number, time: number) {
+  queue.currentIndex = index;
+  queue.time = time;
 }
 
 export function pause() {

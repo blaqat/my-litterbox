@@ -4,7 +4,14 @@
   import { type MusicItem, MusicType } from "./types";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
   import { matchesQuery, sortByDate } from "./utils";
-  import { swapQueue, play, queue, playSong } from "./MusicData.svelte";
+  import {
+    swapQueue,
+    play,
+    queue,
+    playSong,
+    init,
+    pause,
+  } from "./MusicData.svelte";
   import { onMount } from "svelte";
   import {
     parseMusicQueries,
@@ -39,6 +46,7 @@
 
   function handleQueryParameters() {
     const queries = parseMusicQueries();
+    console.log("Parsed music queries:", queries);
 
     // Handle search query parameter
     if (queries.q) {
@@ -85,10 +93,9 @@
             (s) => s.url === foundSongs[0].url
           );
           if (songIndex >= 0) {
-            play(songIndex);
-            // Set the time after a brief delay to ensure the audio is loaded
+            play(songIndex, timeSeconds);
             setTimeout(() => {
-              queue.time = timeSeconds;
+              pause();
             }, 100);
           }
         }
