@@ -5,6 +5,7 @@
   import { MagnifyingGlass as Search } from "phosphor-svelte";
   import { matchesQuery, sortByDate } from "./utils";
   import { swapQueue } from "./MusicData.svelte";
+  import { onMount } from "svelte";
 
   let { music }: { music: MusicItem[] } = $props();
   let query = $state("");
@@ -24,6 +25,10 @@
         }
       })
   );
+
+  onMount(() => {
+    swapQueue();
+  });
 </script>
 
 <div class="flex items-center justify-between gap-3 mb-6">

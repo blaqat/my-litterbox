@@ -32,7 +32,22 @@ export const queue = $state({
   volume: 1,
 });
 
-export function swapQueue(items: MusicItem[]) {
+export function swapQueue(items: MusicItem[] | undefined = undefined) {
+  // Handle Reset to full list
+  if (items === undefined) {
+    let oldPlaying = queue.songs[queue.currentIndex];
+    queue.songs = orderedSongList;
+    let playingIndex = queue.songs.findIndex(
+      (s) => s.url === oldPlaying?.url && s.name === oldPlaying?.name
+    );
+    if (playingIndex === -1) {
+      console.warn("Current song not in full list, resetting to start");
+    } else {
+      queue.currentIndex = playingIndex;
+    }
+    return;
+  }
+
   let oldPlaying = queue.songs[queue.currentIndex];
   const newSongs = sortByDate(items)
     .map((item) => {
