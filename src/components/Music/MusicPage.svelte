@@ -54,28 +54,6 @@
       query = queries.q;
     }
 
-    // Handle playlist parameter
-    if (queries.s) {
-      const songIds = queries.s.split(",").filter(Boolean);
-      // Create a flat list of all singles from the music collection
-      const allSingles = sorted
-        .flatMap((item) =>
-          item.type === MusicType.Single ? [item] : item.songs
-        )
-        .filter((song) => song.url);
-
-      const foundSongs = findSongsByIds(songIds, allSingles);
-      if (foundSongs.length > 0) {
-        // Create a temporary music items array for swapQueue
-        const playlistItems: MusicItem[] = foundSongs.map((song) => ({
-          ...song,
-          type: MusicType.Single,
-        }));
-        sorted = playlistItems;
-        swapQueue(playlistItems, false);
-      }
-    }
-
     // Handle continue parameter (song,time)
     if (queries.c) {
       const [songId, timeStr] = queries.c.split(",");
@@ -100,6 +78,28 @@
             }, 100);
           }
         }
+      }
+    }
+
+    // Handle playlist parameter
+    if (queries.s) {
+      const songIds = queries.s.split(",").filter(Boolean);
+      // Create a flat list of all singles from the music collection
+      const allSingles = sorted
+        .flatMap((item) =>
+          item.type === MusicType.Single ? [item] : item.songs
+        )
+        .filter((song) => song.url);
+
+      const foundSongs = findSongsByIds(songIds, allSingles);
+      if (foundSongs.length > 0) {
+        // Create a temporary music items array for swapQueue
+        const playlistItems: MusicItem[] = foundSongs.map((song) => ({
+          ...song,
+          type: MusicType.Single,
+        }));
+        sorted = playlistItems;
+        swapQueue(playlistItems, false);
       }
     }
 
