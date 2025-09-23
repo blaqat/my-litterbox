@@ -120,6 +120,7 @@ export function unpause() {
 export function forward() {
   if (_needs_del) {
     // console.log("removed", queue.songs.shift()?.name);
+    queue.songs.shift()?.name;
     _needs_del = false;
   } else if (queue.currentIndex < queue.songs.length - 1) {
     queue.currentIndex += 1;
