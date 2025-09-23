@@ -104,33 +104,33 @@ export function play(index: number) {
   if (queue.currentIndex === index) return;
   queue.currentIndex = index;
   queue.time = 0;
-  console.log("playing", queue.songs[queue.currentIndex].name);
+  // console.log("playing", queue.songs[queue.currentIndex].name);
 }
 
 export function pause() {
   queue.isPlaying = false;
-  console.log("paused", queue.songs[queue.currentIndex].name);
+  // console.log("paused", queue.songs[queue.currentIndex].name);
 }
 
 export function unpause() {
   queue.isPlaying = true;
-  console.log("unpaused", queue.songs[queue.currentIndex].url);
+  // console.log("unpaused", queue.songs[queue.currentIndex].url);
 }
 
 export function forward() {
   if (_needs_del) {
-    console.log("removed", queue.songs.shift()?.name);
+    // console.log("removed", queue.songs.shift()?.name);
     _needs_del = false;
   } else if (queue.currentIndex < queue.songs.length - 1) {
     queue.currentIndex += 1;
   } else {
     queue.currentIndex = 0;
   }
-  console.log(
-    "forward to",
-    queue.currentIndex,
-    queue.songs[queue.currentIndex].name
-  );
+  // console.log(
+  //   "forward to",
+  //   queue.currentIndex,
+  //   queue.songs[queue.currentIndex].name
+  // );
 }
 
 export function back() {
@@ -139,11 +139,11 @@ export function back() {
   } else {
     queue.currentIndex = queue.songs.length - 1;
   }
-  console.log(
-    "back to",
-    queue.currentIndex,
-    queue.songs[queue.currentIndex].name
-  );
+  // console.log(
+  //   "back to",
+  //   queue.currentIndex,
+  //   queue.songs[queue.currentIndex].name
+  // );
 }
 
 const controller = {
