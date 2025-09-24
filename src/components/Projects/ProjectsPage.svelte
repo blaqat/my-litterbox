@@ -4,23 +4,26 @@
   import { initializeProjects } from "./projectStore";
   import { getSortedProjects } from "./ProjectData";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
+  import { onMount } from "svelte";
 
-  export let projects: Project[] = [];
+  let { projects }: { projects: Project[] } = $props();
 
-  type ViewMode = "grid" | "list";
-  let view: ViewMode = "grid";
+  let query = $state("");
+  let filtered = $derived(projects.filter((p) => matches(p, query)));
+  let groups = $derived(
+    getSortedProjects(filtered.length > 0 ? [...filtered] : projects)
+  );
+  let years = $derived(
+    Object.keys(groups)
+      .map((y) => parseInt(y))
+      .sort((a, b) => b - a)
+  );
 
-  // Search
-  let query = "";
-  $: filtered = projects.filter((p) => matches(p, query));
-  $: groups = getSortedProjects(filtered.length > 0 ? [...filtered] : projects);
-  $: years = Object.keys(groups)
-    .map((y) => parseInt(y))
-    .sort((a, b) => b - a);
-
-  if (typeof window !== "undefined") {
-    queueMicrotask(() => initializeProjects(projects));
-  }
+  onMount(() => {
+    if (typeof window !== "undefined") {
+      queueMicrotask(() => initializeProjects(projects));
+    }
+  });
 </script>
 
 <div class="flex items-center justify-between gap-3 mb-4">
@@ -42,6 +45,7 @@
   <p class="text-center text-gray-500">no projects found...</p>
   <hr class="my-2 border-gray-500 border-dashed" />
 {/if}
+
 <div class="pb-25">
   {#each years as year}
     <section class="mb-8">

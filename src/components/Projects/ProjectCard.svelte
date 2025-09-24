@@ -10,9 +10,10 @@
   import { openProject } from "./projectStore";
   import { marked } from "marked";
 
-  export let project: Project;
+  // export let project: Project;
+  let { project }: { project: Project } = $props();
 
-  let mouse_is_over_child = false;
+  let mouse_is_over_child = $state(false);
 
   function hover() {
     mouse_is_over_child = true;
@@ -28,7 +29,10 @@
     type="button"
     class="border-gray-300 text-left h-full w-full relative border p-4 rounded-xl transition cursor-pointer hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200 bg-white hover:scale-102 {!mouse_is_over_child &&
       'active:scale-99'}"
-    on:click|stopPropagation={() => openProject(project)}
+    onclick={(e) => {
+      e.stopPropagation();
+      openProject(project);
+    }}
     data-project-slug={project.slug}
     aria-controls="project-modal"
   >
@@ -99,9 +103,9 @@
               target="_blank"
               aria-label="Open GitHub"
               title="Open GitHub"
-              on:click|stopPropagation
-              on:mouseenter={hover}
-              on:mouseleave={unhover}
+              onclick={(e) => e.stopPropagation()}
+              onmouseenter={hover}
+              onmouseleave={unhover}
             >
               <GithubLogo size={16} weight="duotone" />
             </a>
@@ -112,9 +116,9 @@
               class="inline-flex items-center justify-center rounded-full border p-1.5 hover:border-malibu-500 text-slate-700 hover:scale-110 hover:shadow-md bg-slate-50/40 backdrop-blur-xs border-slate-300 no-underline transition-all duration-200 active:scale-95 hover:text-malibu-900 hover:bg-malibu-100"
               target="_blank"
               aria-label="View Project"
-              on:click|stopPropagation
-              on:mouseenter={hover}
-              on:mouseleave={unhover}
+              onclick={(e) => e.stopPropagation()}
+              onmouseenter={hover}
+              onmouseleave={unhover}
               title="View Project"
             >
               <Link size={16} weight="duotone" />

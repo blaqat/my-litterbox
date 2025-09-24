@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Cloud, BracketsCurly, Code, Cpu, Brain } from "phosphor-svelte";
+  import { BracketsCurly } from "phosphor-svelte";
 
   // export let name: string;
   let { dark = false, name }: { dark?: boolean; name: string } = $props();
@@ -40,7 +40,7 @@
     return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${slug}/${slug}-original.svg`;
   }
 
-  let url = $state(iconUrl(name));
+  let url = $derived(iconUrl(name));
 </script>
 
 <span class="tag" class:bg-[#f3f4f6]={!dark} class:bg-white={dark}>
