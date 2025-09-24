@@ -36,7 +36,7 @@
       type="search"
       placeholder="Search projects..."
       bind:value={query}
-      class="w-full rounded-md border border-gray-300 bg-white pr-3 pl-9 py-2 text-sm"
+      class="w-full rounded-md border border-gray-300 bg-white pr-3 pl-9 py-2 sm:text-[16px] md:text-sm"
     />
   </div>
 </div>

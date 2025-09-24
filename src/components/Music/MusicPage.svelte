@@ -4,12 +4,7 @@
   import MusicTypeFilter from "./MusicTypeFilter.svelte";
   import { type MusicItem, MusicType, MusicInstrument } from "./types";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
-  import {
-    matchesQuery,
-    sortByDate,
-    matchesPlaying,
-    matchesInstrumentFilter,
-  } from "./utils";
+  import { matchesQuery, sortByDate, matchesInstrumentFilter } from "./utils";
   import { swapQueue, play, queue, pause } from "./MusicData.svelte";
   import { onMount } from "svelte";
   import {
@@ -151,7 +146,7 @@
       type="search"
       placeholder="Search music..."
       bind:value={query}
-      class="w-full rounded-md border border-gray-300 bg-white pr-3 pl-9 py-2 text-sm"
+      class="w-full rounded-md border border-gray-300 bg-white pr-3 pl-9 py-2 sm:text-[16px] md:text-sm"
       oninput={() => {
         if (filtered && filtered.length > 0) {
           swapQueue(filtered);
