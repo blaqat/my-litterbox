@@ -17,6 +17,86 @@ import SEO from "@components/SEO.astro";
     <main class="h-full w-full">
       <slot />
     </main>
+    <script is:inline>
+      (function () {
+        const isTouchPrimary =
+          typeof window !== "undefined" &&
+          (window.matchMedia?.("(hover: none)")?.matches ||
+            window.matchMedia?.("(pointer: coarse)")?.matches);
+        if (!isTouchPrimary) return;
+
+        let activeEl = null;
+        let added = [];
+
+        function isInteractive(el) {
+          if (!el || !(el instanceof Element)) return false;
+          const tag = el.tagName.toLowerCase();
+          if (tag === "button" || tag === "a") return true;
+          const role = el.getAttribute("role");
+          if (role === "button") return true;
+          return false;
+        }
+
+        function findInteractive(start) {
+          let el = start instanceof Element ? start : null;
+          while (el) {
+            if (isInteractive(el)) return el;
+            el = el.parentElement;
+          }
+          return null;
+        }
+
+        function collectHoverClasses(el) {
+          const classes = Array.from(el.classList);
+          const toAdd = [];
+          for (const cls of classes) {
+            if (cls.includes("group-hover:") || cls.includes("peer-hover:"))
+              continue;
+            if (cls.includes("hover:")) {
+              const parts = cls.split(":");
+              const hoverIndex = parts.lastIndexOf("hover");
+              if (hoverIndex !== -1 && hoverIndex < parts.length - 1) {
+                const base = parts.slice(hoverIndex + 1).join(":");
+                if (base && !el.classList.contains(base)) toAdd.push(base);
+              }
+            }
+          }
+          return toAdd;
+        }
+
+        function cleanup() {
+          if (activeEl && added.length) {
+            for (const c of added) activeEl.classList.remove(c);
+          }
+          activeEl = null;
+          added = [];
+        }
+
+        function onPointerDown(e) {
+          cleanup();
+          const target = e.target;
+          const el = findInteractive(target);
+          if (!el) return;
+          const toAdd = collectHoverClasses(el);
+          if (!toAdd.length) return;
+          activeEl = el;
+          added = toAdd;
+          for (const c of toAdd) el.classList.add(c);
+        }
+
+        function onPointerEnd() {
+          cleanup();
+        }
+
+        document.addEventListener("pointerdown", onPointerDown, true);
+        document.addEventListener("pointerup", onPointerEnd, true);
+        document.addEventListener("pointercancel", onPointerEnd, true);
+        document.addEventListener("pointerleave", onPointerEnd, true);
+        document.addEventListener("touchend", onPointerEnd, true);
+        document.addEventListener("touchcancel", onPointerEnd, true);
+        window.addEventListener("blur", onPointerEnd);
+      })();
+    </script>
   </body>
 </html>
 
