@@ -239,11 +239,11 @@
   @reference "../../styles/global.css";
   input[type="range"]::-webkit-slider-thumb {
     @apply bg-light-wisteria-500;
-    -webkit-appearance: none; /* remove default styling */
+    -webkit-appearance: none;
     appearance: none;
-    width: 4px; /* narrow width */
-    height: 16px; /* taller height */
-    border-radius: 9999px; /* full rounding gives an oval */
+    width: 4px;
+    height: 16px;
+    border-radius: 9999px;
     cursor: pointer;
   }
 
