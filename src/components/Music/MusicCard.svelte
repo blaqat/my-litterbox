@@ -194,7 +194,7 @@
     >
       <header class="flex items-start justify-between">
         <h3
-          class="gap-2 flex items-center font-semibold {mini
+          class="gap-1 flex items-center flex-wrap font-semibold {mini
             ? 'text-md'
             : 'text-lg'} leading-tight pr-2"
         >

@@ -1,9 +1,15 @@
 <script lang="ts">
   import MusicGrid from "./MusicGrid.svelte";
   import MusicModal from "./MusicModal.svelte";
-  import { type MusicItem, MusicType } from "./types";
+  import MusicTypeFilter from "./MusicTypeFilter.svelte";
+  import { type MusicItem, MusicType, MusicInstrument } from "./types";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
-  import { matchesQuery, sortByDate, matchesPlaying } from "./utils";
+  import {
+    matchesQuery,
+    sortByDate,
+    matchesPlaying,
+    matchesInstrumentFilter,
+  } from "./utils";
   import { swapQueue, play, queue, pause } from "./MusicData.svelte";
   import { onMount } from "svelte";
   import {
@@ -14,6 +20,11 @@
 
   let { music }: { music: MusicItem[] } = $props();
   let query = $state("");
+  let selectedInstruments = $state([
+    MusicInstrument.Piano,
+    MusicInstrument.Beepbox,
+    MusicInstrument.DAW,
+  ]);
   let sorted = $state(sortByDate(music));
   let modalOpen = $state(false);
   let modalSong = $state<MusicItem | null>(null);
@@ -28,11 +39,16 @@
   let filtered = $derived(
     sorted
       .filter((item) => matchesQuery(item, query))
+      .filter((item) => matchesInstrumentFilter(item, selectedInstruments))
       .map((item) => {
         if (item.type === MusicType.Collection) {
           let s = {
             ...item,
-            songs: item.songs.filter((song) => matchesQuery(song, query)),
+            songs: item.songs
+              .filter((song) => matchesQuery(song, query))
+              .filter((song) =>
+                matchesInstrumentFilter(song, selectedInstruments)
+              ),
           };
           return s.songs.length > 0 ? s : item;
         } else {
@@ -124,7 +140,8 @@
   }
 </script>
 
-<div class="flex items-center justify-between gap-3 mb-6">
+<div class="flex flex-col gap-4 mb-6">
+  <!-- Search bar -->
   <div class="relative w-full">
     <Search
       size={18}
@@ -142,6 +159,16 @@
       }}
     />
   </div>
+
+  <!-- Instrument type filter -->
+  <MusicTypeFilter
+    bind:selectedInstruments
+    onChange={(instruments) => {
+      if (filtered && filtered.length > 0) {
+        swapQueue(filtered);
+      }
+    }}
+  />
 </div>
 
 {#if filtered.length === 0}

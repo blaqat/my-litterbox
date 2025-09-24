@@ -9,6 +9,7 @@ import {
   isCollection,
   MusicStatus,
   MusicType,
+  MusicInstrument,
 } from "./types";
 
 export function toSearchableString(item: MusicItem): string {
@@ -74,6 +75,28 @@ export function matchesPlaying(item: MusicItem, playing?: Single): boolean {
 
   if (item.type === MusicType.Collection) {
     return item.songs.some((s) => !!s.url && s.url === playing.url);
+  }
+
+  return false;
+}
+
+export function matchesInstrumentFilter(
+  item: MusicItem,
+  selectedInstruments: MusicInstrument[]
+): boolean {
+  if (selectedInstruments.length === 0) {
+    return true;
+  }
+
+  if (item.type === MusicType.Single) {
+    return selectedInstruments.includes(item.instrument as MusicInstrument);
+  }
+
+  if (item.type === MusicType.Collection) {
+    // Show collection if any of its songs match the filter
+    return item.songs.some((song) =>
+      selectedInstruments.includes(song.instrument as MusicInstrument)
+    );
   }
 
   return false;
