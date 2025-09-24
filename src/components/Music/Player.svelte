@@ -79,20 +79,26 @@
   )}
   {@const parent = nowPlaying?.parentRefData}
   <div
-    class="fixed bottom-0 right-0 left-0 flex justify-center z-50 mb-3 px-4"
+    class="fixed bottom-0 right-0 left-0 flex z-50 mb-3 px-4"
     class:bottom-22={Device.lt_md}
     class:justify-end={Device.lt_md && collapsed}
+    class:justify-center={Device.md || (Device.lt_md && !collapsed)}
   >
     <div
       class="overflow-hidden border-1 backdrop-blur-xs shadow-sm flex justify-between p-2 rounded-xl
       {isPlaying
         ? 'bg-light-wisteria-50/80 border-light-wisteria-300 shadow-light-wisteria-300/20'
         : 'bg-slate-50/80 border-slate-200 shadow-slate-300/20'}"
+      class:w-full={Device.lt_md && !collapsed}
+      class:w-auto={Device.md || (Device.lt_md && collapsed)}
+      class:max-w-4xl={Device.md}
     >
       {#if Device.md || !collapsed}
         <!-- Song Title -->
         {#if parent}
-          <div class="mx-2 text-light-wisteria-950 truncate md:min-w-max">
+          <div
+            class="mx-2 text-light-wisteria-950 truncate md:w-64 md:flex-shrink-0"
+          >
             <p class="font-medium -mb-2 truncate">
               {nowPlaying?.name}
             </p>
@@ -105,7 +111,7 @@
           </div>
         {:else}
           <div
-            class="mx-2 text-light-wisteria-950 flex items-center truncate md:min-w-max"
+            class="mx-2 text-light-wisteria-950 flex items-center truncate md:w-64 md:flex-shrink-0"
           >
             <p class="font-medium truncate">{nowPlaying?.name}</p>
           </div>
@@ -113,7 +119,7 @@
 
         <!-- Scrubber -->
         <Desktop>
-          <div class="flex items-center justify-between gap-4 w-full px-4">
+          <div class="flex items-center justify-between gap-4 flex-1 px-4">
             <span class="text-sm text-gray-500 w-10 text-right tabular-nums">
               {timeify(time)}
             </span>
@@ -144,9 +150,12 @@
                     0)}
                 onmousemovecapture={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
-                  const offsetX = e.clientX - rect.left;
+                  const offsetX = Math.max(
+                    0,
+                    Math.min(e.clientX - rect.left, rect.width)
+                  );
                   const widthPercent = (offsetX / rect.width) * 100;
-                  scrubHighlight.style.width = `${widthPercent}%`;
+                  scrubHighlight.style.width = `${Math.max(0, Math.min(widthPercent, 100))}%`;
                 }}
                 onmouseleave={(e) => {
                   scrubHighlight.style.width = "0%";
