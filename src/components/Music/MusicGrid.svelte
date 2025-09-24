@@ -1,6 +1,6 @@
 <script lang="ts">
   import MusicCard from "./MusicCard.svelte";
-  import { type MusicItem } from "./types";
+  import { type MusicItem, type RefdSingle } from "./types";
 
   let { songs }: { songs: MusicItem[] } = $props();
 </script>
@@ -11,6 +11,11 @@
     : 'sm:grid-cols-1 md:grid-cols-2'}"
 >
   {#each songs as song}
-    <MusicCard {song} />
+    <MusicCard
+      {song}
+      parent_name={"parentRefData" in song
+        ? (song as RefdSingle).parentRefData?.name
+        : undefined}
+    />
   {/each}
 </div>

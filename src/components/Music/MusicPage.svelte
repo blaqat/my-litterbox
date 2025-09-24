@@ -84,16 +84,26 @@
     // Handle playlist parameter
     if (queries.s) {
       const songIds = queries.s.split(",").filter(Boolean);
-      // Create a flat list of all singles from the music collection
+      // Create a flat list of all reffed singles from the music collection
       const allSingles = sorted
-        .flatMap((item) =>
-          item.type === MusicType.Single ? [item] : item.songs
-        )
+        .flatMap((item) => {
+          if (item.type === MusicType.Single) {
+            return [item];
+          } else {
+            return item.songs.map((song, index) => ({
+              ...song,
+              parentRefData: {
+                name: item.name,
+                index: index,
+                total: item.songs.length,
+              },
+            }));
+          }
+        })
         .filter((song) => song.url);
 
       const foundSongs = findSongsByIds(songIds, allSingles);
       if (foundSongs.length > 0) {
-        // Create a temporary music items array for swapQueue
         const playlistItems: MusicItem[] = foundSongs.map((song) => ({
           ...song,
           type: MusicType.Single,
