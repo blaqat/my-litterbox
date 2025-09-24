@@ -138,12 +138,18 @@
     if (collection_is_opened && song.type === MusicType.Collection) {
       // Use setTimeout to ensure the DOM has updated
       setTimeout(() => scrollToCurrentlyPlaying(), 150);
+    } else if (collection_is_opened) {
+      collection_is_opened = false;
     }
   });
 
   // Auto-scroll when currently playing song changes and collection is open
   $effect(() => {
-    if (collection_is_opened && nowPlaying) {
+    if (
+      collection_is_opened &&
+      nowPlaying &&
+      song.type === MusicType.Collection
+    ) {
       scrollToCurrentlyPlaying();
     }
   });
@@ -161,7 +167,8 @@
     {forcePlay}
   />
   <div
-    class="relative group min-w-0 {collection_is_opened &&
+    class="relative group min-w-0 {song.type === MusicType.Collection &&
+      collection_is_opened &&
       'md:col-span-2 sm:col-span-1'} {_class}"
   >
     <div

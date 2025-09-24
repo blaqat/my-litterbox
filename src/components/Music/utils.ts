@@ -106,13 +106,13 @@ export const linkMapColors: LinkMap = {
   spotify:
     "text-green-900 hover:border-green-400 hover:bg-green-200/40 hover:text-green-800",
   youtube:
-    "text-red-900 hover:border-red-400 hover:bg-red-200/40 hover:text-red-800",
+    "text-sea-pink-900 hover:border-sea-pink-400 hover:bg-sea-pink-200/40 hover:text-sea-pink-800",
   soundcloud:
     "text-orange-900 hover:border-orange-400 hover:bg-orange-200/40 hover:text-orange-800",
   beepbox:
     "text-purple-900 hover:border-purple-400 hover:bg-purple-200/40 hover:text-purple-800",
   apple:
-    "text-sea-pink-900 hover:border-sea-pink-400 hover:bg-sea-pink-200/40 hover:text-sea-pink-800",
+    "text-red-900 hover:border-red-400 hover:bg-red-200/40 hover:text-red-800",
   bandcamp:
     "text-malibu-900 hover:border-malibu-400 hover:bg-malibu-200/40 hover:text-malibu-800",
 };

@@ -19,6 +19,7 @@
   } from "./MusicQueries";
 
   let { music }: { music: MusicItem[] } = $props();
+
   let query = $state("");
   let selectedInstruments = $state([
     MusicInstrument.Piano,
@@ -26,16 +27,6 @@
     MusicInstrument.DAW,
   ]);
   let sorted = $state(sortByDate(music));
-  let modalOpen = $state(false);
-  let modalSong = $state<MusicItem | null>(null);
-
-  // Derive currently playing song and modal force play state
-  let playingModal = $derived(
-    modalSong &&
-      queue.isPlaying &&
-      queue.songs[queue.currentIndex % queue.songs.length]?.name ===
-        modalSong?.name
-  );
   let filtered = $derived(
     sorted
       .filter((item) => matchesQuery(item, query))
@@ -55,6 +46,15 @@
           return item;
         }
       })
+  );
+
+  let modalOpen = $state(false);
+  let modalSong = $state<MusicItem | null>(null);
+  let playingModal = $derived(
+    modalSong &&
+      queue.isPlaying &&
+      queue.songs[queue.currentIndex % queue.songs.length]?.name ===
+        modalSong?.name
   );
 
   onMount(() => {
@@ -159,8 +159,6 @@
       }}
     />
   </div>
-
-  <!-- Instrument type filter -->
   <MusicTypeFilter
     bind:selectedInstruments
     onChange={(instruments) => {
