@@ -6,6 +6,7 @@ import {
 } from "./types";
 import music from "../../data/music.json";
 import { sortByDate } from "./utils";
+import { Device } from "@lib/device.svelte";
 
 const orderedSongList = sortByDate(music as MusicItem[])
   .map((item) => {
@@ -158,17 +159,35 @@ export function forward() {
   // );
 }
 
+// sentinel for double click timer
+let lastBack: ReturnType<typeof setTimeout> | undefined;
+
+/**
+ * handles the "back" control for the playback queue.
+ * if clicked once, it resets the current song's time to 0.
+ * if clicked twice ON DESKTOP within 750ms it reverse to the previous song in the queue.
+ * @returns void
+ */
 export function back() {
-  if (queue.currentIndex > 0) {
-    queue.currentIndex -= 1;
+  // on mobile, always just go back
+  if (Device.lt_md) return backPure();
+
+  if (lastBack) {
+    clearTimeout(lastBack);
+    lastBack = undefined;
+    backPure();
   } else {
-    queue.currentIndex = queue.songs.length - 1;
+    queue.time = 0;
   }
-  // console.log(
-  //   "back to",
-  //   queue.currentIndex,
-  //   queue.songs[queue.currentIndex].name
-  // );
+
+  lastBack = setTimeout(() => {
+    lastBack = undefined;
+  }, 750);
+}
+
+function backPure() {
+  queue.currentIndex =
+    (queue.currentIndex + queue.songs.length - 1) % queue.songs.length;
 }
 
 const controller = {
