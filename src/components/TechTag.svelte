@@ -1,7 +1,7 @@
 <script lang="ts">
   import { BracketsCurly } from "phosphor-svelte";
 
-  // export let name: string;
+  // export let a: string;
   let { dark = false, name }: { dark?: boolean; name: string } = $props();
 
   const devicons: Record<string, string> = {
@@ -31,7 +31,7 @@
     Supabase: "supabase",
   };
 
-  function iconUrl(label: string): string | null {
+  export function getIconUrl(label: string): string | null {
     const key = Object.keys(devicons).find(
       (k) => k.toLowerCase() === label.toLowerCase()
     );
@@ -40,7 +40,7 @@
     return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${slug}/${slug}-original.svg`;
   }
 
-  let url = $derived(iconUrl(name));
+  let url = $derived(getIconUrl(name));
 </script>
 
 <span class="tag" class:bg-[#f3f4f6]={!dark} class:bg-white={dark}>

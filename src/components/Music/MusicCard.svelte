@@ -2,6 +2,7 @@
   import { slide } from "svelte/transition";
   import { marked } from "marked";
   import MusicCard from "./MusicCard.svelte";
+  import ClickHint from "../ClickHint.svelte";
   import {
     MusicInstrument,
     MusicStatus,
@@ -36,6 +37,7 @@
     forcePlay = false,
     mini = false,
     parent_name = "",
+    showHint = false,
     onmouseover,
     onmouseleave,
     class: _class = "",
@@ -44,6 +46,7 @@
     parent_name?: string;
     song: MusicItem;
     mini?: boolean;
+    showHint?: boolean;
     class?: string;
     onmouseover?: () => void;
     onmouseleave?: () => void;
@@ -53,7 +56,24 @@
   let collection_is_opened = $state(false);
   let collectionScrollContainer: HTMLDivElement | undefined = $state();
   let copyFeedback = $state("");
+  let dismissHint = $state(false);
 
+  function handleCardClick() {
+    // Dismiss hint when card is clicked
+    if (showHint || dismissHint === false) {
+      dismissHint = true;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("hint-dismissed-music-card-click", "true");
+      }
+    }
+
+    // Original click logic
+    if (song.type === MusicType.Collection) {
+      collection_is_opened = !collection_is_opened;
+    } else {
+      modalOpen = true;
+    }
+  }
   async function handleCopyPlaylist(e: Event) {
     e.stopPropagation();
 
@@ -192,12 +212,17 @@
         MusicType.Collection && 'hover:scale-102'} {!mouse_is_over_child &&
         'active:scale-99'}"
       aria-controls="song-modal"
-      onclick={() =>
-        song.type === MusicType.Collection
-          ? (collection_is_opened = !collection_is_opened)
-          : (modalOpen = true)}
+      onclick={handleCardClick}
       onkeydown={() => {}}
     >
+      {#if showHint}
+        <ClickHint
+          hintKey="music-card-click"
+          class="border-light-wisteria-500 hover:bg-light-wisteria-100"
+          cursorClass="text-light-wisteria-800"
+          dismiss={dismissHint}
+        />
+      {/if}
       <header class="flex items-start justify-between">
         <h3
           class="gap-1 flex items-center flex-wrap font-semibold {mini

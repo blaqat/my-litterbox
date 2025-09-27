@@ -46,7 +46,7 @@
     "view": "https://rust.vulnerabilityhistory.org/",
     "images": [
       {
-        "src": "https://media.licdn.com/dms/image/v2/D4E2DAQGWOsFb8EaRgA/profile-treasury-image-shrink_800_800/B4EZVm7JmIGwAc-/0/1741188538529?e=1758502800&v=beta&t=1WwZHH2UpIiK_20xw6PhtV2R7CoKODePODD1BJHz_SU",
+        "src": "/media/rawsy.png",
         "alt": "Rust Are We Secure Yet - Homepage"
       }
     ]
@@ -98,8 +98,8 @@
     "github": "https://github.com/blaqat/Classes/tree/main/2024-swen563-RealTimeEmbeddedSystems/P3-Bank",
     "images": [
       {
-        "src": "https://img.notionusercontent.com/s3/prod-files-secure%2F6dc985a3-ee71-4359-becb-2aa4a2af5847%2Fa38c8579-0c43-458d-b0bf-445245c8fcb0%2FNeovide-Neovide-Capture-010934.png/size/w=1960?exp=1758134269&sig=ayrIvI1bJgDdYdueNd5pHiICJoOwzLPV_Gj9tIRAe58&id=40ee67c8-602a-4923-864e-5f20c1e75983&table=block&userId=1893b560-8628-4415-afed-d39eeb444999",
-        "alt": "Bank Simulation Demo"
+        "src": "/media/bankresult.png",
+        "alt": "Bank Simulation Output"
       }
     ]
   },
@@ -206,7 +206,7 @@
     "type": "Personal",
     "images": [
       {
-        "src": "https://media.licdn.com/dms/image/v2/D4E2DAQGYKd3cjhsXug/profile-treasury-image-shrink_1920_1920/profile-treasury-image-shrink_1920_1920/0/1689192152464?e=1758506400&v=beta&t=718CdE4D069ORJ3gfi0pjeYKuqVRNDEND1_Klf3VHRU",
+        "src": "/media/beepsearch.png",
         "alt": "Showing search artist command that pulls and filteres from a google sheet"
       }
     ]

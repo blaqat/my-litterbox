@@ -6,14 +6,17 @@
     getProjectDuration as duration,
   } from "./ProjectData";
   import TechTag from "@components/TechTag.svelte";
+  import ClickHint from "@components/ClickHint.svelte";
   import { GithubLogo, Link } from "phosphor-svelte";
   import { openProject } from "./projectStore";
   import { marked } from "marked";
 
   // export let project: Project;
-  let { project }: { project: Project } = $props();
+  let { project, showHint = false }: { project: Project; showHint?: boolean } =
+    $props();
 
   let mouse_is_over_child = $state(false);
+  let dismissHint = $state(false);
 
   function hover() {
     mouse_is_over_child = true;
@@ -22,6 +25,19 @@
   function unhover() {
     mouse_is_over_child = false;
   }
+
+  function handleCardClick(e: MouseEvent) {
+    e.stopPropagation();
+    openProject(project);
+
+    // Dismiss hint when card is clicked
+    if (showHint || dismissHint === false) {
+      dismissHint = true;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("hint-dismissed-project-card-click", "true");
+      }
+    }
+  }
 </script>
 
 <div class="relative group min-w-0">
@@ -29,13 +45,18 @@
     type="button"
     class="border-gray-300 text-left h-full w-full relative border p-4 rounded-xl transition cursor-pointer hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200 bg-white hover:scale-102 {!mouse_is_over_child &&
       'active:scale-99'}"
-    onclick={(e) => {
-      e.stopPropagation();
-      openProject(project);
-    }}
+    onclick={handleCardClick}
     data-project-slug={project.slug}
     aria-controls="project-modal"
   >
+    {#if showHint}
+      <ClickHint
+        hintKey="project-card-click"
+        class="border-malibu-500 hover:bg-malibu-100"
+        cursorClass="text-malibu-800"
+        dismiss={dismissHint}
+      />
+    {/if}
     <header class="flex items-start justify-between">
       <h3 class="font-semibold text-lg leading-tight pr-2">{project.name}</h3>
       <span

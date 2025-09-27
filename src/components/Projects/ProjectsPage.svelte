@@ -47,12 +47,15 @@
 {/if}
 
 <div class="pb-25">
-  {#each years as year}
+  {#each years as year, yearIndex}
     <section class="mb-8">
       <h2 class="text-lg font-medium text-gray-600 mb-3">{year}</h2>
       <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-        {#each groups[year] as p}
-          <ProjectCard project={p} />
+        {#each groups[year] as p, projectIndex}
+          <ProjectCard 
+            project={p} 
+            showHint={yearIndex === 0 && projectIndex === 0} 
+          />
         {/each}
       </div>
     </section>

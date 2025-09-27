@@ -1,8 +1,17 @@
 import { FilePdf } from "phosphor-svelte";
 
+<div class="flex gap-2 items-center p-0 m-0 text-[16px] justify-center text-slate-600 not-prose sticky top-0 underline underline-offset-1">
+{["about me", "skills", "hobbies", "future goals"].map((section, index) => (
+	<>
+	  {index!==0 && <span key={`sep-${index}`} class="text-slate-400">|</span>}
+	  <a href={`#${section.replace(/\s+/g, "-")}`} class="hover:scale-105">{section}</a>
+	</>
+))}
+</div>
+
 ## about me!
 
-Hello! My name is [**Aiden Green**](/contact), and I am a recent graduate of [**Rochester Institute of Technology**](https://www.rit.edu) seeking an entry-level position in **Software Engineering**.
+Hello and welcome to my site! My name is [**Aiden Green**](/contact), and I am a recent graduate of [**Rochester Institute of Technology**](https://www.rit.edu) seeking an entry-level position in **Software Engineering**.
 
 <a
 	href="/aidengreenj-resume-fall-2025.pdf"
@@ -19,13 +28,16 @@ Hello! My name is [**Aiden Green**](/contact), and I am a recent graduate of [**
 
 ## skills
 
-I possess a diverse range of programming skills, including: **Java**, **Python**, **Typescript**, **Rust**, and **C**.
-I also have experience with web development frameworks such as [**Astro**](https://astro.build), [**Svelte**](https://svelte.dev), [**React**](https://reactjs.org), and [**Next.js**](https://nextjs.org). I also have some love for **UI/UX Design** (which is how I got into programming) which I love to explore in projects whenever I get the chance.
+My programming journey has given me levels of proficiency in many different areas and languages including: **Java**, **Python**, **Typescript**, **Rust**, and **Embedded C**.
+
+I have experience with web development frameworks such as [**React**](https://reactjs.org), [**Next.js**](https://nextjs.org), [**Svelte**](https://svelte.dev), and [**Astro**](https://astro.build). 
+
+I also have a sweet tooth in a sense for **UI/UX Design** (actually how I got into development in the first place) which I love to explore in projects whenever I get the chance.
 
 ## hobbies
 
-Beyond programming, I have a passion for **composing music** for film and games. I have been **playing the piano** for over ten years and enjoy composing original pieces. One of my projects includes a [**Music Player Discord Bot**](/projects/beepbox-bot) that plays music from a niche music program called [**"Beepbox"**](https://beepbox.co) for a small community of users.
+Beyond programming, I have a passion for **composing music** for piano, film, and video games. I have been playing the piano for almost 20 years and grew to enjoy composing original pieces.
 
 ## future goals
 
-My main goal currently is to get experience under the guidance of experienced engineers in a professional setting to further develop my skills and grow as a software engineer. I am always looking for opportunities to use my skills to make a positive impact, and I am excited about the future possibilities!
+My main goal is to learn from experienced engineers and gain hands-on experience in a professional environment. I'm passionate about using my skills to make a positive impact and excited for future possibilities to keep growing as a software engineer.
