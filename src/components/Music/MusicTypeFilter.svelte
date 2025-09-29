@@ -52,11 +52,12 @@
 <div class="flex flex-wrap gap-2">
   {#each instrumentOptions as option}
     <button
-      class="px-3 py-1 text-sm rounded-full border transition-all duration-200 {selectedInstruments.includes(
+      class=" hover:scale-105 active:scale-95 px-3 py-1 text-sm rounded-full border transition-all duration-200 {selectedInstruments.includes(
         option.type
       )
         ? option.activeColor + ' shadow-sm'
         : option.inactiveColor}"
+      class:hover:line-through={selectedInstruments.includes(option.type)}
       onclick={() => toggleInstrument(option.type)}
     >
       <div class="flex items-center gap-1.5">

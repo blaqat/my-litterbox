@@ -1,18 +1,32 @@
 <script lang="ts">
   import ProjectCard from "./ProjectCard.svelte";
-  import { type Project, projectMatches as matches } from "./ProjectData";
+  import {
+    type Project,
+    projectMatches as matches,
+    ProjectCategory,
+  } from "./ProjectData";
   import { initializeProjects } from "./projectStore";
   import { getSortedProjects } from "./ProjectData";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
   import { onMount } from "svelte";
+  import ProjectsFilter from "./ProjectsFilter.svelte";
 
   let { projects }: { projects: Project[] } = $props();
 
   let query = $state("");
-  let filtered = $derived(projects.filter((p) => matches(p, query)));
-  let groups = $derived(
-    getSortedProjects(filtered.length > 0 ? [...filtered] : projects)
+  // Empty = all selected (implicit)
+  let selectedCategories = $state<ProjectCategory[]>([]);
+
+  function matchesFilters(p: Project) {
+    // If none selected treat as all selected
+    if (selectedCategories.length === 0) return true;
+    return selectedCategories.includes(p.type);
+  }
+
+  let filtered = $derived(
+    projects.filter((p) => matches(p, query)).filter((p) => matchesFilters(p))
   );
+  let groups = $derived(getSortedProjects([...filtered]));
   let years = $derived(
     Object.keys(groups)
       .map((y) => parseInt(y))
@@ -26,7 +40,7 @@
   });
 </script>
 
-<div class="flex items-center justify-between gap-3 mb-4">
+<div class="flex flex-col gap-3 mb-4">
   <div class="relative w-full">
     <Search
       size={18}
@@ -39,6 +53,12 @@
       class="w-full rounded-md border border-gray-300 bg-white pr-3 pl-9 py-2 sm:text-[16px] md:text-sm"
     />
   </div>
+  <ProjectsFilter
+    bind:selectedCategories
+    onChange={() => {
+      /* derived reactive filtering will update */
+    }}
+  />
 </div>
 
 {#if filtered.length === 0}
@@ -52,9 +72,9 @@
       <h2 class="text-lg font-medium text-gray-600 mb-3">{year}</h2>
       <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
         {#each groups[year] as p, projectIndex}
-          <ProjectCard 
-            project={p} 
-            showHint={yearIndex === 0 && projectIndex === 0} 
+          <ProjectCard
+            project={p}
+            showHint={yearIndex === 0 && projectIndex === 0}
           />
         {/each}
       </div>
