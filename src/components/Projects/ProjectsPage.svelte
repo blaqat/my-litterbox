@@ -15,7 +15,11 @@
 
   let query = $state("");
   // Empty = all selected (implicit)
-  let selectedCategories = $state<ProjectCategory[]>([]);
+  let selectedCategories = $state<ProjectCategory[]>([
+    ProjectCategory.Personal,
+    ProjectCategory.Work,
+    ProjectCategory.School,
+  ]);
 
   function matchesFilters(p: Project) {
     // If none selected treat as all selected
