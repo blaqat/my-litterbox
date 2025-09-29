@@ -155,7 +155,7 @@
     "name": "Code Editor Theme Generator",
     "start": "Jun 2024",
     "status": "Paused",
-    "description": "A json and toml preprocessor tool that allows users to create a theme language that can be used to create and generate themes for multiple code editors and IDEs from a single source of truth. Currently supports Zed, VSCode, and Textmate. The tool has custom syntax support recursive variables, self referring variables, HSL HSV RGB and HEX modifiable colors e.g. `$color::lightness+10.` This tool was used to create many themes for zed found here: https://github.com/blaqat/zed-extensions",
+    "description": "A json and toml preprocessor tool that allows users to create a theme language that can be used to create and generate themes for multiple code editors and IDEs from a single source of truth. Currently supports Zed, VSCode, and Textmate. The tool has custom syntax support recursive variables, self referring variables, HSL HSV RGB and HEX modifiable colors e.g. `$color::lightness+10.` This tool was used to create many themes for zed found here: https://github.com/blaqat/zed-themes",
     "stack": ["Rust", "Python", "TOML", "JSON"],
     "type": "Personal",
     "github": "https://github.com/blaqat/theme-generation",
