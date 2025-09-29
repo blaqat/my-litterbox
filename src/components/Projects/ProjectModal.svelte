@@ -5,6 +5,11 @@
   import TechTag from "@components/TechTag.svelte";
   import { GithubLogo, Link, X } from "phosphor-svelte";
   import { getProjectDuration as duration } from "@components/Projects/ProjectData";
+  import Prism from "prismjs";
+  import { onMount, tick } from "svelte";
+  // import "prismjs/themes/prism-coy.css";
+  import "prismjs/components/prism-rust";
+  import "prism-themes/themes/prism-vs.css";
 
   let project = $derived($activeProject);
 
@@ -15,6 +20,14 @@
   function renderMarkdown(md: string) {
     return marked(md);
   }
+
+  $effect(() => {
+    if (project) {
+      tick().then(() => {
+        Prism.highlightAll();
+      });
+    }
+  });
 </script>
 
 {#if project}

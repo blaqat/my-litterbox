@@ -1,4 +1,5 @@
 import typography from "@tailwindcss/typography";
+import prismjs from "prismjs";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,5 +7,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [typography],
+  plugins: [typography, prismjs],
 };
