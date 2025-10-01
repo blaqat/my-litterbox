@@ -7,6 +7,13 @@ let _projects: Project[] = [];
 
 export const activeProject = writable<Project | null>(null);
 
+/**
+ * Opens a project by setting it as active and updating the browser URL.
+ * 
+ * @param project - The project object to open and set as active
+ * @param opts - Configuration options for URL handling
+ * @param opts.replace - If true, replaces the current history entry instead of pushing a new one
+ */
 export function openProject(
   project: Project,
   opts: { replace?: boolean } = {}
@@ -52,8 +59,6 @@ if (typeof window !== "undefined") {
 }
 
 /**
- * Initializes the projects store with the provided projects array and handles route-based project navigation.
- *
  * This function sets up the global projects state and checks if the current URL path corresponds to a specific
  * project route. If a matching project is found based on the URL slug, it automatically opens that project.
  *

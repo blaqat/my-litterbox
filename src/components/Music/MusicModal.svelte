@@ -42,6 +42,9 @@
     forcePlay?: boolean;
   } = $props();
 
+
+  let copyFeedback = $state("");
+
   let songCurrentlyPlaying = $derived(
     controller.queue.songs[
       controller.queue.currentIndex % controller.queue.songs.length
@@ -54,8 +57,6 @@
         controller.queue.isPlaying &&
         matchesPlaying(song, songCurrentlyPlaying))
   );
-
-  let copyFeedback = $state("");
 
   /**
    * Handles copying the playlist URL to clipboard
