@@ -1,3 +1,16 @@
+/**
+ * Screensize utility for breakpoints based on Tailwind CSS.
+ * - sm: 640px and up
+ * - md: 768px and up
+ * - lg: 1024px and up
+ * - xl: 1280px and up
+ * - two_xl: 1536px and up
+ *
+ * Also includes greater-than and less-than utilities:
+ * - gt_* (greater than): Matches the next breakpoint up
+ * - lt_* (less than): Matches below the specified breakpoint
+ */
+
 import { MediaQuery } from "svelte/reactivity";
 
 const smM = new MediaQuery("min-width: 640px", false);

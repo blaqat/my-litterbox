@@ -1,13 +1,12 @@
 <script lang="ts">
   import { activeProject, closeProject } from "./projectStore";
-  import { ProjectState, ProjectCategory, type Project } from "./ProjectData";
+  import { ProjectState, ProjectCategory } from "./ProjectData";
   import { marked } from "marked";
   import TechTag from "@components/TechTag.svelte";
   import { GithubLogo, Link, X } from "phosphor-svelte";
   import { getProjectDuration as duration } from "@components/Projects/ProjectData";
   import Prism from "prismjs";
-  import { onMount, tick } from "svelte";
-  // import "prismjs/themes/prism-coy.css";
+  import { tick } from "svelte";
   import "prismjs/components/prism-rust";
   import "prism-themes/themes/prism-vs.css";
 
@@ -22,6 +21,7 @@
   }
 
   $effect(() => {
+    // highlights code blocks with Prism when a modal is opened
     if (project) {
       tick().then(() => {
         Prism.highlightAll();
@@ -57,6 +57,7 @@
         <X size={16} weight="bold" />
       </button>
 
+      <!-- modal header (name, duration, status, type) -->
       <header class="flex items-start justify-between gap-4 pr-8">
         <div>
           <h2 class="text-xl font-semibold">{project.name}</h2>
@@ -92,15 +93,18 @@
         </span>
       </header>
 
+      <!-- description -->
       <article class="mt-4 text-gray-800 prose max-w-none">
         {@html renderMarkdown(project.description)}
       </article>
 
+      <!-- media -->
       {#if project.images && project.images.length}
         <h3 class="mt-5 text-sm font-medium text-gray-700">Media</h3>
         <div class="mt-2 grid gap-3 sm:grid-cols-3">
           {#each project.images as img}
             {#if /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(img.src)}
+              <!-- videos -->
               <div class="block relative group">
                 <!-- svelte-ignore a11y_media_has_caption -->
                 <video
@@ -121,6 +125,7 @@
                 </div>
               </div>
             {:else}
+              <!-- images -->
               <a
                 href={img.src}
                 target="_blank"
@@ -144,6 +149,7 @@
         </div>
       {/if}
 
+      <!-- tech stack -->
       <div class="mt-6 flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h3 class="text-sm font-medium text-gray-700">Stack</h3>
@@ -153,6 +159,8 @@
             {/each}
           </div>
         </div>
+
+        <!-- external links -->
         {#if project.github || project.view}
           <div>
             <h3 class="text-sm font-medium text-gray-700 -translate-x-1">

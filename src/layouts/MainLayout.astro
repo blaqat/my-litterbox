@@ -5,6 +5,7 @@ import Header from "@components/Header.svelte";
 import Player from "@components/Music/Player.svelte";
 import SEO from "@components/SEO.astro";
 import { Device } from "@lib/device.svelte";
+import convertHoverToFingerDown from "@lib/hover-to-tap";
 
 export interface Props {
   pageTitle?: string;
@@ -29,6 +30,7 @@ const { pageTitle } = Astro.props;
   <body class="min-h-screen flex flex-col font-sans">
     <ClientRouter />
     <Header client:only />
+    <!-- Background Colors -->
     <div id="background-overlays" class="w-full h-full fixed top-0 left-0 -z-5">
       <div
         class="absolute top-0 left-0 w-1/3 h-1/3 bg-sea-pink-400 opacity-12 blur-[120px] rounded-full"
@@ -47,98 +49,22 @@ const { pageTitle } = Astro.props;
       >
       </div>
     </div>
+
     <Player client:only desktop={Device.gt_sm} />
+
     <main class="flex-1 p-6 max-w-4xl mx-auto">
       {pageTitle && <h1 class="text-2xl font-bold mb-4">{pageTitle}</h1>}
       <slot />
     </main>
+
     <script is:inline>
       (function () {
-        // Only enable on devices without hover (most touch devices)
+        // Only enable on touch devices
         const isTouchPrimary =
           typeof window !== "undefined" &&
           (window.matchMedia?.("(hover: none)")?.matches ||
-            window.matchMedia?.("(pointer: coarse)")?.matches);
-
-        if (!isTouchPrimary) return;
-
-        let activeEl = null;
-        let added = [];
-
-        function isInteractive(el) {
-          if (!el || !(el instanceof Element)) return false;
-          const tag = el.tagName.toLowerCase();
-          if (tag === "button" || tag === "a") return true;
-          const role = el.getAttribute("role");
-          if (role === "button") return true;
-          return false;
-        }
-
-        function findInteractive(start) {
-          let el = start instanceof Element ? start : null;
-          while (el) {
-            if (isInteractive(el)) return el;
-            el = el.parentElement;
-          }
-          return null;
-        }
-
-        function collectHoverClasses(el) {
-          // Convert Tailwind hover:... classes to their base class to simulate hover
-          // Example: hover:bg-slate-200 -> bg-slate-200
-          const classes = Array.from(el.classList);
-          const toAdd = [];
-          for (const cls of classes) {
-            // Skip group-hover/peer-hover variants (out of scope)
-            if (cls.includes("group-hover:") || cls.includes("peer-hover:"))
-              continue;
-
-            // Handle responsive variants like sm:hover:..., md:hover:... by stripping to base
-            // We only map when a :hover segment exists somewhere
-            if (cls.includes("hover:")) {
-              const parts = cls.split(":");
-              const hoverIndex = parts.lastIndexOf("hover");
-              if (hoverIndex !== -1 && hoverIndex < parts.length - 1) {
-                const base = parts.slice(hoverIndex + 1).join(":");
-                if (base && !el.classList.contains(base)) toAdd.push(base);
-              }
-            }
-          }
-          return toAdd;
-        }
-
-        function cleanup() {
-          if (activeEl && added.length) {
-            for (const c of added) activeEl.classList.remove(c);
-          }
-          activeEl = null;
-          added = [];
-        }
-
-        function onPointerDown(e) {
-          cleanup();
-          const target = e.target;
-          const el = findInteractive(target);
-          if (!el) return;
-          const toAdd = collectHoverClasses(el);
-          if (!toAdd.length) return;
-          activeEl = el;
-          added = toAdd;
-          for (const c of toAdd) el.classList.add(c);
-        }
-
-        function onPointerEnd() {
-          cleanup();
-        }
-
-        // Use capture to run early
-        document.addEventListener("pointerdown", onPointerDown, true);
-        document.addEventListener("pointerup", onPointerEnd, true);
-        document.addEventListener("pointercancel", onPointerEnd, true);
-        document.addEventListener("pointerleave", onPointerEnd, true);
-        document.addEventListener("touchend", onPointerEnd, true);
-        document.addEventListener("touchcancel", onPointerEnd, true);
-        window.addEventListener("blur", onPointerEnd);
+            window.navigator?.maxTouchPoints > 0);
+        if (isTouchPrimary) convertHoverToFingerDown();
       })();
     </script>
   </body>

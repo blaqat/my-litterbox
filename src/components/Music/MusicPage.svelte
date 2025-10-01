@@ -1,8 +1,12 @@
 <script lang="ts">
-  import MusicGrid from "./MusicGrid.svelte";
   import MusicModal from "./MusicModal.svelte";
   import MusicTypeFilter from "./MusicTypeFilter.svelte";
-  import { type MusicItem, MusicType, MusicInstrument } from "./types";
+  import {
+    type MusicData,
+    MusicType,
+    MusicInstrument,
+    type CollectionSingle,
+  } from "./types";
   import { MagnifyingGlass as Search } from "phosphor-svelte";
   import { matchesQuery, sortByDate, matchesInstrumentFilter } from "./utils";
   import { swapQueue, play, queue, pause } from "./MusicData.svelte";
@@ -12,16 +16,32 @@
     findSongsByIds,
     findSongById,
   } from "./MusicQueries";
+  import MusicCard from "./MusicCard.svelte";
 
-  let { music }: { music: MusicItem[] } = $props();
+  let { music }: { music: MusicData[] } = $props();
 
+  // Modal state
+  let modalOpen = $state(false);
+  let modalSong = $state<MusicData | null>(null);
+  let modalIsPlaying = $derived(
+    modalSong &&
+      queue.isPlaying &&
+      queue.songs[queue.currentIndex % queue.songs.length]?.name ===
+        modalSong?.name
+  );
+
+  // Music list state
   let query = $state("");
+
   let selectedInstruments = $state([
     MusicInstrument.Piano,
     MusicInstrument.Beepbox,
     MusicInstrument.DAW,
   ]);
+
   let sorted = $state(sortByDate(music));
+
+  // Final filtered list of music to display (based on search, query, and instrument filter)
   let filtered = $derived(
     sorted
       .filter((item) => matchesQuery(item, query))
@@ -43,88 +63,99 @@
       })
   );
 
-  let modalOpen = $state(false);
-  let modalSong = $state<MusicItem | null>(null);
-  let playingModal = $derived(
-    modalSong &&
-      queue.isPlaying &&
-      queue.songs[queue.currentIndex % queue.songs.length]?.name ===
-        modalSong?.name
-  );
-
+  // Handles updating the queue and playing song based on URL query parameters
   onMount(() => {
     swapQueue();
     handleQueryParameters();
   });
 
+  /**
+   * Handles the "c" (continue) URL parameter to continue playing a specific song at a given time.
+   * @param c Continue parameter in the format "songId,timeInSeconds"
+   * @example c=song1,90 (to continue song1 at 90 seconds)
+   */
+  function handleContinueParam(c: string) {
+    const [songId, timeStr] = c.split(",");
+    const timeSeconds = parseInt(timeStr, 10);
+
+    if (songId && !isNaN(timeSeconds)) {
+      const allSingles = sorted
+        .flatMap((item) =>
+          item.type === MusicType.Single ? [item] : item.songs
+        )
+        .filter((song) => song.url);
+
+      const foundSongs = findSongsByIds([songId], allSingles);
+      if (foundSongs.length > 0) {
+        const songIndex = queue.songs.findIndex(
+          (s) => s.url === foundSongs[0].url
+        );
+        if (songIndex >= 0) {
+          play(songIndex, timeSeconds);
+          setTimeout(() => {
+            pause();
+          }, 100);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handles the "s" (playlist) URL parameter to create a custom playlist.
+   * @param s Comma-separated list of song IDs
+   * @example s=song1,song2,song3
+   */
+  function handlePlaylistParam(s: string) {
+    const songIds = s.split(",").filter(Boolean);
+    // Create a flat list of all collection's songs
+    const allSingles = sorted
+      .flatMap((item) => {
+        if (item.type === MusicType.Single) {
+          return [item];
+        } else {
+          return item.songs.map((song, index) => ({
+            ...song,
+            parentRefData: {
+              name: item.name,
+              index: index,
+              total: item.songs.length,
+            },
+          }));
+        }
+      })
+      .filter((song) => song.url);
+
+    const foundSongs = findSongsByIds(songIds, allSingles);
+    if (foundSongs.length > 0) {
+      const playlistItems: MusicData[] = foundSongs.map((song) => ({
+        ...song,
+        type: MusicType.Single,
+      }));
+      // Updates the displayed list to only show the playlist items
+      sorted = playlistItems;
+      // Updates the queue with the new raw playlist
+      swapQueue(playlistItems, { sort: false });
+    }
+  }
+
+  /**
+   * Handles URL query parameters for search, continue, playlist, and open modal.
+   */
   function handleQueryParameters() {
     const queries = parseMusicQueries();
 
-    // Handle search query parameter
     if (queries.q) {
       query = queries.q;
     }
 
-    // Handle continue parameter (song,time)
     if (queries.c) {
-      const [songId, timeStr] = queries.c.split(",");
-      const timeSeconds = parseInt(timeStr, 10);
-
-      if (songId && !isNaN(timeSeconds)) {
-        const allSingles = sorted
-          .flatMap((item) =>
-            item.type === MusicType.Single ? [item] : item.songs
-          )
-          .filter((song) => song.url);
-
-        const foundSongs = findSongsByIds([songId], allSingles);
-        if (foundSongs.length > 0) {
-          const songIndex = queue.songs.findIndex(
-            (s) => s.url === foundSongs[0].url
-          );
-          if (songIndex >= 0) {
-            play(songIndex, timeSeconds);
-            setTimeout(() => {
-              pause();
-            }, 100);
-          }
-        }
-      }
+      handleContinueParam(queries.c);
     }
 
-    // Handle playlist parameter
     if (queries.s) {
-      const songIds = queries.s.split(",").filter(Boolean);
-      // Create a flat list of all reffed singles from the music collection
-      const allSingles = sorted
-        .flatMap((item) => {
-          if (item.type === MusicType.Single) {
-            return [item];
-          } else {
-            return item.songs.map((song, index) => ({
-              ...song,
-              parentRefData: {
-                name: item.name,
-                index: index,
-                total: item.songs.length,
-              },
-            }));
-          }
-        })
-        .filter((song) => song.url);
-
-      const foundSongs = findSongsByIds(songIds, allSingles);
-      if (foundSongs.length > 0) {
-        const playlistItems: MusicItem[] = foundSongs.map((song) => ({
-          ...song,
-          type: MusicType.Single,
-        }));
-        sorted = playlistItems;
-        swapQueue(playlistItems, false);
-      }
+      handlePlaylistParam(queries.s);
     }
 
-    // Handle open modal parameter
     if (queries.o) {
       const songToOpen = findSongById(queries.o, music);
       if (songToOpen) {
@@ -134,6 +165,16 @@
     }
   }
 </script>
+
+<MusicModal
+  song={modalSong}
+  isOpen={modalOpen}
+  onClose={() => {
+    modalOpen = false;
+    modalSong = null;
+  }}
+  forcePlay={modalIsPlaying || undefined}
+/>
 
 <div class="flex flex-col gap-4 mb-6">
   <!-- Search bar -->
@@ -154,6 +195,7 @@
       }}
     />
   </div>
+  <!-- Filters -->
   <MusicTypeFilter
     bind:selectedInstruments
     onChange={(instruments) => {
@@ -169,15 +211,18 @@
   <hr class="my-2 border-gray-500 border-dashed mb-5" />
 {/if}
 
-<MusicGrid songs={filtered.length !== 0 ? filtered : sorted} />
-<div class="pb-35"></div>
+<!-- Music Grid -->
+<div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+  {#each filtered.length !== 0 ? filtered : sorted as song, index}
+    <MusicCard
+      {song}
+      showHint={index === 0}
+      parent_name={"parentRefData" in song
+        ? (song as CollectionSingle).parentRefData?.name
+        : undefined}
+    />
+  {/each}
+</div>
 
-<MusicModal
-  song={modalSong}
-  isOpen={modalOpen}
-  onClose={() => {
-    modalOpen = false;
-    modalSong = null;
-  }}
-  forcePlay={playingModal || undefined}
-/>
+<!-- Padding -->
+<div class="pb-35"></div>

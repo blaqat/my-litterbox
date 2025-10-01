@@ -1,11 +1,12 @@
 <script lang="ts">
   import { marked } from "marked";
   import {
-    type MusicItem,
+    type MusicData,
     MusicType,
     MusicStatus,
     MusicInstrument,
     type LinkLocation,
+    type Single,
   } from "./types";
   import controller from "./MusicData.svelte";
   import { getMusicDuration, matchesPlaying, linkMapColors } from "./utils";
@@ -35,30 +36,31 @@
     onClose,
     forcePlay,
   }: {
-    song: MusicItem | null;
+    song: MusicData | null;
     isOpen: boolean;
     onClose: () => void;
     forcePlay?: boolean;
   } = $props();
 
-  // derive playing state
-  let nowPlaying = $derived(
+  let songCurrentlyPlaying = $derived(
     controller.queue.songs[
       controller.queue.currentIndex % controller.queue.songs.length
     ]
   );
-  let isplaying = $derived(
+
+  let matchesSongPlaying = $derived(
     forcePlay ||
       (song !== null &&
         controller.queue.isPlaying &&
-        matchesPlaying(song, nowPlaying))
+        matchesPlaying(song, songCurrentlyPlaying))
   );
-
-  const onplay = controller.playSong;
-  const onpause = () => controller.pause();
 
   let copyFeedback = $state("");
 
+  /**
+   * Handles copying the playlist URL to clipboard
+   * Displays feedback message based on success/failure
+   */
   async function handleCopyPlaylist() {
     if (!song) return;
 
@@ -113,6 +115,7 @@
 
       <!-- Header -->
       <header class="flex gap-3 items-center">
+        <!-- Song Type -->
         <div
           class="text-gray-400 shrink-0 mt-0.5 border rounded-lg p-1"
           class:bg-malibu-100={song.instrument === MusicInstrument.Piano}
@@ -139,6 +142,8 @@
             <MusicNote size={18} />
           {/if}
         </div>
+
+        <!-- Song Name + Status -->
         <div>
           <h2 class="text-xl font-semibold">{song.name}</h2>
           <p class="text-xs text-gray-500 flex items-center gap-2 mt-0.5">
@@ -185,7 +190,7 @@
         </section>
       {/if}
 
-      <!-- Links -->
+      <!-- External Links -->
       {#if song.links}
         {@const links = Object.entries(song.links ?? {}) as [
           LinkLocation,
@@ -219,11 +224,11 @@
         </section>
       {/if}
 
-      {#if song.url}
-        <!-- Sticky buttons container -->
+      {#if (song as Single).url}
+        <!-- Sticky action buttons (play, copy) -->
         <div class="sticky bottom-0 flex justify-end pt-4 pb-2 -mx-6 px-6">
           <div class="flex items-center gap-2">
-            <!-- Copy playlist link button -->
+            <!-- Copy playlist -->
             <button
               class="rounded-full p-2 hover:scale-110 hover:shadow-lg bg-slate-50/40 border border-slate-300 text-slate-600 backdrop-blur-xs transition-all duration-200 hover:border-blue-400 hover:bg-blue-100/50 hover:text-blue-800 active:scale-95"
               onclick={handleCopyPlaylist}
@@ -233,23 +238,23 @@
               <Copy size={16} weight="bold" />
             </button>
 
-            <!-- Play button -->
+            <!-- Play/Pause -->
             <button
-              class="rounded-full {'p-3 hover:scale-110'} hover:shadow-lg {isplaying
+              class="rounded-full {'p-3 hover:scale-110'} hover:shadow-lg {matchesSongPlaying
                 ? 'border-light-wisteria-400 bg-light-wisteria-200 text-light-wisteria-800'
                 : 'bg-slate-50/40 border-slate-300 text-slate-600'} 
               border backdrop-blur-xs no-underline transition-all duration-200 hover:border-light-wisteria-400 hover:bg-light-wisteria-300/50 hover:text-light-wisteria-800 active:scale-95"
               onclick={(e) => {
                 e.stopPropagation();
-                if (!isplaying) {
-                  onplay(song);
+                if (!matchesSongPlaying) {
+                  controller.playSong(song);
                 } else {
-                  onpause();
+                  controller.pause();
                 }
               }}
               tabindex="0"
             >
-              {#if !isplaying}
+              {#if !matchesSongPlaying}
                 <span class="flex items-center gap-2">
                   <Play size={20} aria-label="Play" weight="fill" />
                 </span>

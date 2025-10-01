@@ -1,3 +1,6 @@
+/**
+ * Types for music.json data content and related utilities.
+ */
 import type { ProjectDate } from "@components/Projects/ProjectData";
 
 export type LinkLocation =
@@ -31,7 +34,7 @@ export enum MusicType {
 
 export interface BaseMusicItem {
   name: string;
-  start?: ProjectDate;
+  start: ProjectDate;
   end?: ProjectDate;
   status: MusicStatus;
   instrument: MusicInstrument;
@@ -45,7 +48,7 @@ export interface Single extends BaseMusicItem {
   url: string;
 }
 
-export type RefdSingle = Single & {
+export type CollectionSingle = Single & {
   parentRefData?: { name: string; index: number; total: number };
 };
 
@@ -54,8 +57,4 @@ export interface Collection extends BaseMusicItem {
   songs: Single[];
 }
 
-export type MusicItem = Single | Collection;
-
-export function isCollection(item: MusicItem): item is Collection {
-  return (item as Collection).songs !== undefined;
-}
+export type MusicData = Single | Collection;

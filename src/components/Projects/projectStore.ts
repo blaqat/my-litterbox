@@ -22,6 +22,12 @@ export function openProject(
   }
 }
 
+/**
+ * Closes the currently active project and updates the browser history.
+ *
+ * @param opts - Configuration options for closing the project
+ * @param opts.fromPopState - If true, skips updating browser history to prevent infinite loops when called from popstate events
+ */
 export function closeProject(opts: { fromPopState?: boolean } = {}) {
   activeProject.set(null);
   if (typeof window !== "undefined" && !opts.fromPopState) {
@@ -29,6 +35,7 @@ export function closeProject(opts: { fromPopState?: boolean } = {}) {
   }
 }
 
+// Listen for popstate events to handle back/forward navigation
 if (typeof window !== "undefined") {
   window.addEventListener("popstate", () => {
     const path = window.location.pathname;
@@ -44,6 +51,14 @@ if (typeof window !== "undefined") {
   });
 }
 
+/**
+ * Initializes the projects store with the provided projects array and handles route-based project navigation.
+ *
+ * This function sets up the global projects state and checks if the current URL path corresponds to a specific
+ * project route. If a matching project is found based on the URL slug, it automatically opens that project.
+ *
+ * @param projects - Array of Project objects to initialize the store with
+ */
 export function initializeProjects(projects: Project[]) {
   if (typeof window === "undefined") return;
   _projects = projects;

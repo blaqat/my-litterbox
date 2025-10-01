@@ -14,28 +14,29 @@
   let { projects }: { projects: Project[] } = $props();
 
   let query = $state("");
-  // Empty = all selected (implicit)
+
   let selectedCategories = $state<ProjectCategory[]>([
     ProjectCategory.Personal,
     ProjectCategory.Work,
     ProjectCategory.School,
   ]);
 
-  function matchesFilters(p: Project) {
-    // If none selected treat as all selected
-    if (selectedCategories.length === 0) return true;
-    return selectedCategories.includes(p.type);
-  }
-
   let filtered = $derived(
     projects.filter((p) => matches(p, query)).filter((p) => matchesFilters(p))
   );
+
   let groups = $derived(getSortedProjects([...filtered]));
+
   let years = $derived(
     Object.keys(groups)
       .map((y) => parseInt(y))
       .sort((a, b) => b - a)
   );
+
+  function matchesFilters(p: Project) {
+    if (selectedCategories.length === 0) return true;
+    return selectedCategories.includes(p.type);
+  }
 
   onMount(() => {
     if (typeof window !== "undefined") {
@@ -45,6 +46,7 @@
 </script>
 
 <div class="flex flex-col gap-3 mb-4">
+  <!-- Search Bar -->
   <div class="relative w-full">
     <Search
       size={18}
@@ -57,12 +59,8 @@
       class="w-full rounded-md border border-gray-300 bg-white pr-3 pl-9 py-2 sm:text-[16px] md:text-sm"
     />
   </div>
-  <ProjectsFilter
-    bind:selectedCategories
-    onChange={() => {
-      /* derived reactive filtering will update */
-    }}
-  />
+  <!-- Filters -->
+  <ProjectsFilter bind:selectedCategories onChange={() => {}} />
 </div>
 
 {#if filtered.length === 0}
@@ -70,6 +68,7 @@
   <hr class="my-2 border-gray-500 border-dashed" />
 {/if}
 
+<!-- Project Grid -->
 <div class="pb-25">
   {#each years as year, yearIndex}
     <section class="mb-8">

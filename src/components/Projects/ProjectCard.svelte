@@ -11,26 +11,25 @@
   import { openProject } from "./projectStore";
   import { marked } from "marked";
 
-  // export let project: Project;
   let { project, showHint = false }: { project: Project; showHint?: boolean } =
     $props();
 
-  let mouse_is_over_child = $state(false);
+  let mouseOverChild = $state(false);
   let dismissHint = $state(false);
 
-  function hover() {
-    mouse_is_over_child = true;
+  function handleMouseEnterChild() {
+    mouseOverChild = true;
   }
 
-  function unhover() {
-    mouse_is_over_child = false;
+  function handleMouseLeaveCHild() {
+    mouseOverChild = false;
   }
 
   function handleCardClick(e: MouseEvent) {
     e.stopPropagation();
     openProject(project);
 
-    // Dismiss hint when card is clicked
+    // Dismiss "click me" hint when card is clicked
     if (showHint || dismissHint === false) {
       dismissHint = true;
       if (typeof window !== "undefined") {
@@ -43,12 +42,13 @@
 <div class="relative group min-w-0">
   <button
     type="button"
-    class="border-gray-300 text-left h-full w-full relative border p-4 rounded-xl transition cursor-pointer hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200 bg-white hover:scale-102 {!mouse_is_over_child &&
+    class="border-gray-300 text-left h-full w-full relative border p-4 rounded-xl transition cursor-pointer hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200 bg-white hover:scale-102 {!mouseOverChild &&
       'active:scale-99'}"
     onclick={handleCardClick}
     data-project-slug={project.slug}
     aria-controls="project-modal"
   >
+    <!-- Click Me Hint -->
     {#if showHint}
       <ClickHint
         hintKey="project-card-click"
@@ -57,6 +57,8 @@
         dismiss={dismissHint}
       />
     {/if}
+
+    <!-- header -->
     <header class="flex items-start justify-between">
       <h3 class="font-semibold text-lg leading-tight pr-2">{project.name}</h3>
       <span
@@ -75,6 +77,7 @@
       </span>
     </header>
 
+    <!-- duration and status -->
     <p class="text-xs text-gray-500 mt-0.5 flex items-center gap-2">
       <span>{duration(project)}</span>
       {#if project.status !== ProjectState.Completed}
@@ -91,14 +94,16 @@
       {/if}
     </p>
 
+    <!-- description -->
     <article class="mt-2 text-gray-700 line-clamp-5 prose prose-sm">
       {@html marked(project.description)}
     </article>
 
+    <!-- footer -->
     <footer class="justify-between mt-8">
       <div class="h-[30px]"></div>
 
-      <!-- Tech stack tags -->
+      <!-- tech stack tags -->
       <div class="ml-auto absolute bottom-3 left-4">
         <div class="flex gap-2 flex-wrap min-w-0">
           {#each project.stack.slice(0, 3) as tech}
@@ -114,7 +119,7 @@
         </div>
       </div>
 
-      <!-- External links and view button -->
+      <!-- external link buttons -->
       <div class="ml-auto absolute bottom-3 right-4">
         <div class="flex gap-2.5 items-center shrink-0 whitespace-nowrap">
           {#if project.github}
@@ -125,8 +130,8 @@
               aria-label="Open GitHub"
               title="Open GitHub"
               onclick={(e) => e.stopPropagation()}
-              onmouseenter={hover}
-              onmouseleave={unhover}
+              onmouseenter={handleMouseEnterChild}
+              onmouseleave={handleMouseLeaveCHild}
             >
               <GithubLogo size={16} weight="duotone" />
             </a>
@@ -138,8 +143,8 @@
               target="_blank"
               aria-label="View Project"
               onclick={(e) => e.stopPropagation()}
-              onmouseenter={hover}
-              onmouseleave={unhover}
+              onmouseenter={handleMouseEnterChild}
+              onmouseleave={handleMouseLeaveCHild}
               title="View Project"
             >
               <Link size={16} weight="duotone" />

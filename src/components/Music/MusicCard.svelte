@@ -9,7 +9,7 @@
     MusicType,
     type LinkLocation,
     type LinkMap,
-    type MusicItem,
+    type MusicData,
   } from "./types";
   import { getMusicDuration, linkMapColors, matchesPlaying } from "./utils";
   import {
@@ -44,7 +44,7 @@
   }: {
     forcePlay?: boolean;
     parent_name?: string;
-    song: MusicItem;
+    song: MusicData;
     mini?: boolean;
     showHint?: boolean;
     class?: string;
@@ -52,14 +52,31 @@
     onmouseleave?: () => void;
   } = $props();
 
-  let mouse_is_over_child = $state(false);
-  let collection_is_opened = $state(false);
+  let mouseOverChild = $state(false);
   let collectionScrollContainer: HTMLDivElement | undefined = $state();
+  let collectionOpen = $state(false);
+  let modalOpen = $state(false);
   let copyFeedback = $state("");
   let dismissHint = $state(false);
 
+  // Map of link locations to their respective icons and colors
+  const links = $derived(
+    Object.entries(song.links ?? {}) as [LinkLocation, string][]
+  );
+
+  let songCurrentlyPlaying = $derived(
+    controller.queue.songs[
+      controller.queue.currentIndex % controller.queue.songs.length
+    ]
+  );
+
+  let cardHasSongPlaying = $derived(
+    forcePlay ||
+      (controller.queue.isPlaying && matchesPlaying(song, songCurrentlyPlaying))
+  );
+
   function handleCardClick() {
-    // Dismiss hint when card is clicked
+    // Dismiss click me hint when card is clicked
     if (showHint || dismissHint === false) {
       dismissHint = true;
       if (typeof window !== "undefined") {
@@ -67,13 +84,15 @@
       }
     }
 
-    // Original click logic
+    // Open modal for singles, toggle collection view for collections
     if (song.type === MusicType.Collection) {
-      collection_is_opened = !collection_is_opened;
+      collectionOpen = !collectionOpen;
     } else {
       modalOpen = true;
     }
   }
+
+  // Handles copying playlist link for collections
   async function handleCopyPlaylist(e: Event) {
     e.stopPropagation();
 
@@ -92,44 +111,25 @@
     }
   }
 
-  const links = $derived(
-    Object.entries(song.links ?? {}) as [LinkLocation, string][]
-  );
-
-  function hover() {
-    mouse_is_over_child = true;
+  function handleMouseEnterCard() {
+    mouseOverChild = true;
     onmouseover?.();
   }
 
-  function unhover() {
-    mouse_is_over_child = false;
+  function handleMouseLeaveCard() {
+    mouseOverChild = false;
     onmouseleave?.();
   }
 
-  let nowPlaying = $derived(
-    controller.queue.songs[
-      controller.queue.currentIndex % controller.queue.songs.length
-    ]
-  );
-
-  let isplaying = $derived(
-    forcePlay ||
-      (controller.queue.isPlaying && matchesPlaying(song, nowPlaying))
-  );
-
-  // let isplaying = true
-
-  const onplay = controller.playSong;
-  const onpause = () => controller.pause();
-  let modalOpen = $state(false);
-
-  // Function to scroll to currently playing song in collection
-  function scrollToCurrentlyPlaying() {
+  /**
+   * Auto-scrolls open collection to show currently playing song.
+   */
+  function handleScrollToPlaying() {
     if (!collectionScrollContainer || song.type !== MusicType.Collection)
       return;
 
     const playingIndex = song.songs.findIndex(
-      (c_song) => c_song.url === nowPlaying?.url && isplaying
+      (c_song) => c_song.url === songCurrentlyPlaying?.url && cardHasSongPlaying
     );
 
     if (playingIndex === -1) return;
@@ -154,29 +154,32 @@
 
   // Auto-scroll when collection opens and there's a currently playing song
   $effect(() => {
-    if (collection_is_opened && song.type === MusicType.Collection) {
-      // Use setTimeout to ensure the DOM has updated
-      setTimeout(() => scrollToCurrentlyPlaying(), 150);
-    } else if (collection_is_opened) {
-      collection_is_opened = false;
+    if (collectionOpen && song.type === MusicType.Collection) {
+      // Ensure DOM updates before scrolling
+      setTimeout(() => handleScrollToPlaying(), 150);
+    } else if (collectionOpen) {
+      // If collection is Open but song is not a collection (shouldn't happen), close it
+      collectionOpen = false;
     }
   });
 
   // Auto-scroll when currently playing song changes and collection is open
   $effect(() => {
     if (
-      collection_is_opened &&
-      nowPlaying &&
+      collectionOpen &&
+      songCurrentlyPlaying &&
       song.type === MusicType.Collection
     ) {
-      scrollToCurrentlyPlaying();
+      handleScrollToPlaying();
     }
   });
 </script>
 
 {#if song.type === MusicType.Collection && song.songs.length === 1}
+  <!-- Single Card if Only one song from collection is found -->
   {@const c_song = song.songs[0]}
-  {@const playing = isplaying && c_song.url === nowPlaying?.url}
+  {@const playing =
+    cardHasSongPlaying && c_song.url === songCurrentlyPlaying?.url}
   <MusicCard song={c_song} parent_name={song.name} forcePlay={playing} />
 {:else}
   <MusicModal
@@ -187,34 +190,35 @@
   />
   <div
     class="relative group min-w-0 {song.type === MusicType.Collection &&
-      collection_is_opened &&
+      collectionOpen &&
       'md:col-span-2 sm:col-span-1'} {_class}"
   >
     <div
       role="button"
       tabindex="0"
       class:hover:translate-y-1={song.type === MusicType.Collection &&
-        !collection_is_opened}
+        !collectionOpen}
       class:group-hover:translate-y-1={song.type === MusicType.Collection &&
-        !collection_is_opened}
-      class:group-hover:bg-slate-50={!isplaying &&
+        !collectionOpen}
+      class:group-hover:bg-slate-50={!cardHasSongPlaying &&
         song.type === MusicType.Collection &&
-        !collection_is_opened}
-      class:group-hover:bg-light-wisteria-50={isplaying &&
+        !collectionOpen}
+      class:group-hover:bg-light-wisteria-50={cardHasSongPlaying &&
         song.type === MusicType.Collection &&
-        !collection_is_opened}
-      class=" {isplaying
+        !collectionOpen}
+      class=" {cardHasSongPlaying
         ? 'border-light-wisteria-300 border-double bg-[#FBF9FC] hover:bg-light-wisteria-50'
-        : 'border-gray-300 bg-white hover:bg-slate-50'} text-left {!collection_is_opened &&
+        : 'border-gray-300 bg-white hover:bg-slate-50'} text-left {!collectionOpen &&
         'h-full'} w-full relative border {mini
         ? 'p-3 rounded-lg'
         : 'p-4 rounded-xl'} transition cursor-pointer hover:shadow-sm hover:shadow-slate-200 z-5 {song.type !==
-        MusicType.Collection && 'hover:scale-102'} {!mouse_is_over_child &&
+        MusicType.Collection && 'hover:scale-102'} {!mouseOverChild &&
         'active:scale-99'}"
       aria-controls="song-modal"
       onclick={handleCardClick}
       onkeydown={() => {}}
     >
+      <!-- Click Me Hint -->
       {#if showHint}
         <ClickHint
           hintKey="music-card-click"
@@ -223,6 +227,7 @@
           dismiss={dismissHint}
         />
       {/if}
+      <!-- header (name, tracks, instrument) -->
       <header class="flex items-start justify-between">
         <h3
           class="gap-1 flex items-center flex-wrap font-semibold {mini
@@ -248,6 +253,7 @@
           {/if}
         </h3>
 
+        <!-- Instrument Tag -->
         <div
           class="text-gray-400 shrink-0 mt-0.5 border rounded-lg p-1"
           class:bg-malibu-100={song.instrument === MusicInstrument.Piano}
@@ -293,6 +299,7 @@
       </header>
 
       {#if !mini}
+        <!-- Status and Duration -->
         <p class="text-xs text-gray-500 mt-0.5 flex items-center gap-2">
           <span>{getMusicDuration(song)}</span>
           {#if song.status !== MusicStatus.Complete}
@@ -310,6 +317,7 @@
         </p>
       {/if}
 
+      <!-- Description -->
       <article
         class="{!mini && 'mt-2'} text-gray-700 {mini
           ? 'line-clamp-2'
@@ -320,6 +328,7 @@
         {/if}
       </article>
 
+      <!-- External Links -->
       <footer class="justify-between {mini ? 'mt-4' : 'mt-8'}">
         <div class="h-[30px]"></div>
         <div class="ml-auto absolute bottom-3 left-4">
@@ -337,8 +346,8 @@
                 target="_blank"
                 aria-label="Open {loc} Link"
                 onclick={(e) => e.stopPropagation()}
-                onmouseenter={hover}
-                onmouseleave={unhover}
+                onmouseenter={handleMouseEnterCard}
+                onmouseleave={handleMouseLeaveCard}
               >
                 {#if loc === "spotify"}
                   <SpotifyLogo size={16} weight="duotone" />
@@ -355,14 +364,16 @@
             {/each}
           </div>
         </div>
+
+        <!-- Action Buttons (Play, Copy) -->
         <div class="flex items-center gap-2 absolute bottom-3 right-4">
-          <!-- Copy playlist link button for collections -->
+          <!-- Copy playlist -->
           {#if song.type === MusicType.Collection}
             <button
               class="rounded-full p-2 hover:scale-110 hover:shadow-lg bg-slate-50/40 border border-slate-300 text-slate-600 backdrop-blur-xs transition-all duration-200 hover:border-blue-400 hover:bg-blue-100/50 hover:text-blue-800 active:scale-95"
               onclick={handleCopyPlaylist}
-              onmouseenter={hover}
-              onmouseleave={unhover}
+              onmouseenter={handleMouseEnterCard}
+              onmouseleave={handleMouseLeaveCard}
               title="Copy playlist link"
               tabindex="0"
             >
@@ -370,28 +381,37 @@
             </button>
           {/if}
 
-          <!-- Play button -->
+          <!-- Copy feedback -->
+          {#if copyFeedback}
+            <span
+              class="absolute -top-6 -left-4 bg-black/80 text-white text-xs px-2 py-1 rounded z-10"
+            >
+              {copyFeedback}
+            </span>
+          {/if}
+
+          <!-- Play -->
           {#if song.type === MusicType.Collection || !!song.url}
             <button
               class="rounded-full {mini
                 ? 'p-2 hover:scale-120'
-                : 'p-3 hover:scale-110'} hover:shadow-lg {isplaying
+                : 'p-3 hover:scale-110'} hover:shadow-lg {cardHasSongPlaying
                 ? 'border-light-wisteria-400 bg-light-wisteria-200 text-light-wisteria-800'
                 : 'bg-slate-50/40 border-slate-300 text-slate-600'} 
             border backdrop-blur-xs no-underline transition-all duration-200 hover:border-light-wisteria-400 hover:bg-light-wisteria-300/50 hover:text-light-wisteria-800 active:scale-95"
               onclick={(e) => {
                 e.stopPropagation();
-                if (!isplaying) {
-                  onplay(song);
+                if (!cardHasSongPlaying) {
+                  controller.playSong(song);
                 } else {
-                  onpause();
+                  controller.pause();
                 }
               }}
-              onmouseenter={hover}
-              onmouseleave={unhover}
+              onmouseenter={handleMouseEnterCard}
+              onmouseleave={handleMouseLeaveCard}
               tabindex="0"
             >
-              {#if !isplaying}
+              {#if !cardHasSongPlaying}
                 <span
                   class="flex items-center gap-2 {song.type ===
                     MusicType.Collection && 'mr-1'}"
@@ -407,28 +427,21 @@
               {/if}
             </button>
           {/if}
-
-          <!-- Copy feedback -->
-          {#if copyFeedback}
-            <div
-              class="absolute -top-8 right-0 bg-black/80 text-white text-xs px-2 py-1 rounded z-10"
-            >
-              {copyFeedback}
-            </div>
-          {/if}
         </div>
       </footer>
     </div>
 
+    <!-- Collection Song Tabs -->
     {#if song.type === MusicType.Collection}
       <span class="z-0 isloate translate-y-50">
         {#each song.songs as c_song, i}
-          {@const c_playing = isplaying && c_song.url === nowPlaying?.url}
+          {@const c_playing =
+            cardHasSongPlaying && c_song.url === songCurrentlyPlaying?.url}
           <div
             class="w-[calc(25%)] hover:-translate-y-1 hover:z-3 transition-all duration-220 absolute -top-3 rounded-xl border {c_playing
               ? 'bg-light-wisteria-100 border-light-wisteria-300'
               : 'bg-gray-100 border-slate-300'} z-1 h-10 shadow-lg shadow-black/50"
-            class:translate-y-20={collection_is_opened}
+            class:translate-y-20={collectionOpen}
             class:-translate-y-2={c_playing}
             class:z-2={c_playing}
             style:left={song.songs.length <= 8
@@ -445,14 +458,15 @@
         {/each}
         <div
           class="absolute h-10 -z-5 rounded-xl transition-all duration-75
-        {collection_is_opened
+        {collectionOpen
             ? 'w-full h-full top-0 bg-slate-200 border-slate-300 border'
             : 'w-[calc(100%-10px)] left-[5px] -top-1 bg-slate-300 border-slate-400'}"
         ></div>
       </span>
     {/if}
 
-    {#if collection_is_opened && song.type === MusicType.Collection}
+    <!-- Open Collection Song View -->
+    {#if collectionOpen && song.type === MusicType.Collection}
       <div
         bind:this={collectionScrollContainer}
         class="w-full min-w-0 max-w-full overflow-x-auto px-2 py-2 rounded-lg pr-[25%] md:pr-[33%]"
@@ -463,7 +477,8 @@
           out:slide={{ duration: 100 }}
         >
           {#each song.songs as c_song}
-            {@const c_playing = isplaying && c_song.url === nowPlaying?.url}
+            {@const c_playing =
+              cardHasSongPlaying && c_song.url === songCurrentlyPlaying?.url}
             <MusicCard
               song={c_song}
               mini

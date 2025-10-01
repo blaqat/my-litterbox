@@ -1,14 +1,10 @@
-import {
-  type Single,
-  type MusicItem,
-  MusicType,
-  type RefdSingle,
-} from "./types";
+import { type MusicData, MusicType, type CollectionSingle } from "./types";
 import music from "../../data/music.json";
 import { sortByDate } from "./utils";
 import { Device } from "@lib/device.svelte";
 
-const orderedSongList = sortByDate(music as MusicItem[])
+// Default list of songs for the queue
+const orderedSongList = sortByDate(music as MusicData[])
   .map((item) => {
     if (item.type === MusicType.Collection) {
       item.songs = item.songs.map((song, i) => ({
@@ -19,10 +15,14 @@ const orderedSongList = sortByDate(music as MusicItem[])
     return item;
   })
   .flatMap((song) => (song.type === MusicType.Single ? [song] : song.songs))
-  .filter((song) => !!song.url) as RefdSingle[];
+  .filter((song) => !!song.url) as CollectionSingle[];
 
-let _vol_store = 1;
-let _needs_del = false;
+// Internal volume store for mute toggle
+let volStore = 1;
+// Deletion sentinel for queue management (makes sure when song list is swapped, current playing song can still play once)
+let needsDel = false;
+// sentinel for double click timer
+let lastBack: ReturnType<typeof setTimeout> | undefined;
 
 export const queue = $state({
   songs: orderedSongList,
@@ -33,11 +33,21 @@ export const queue = $state({
   volume: 1,
 });
 
+/**
+ * Updates the global playback queue to either a provided subset of songs or the full ordered list.
+ *
+ *
+ * @param items - Optional array of `MusicData` (singles or collections). When omitted, the queue is
+ *                reset to the full `orderedSongList`.
+ * @param opts.sort - When `true` (default), the provided `items` will be passed through `sortByDate`
+ *                    before further processing.
+ * @returns void
+ */
 export function swapQueue(
-  items: MusicItem[] | undefined = undefined,
-  sort: boolean = true
+  items: MusicData[] | undefined = undefined,
+  opts: { sort: boolean } = { sort: true }
 ) {
-  // Handle Reset to full list
+  // Handle reset queue to default ordered list
   if (items === undefined) {
     let oldPlaying = queue.songs[queue.currentIndex];
     queue.songs = orderedSongList;
@@ -45,7 +55,6 @@ export function swapQueue(
       (s) => s.url === oldPlaying?.url && s.name === oldPlaying?.name
     );
     if (playingIndex === -1) {
-      console.warn("Current song not in full list, resetting to start");
       queue.currentIndex = -1;
     } else {
       queue.currentIndex = playingIndex;
@@ -53,8 +62,9 @@ export function swapQueue(
     return;
   }
 
+  // Handle setting queue to a specific subset of songs
   let oldPlaying = queue.songs[queue.currentIndex];
-  const newSongs = (sort ? sortByDate(items) : items)
+  const newSongs = (opts.sort ? sortByDate(items) : items)
     .map((item) => {
       if (item.type === MusicType.Collection) {
         item.songs = item.songs.map((song, i) => ({
@@ -69,39 +79,45 @@ export function swapQueue(
       return item;
     })
     .flatMap((song) => (song.type === MusicType.Single ? [song] : song.songs))
-    .filter((song) => !!song.url) as RefdSingle[];
+    .filter((song) => !!song.url) as CollectionSingle[];
 
+  // If new queue is empty, ignore the swap
   if (newSongs.length === 0) {
     console.warn("New queue is empty, ignoring");
     return;
   }
 
+  // Update the queue while trying to keep the same song playing
   queue.songs = newSongs;
   let playingIndex = queue.songs.findIndex(
     (s) => s.url === oldPlaying?.url && s.name === oldPlaying?.name
   );
 
-  // If current song is not in queue, make sure next song goes to first song
+  // If current song is not in queue, make sure next song goes to first song in new queue
   if (playingIndex === -1) {
     queue.songs.unshift(oldPlaying);
     queue.currentIndex = 0;
-    _needs_del = true;
+    needsDel = true;
   } else {
     // Otherwise, keep playing the same song
     queue.currentIndex = playingIndex;
   }
 }
 
+// Toggles mute state between 0 and last non-zero volume
 export function toggleMute() {
   if (queue.volume > 0) {
-    _vol_store = queue.volume;
+    volStore = queue.volume;
     queue.volume = 0;
   } else {
-    queue.volume = _vol_store;
+    queue.volume = volStore;
   }
 }
 
-export function playSong(item: MusicItem) {
+/**
+ * Plays a specific song or the first song in a collection.
+ */
+export function playSong(item: MusicData) {
   const isCollection = item.type === MusicType.Collection;
   let song = !isCollection ? item : item.songs[0];
   const index = queue.songs.findIndex(
@@ -119,6 +135,13 @@ export function playSong(item: MusicItem) {
   play(index);
 }
 
+/**
+ * Plays the song at the given index in the queue, or resumes if already playing.
+ * If the index is the same as the current song, it does nothing.
+ *
+ * @param index - The index of the song in the queue to play.
+ * @param time - Optional start time in seconds to begin playback from (default is 0).
+ */
 export function play(index: number, time: number = 0) {
   queue.isPlaying = true;
   if (queue.currentIndex === index) return;
@@ -127,55 +150,48 @@ export function play(index: number, time: number = 0) {
   // console.log("playing", queue.songs[queue.currentIndex].name);
 }
 
+// Initializes the queue to a specific index and time without changing play state
 export function init(index: number, time: number) {
   queue.currentIndex = index;
   queue.time = time;
 }
 
+// Pauses playback
 export function pause() {
   queue.isPlaying = false;
-  // console.log("paused", queue.songs[queue.currentIndex].name);
 }
 
-export function unpause() {
+// Resumes playback
+export function resume() {
   queue.isPlaying = true;
-  // console.log("unpaused", queue.songs[queue.currentIndex].url);
 }
 
-export function forward() {
-  if (_needs_del) {
-    // console.log("removed", queue.songs.shift()?.name);
+// Skips to the next song in the queue, or loops to the start if at the end
+export function skip() {
+  if (needsDel) {
     queue.songs.shift()?.name;
-    _needs_del = false;
+    needsDel = false;
   } else if (queue.currentIndex < queue.songs.length - 1) {
     queue.currentIndex += 1;
   } else {
     queue.currentIndex = 0;
   }
-  // console.log(
-  //   "forward to",
-  //   queue.currentIndex,
-  //   queue.songs[queue.currentIndex].name
-  // );
 }
 
-// sentinel for double click timer
-let lastBack: ReturnType<typeof setTimeout> | undefined;
-
 /**
- * handles the "back" control for the playback queue.
+ * Handles the "back" control for the playback queue.
  * if clicked once, it resets the current song's time to 0.
- * if clicked twice ON DESKTOP within 750ms it reverse to the previous song in the queue.
+ * if clicked twice **ON DESKTOP** within 750ms it reverse to the previous song in the queue.
  * @returns void
  */
-export function back() {
-  // on mobile, always just go back
-  if (Device.lt_md) return backPure();
+export function reverse() {
+  // on mobile, always just go back (for my grandparent's sake :3)
+  if (Device.lt_md) return revPure();
 
   if (lastBack) {
     clearTimeout(lastBack);
     lastBack = undefined;
-    backPure();
+    revPure();
   } else {
     queue.time = 0;
   }
@@ -185,7 +201,8 @@ export function back() {
   }, 750);
 }
 
-function backPure() {
+// Reverses to the previous song in the queue, or loops to the end if at the start
+function revPure() {
   queue.currentIndex =
     (queue.currentIndex + queue.songs.length - 1) % queue.songs.length;
 }
@@ -194,9 +211,9 @@ const controller = {
   playSong,
   play,
   pause,
-  unpause,
-  forward,
-  back,
+  resume,
+  skip,
+  reverse,
   queue,
   toggleMute,
 };

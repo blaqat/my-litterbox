@@ -19,6 +19,7 @@
   let shouldShow = $state(false);
   let mounted = $state(false);
 
+  // If already dismissed, stops from being shown again.
   onMount(() => {
     mounted = true;
     if (typeof window !== "undefined") {
@@ -34,6 +35,7 @@
     }
   });
 
+  // Stores the hint as dismissed in localStorage and hides it
   function dismissHint() {
     if (typeof window !== "undefined") {
       localStorage.setItem(`hint-dismissed-${hintKey}`, "true");
@@ -50,7 +52,6 @@
     aria-label="Click to dismiss hint"
     title="Click to dismiss this hint"
   >
-    <!-- Small "click to open!" text -->
     <span
       class="flex items-center gap-1 text-xs font-semibold text-black bg-white border-2 px-3 py-1 rounded-full shadow-sm whitespace-nowrap mt-1 {className}"
     >

@@ -1,3 +1,4 @@
+// Map of technology names to devicon slugs
 const devicons: Record<string, string> = {
   Astro: "astro",
   Svelte: "svelte",
@@ -25,6 +26,12 @@ const devicons: Record<string, string> = {
   Supabase: "supabase",
 };
 
+/**
+ * Retrieves the URL for a DevIcon based on the provided label.
+ *
+ * @param label - The name/label of the technology or framework to get the icon for
+ * @returns The URL for the DevIcon SVG, or null if no matching icon is found
+ */
 export function getIconUrl(label: string): string | null {
   const key = Object.keys(devicons).find(
     (k) => k.toLowerCase() === label.toLowerCase()

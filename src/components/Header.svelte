@@ -1,6 +1,6 @@
 <script lang="ts">
   import blaqatLogo from "@assets/blaqat.svg";
-  import { navigationItems, type NavigationItem } from "@data/NavigationItems";
+  import { navigationItems, type NavigationItem } from "@lib/navigation-colors";
   import Desktop from "./DeviceType/Desktop.svelte";
   import Mobile from "./DeviceType/Mobile.svelte";
 

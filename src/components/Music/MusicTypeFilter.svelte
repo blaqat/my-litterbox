@@ -39,6 +39,7 @@
     },
   ];
 
+  // If instrument is selected, remove it; if not, add it
   function toggleInstrument(instrument: MusicInstrument) {
     if (selectedInstruments.includes(instrument)) {
       selectedInstruments = selectedInstruments.filter((i) => i !== instrument);

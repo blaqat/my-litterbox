@@ -14,9 +14,11 @@
   import Audio from "./Audio.svelte";
   import Desktop from "@components/DeviceType/Desktop.svelte";
   import { Device } from "@lib/device.svelte";
-  import { flip } from "svelte/animate";
   import Mobile from "@components/DeviceType/Mobile.svelte";
-  import { collapsed as PC } from "./PlayerCollapse.svelte.ts";
+
+  // svelte-ignore non_reactive_update
+  let scrubHighlight: HTMLSpanElement;
+  let collapsed = $state(false);
 
   const nowPlaying = $derived(
     controller.queue.songs[
@@ -24,22 +26,10 @@
     ]
   );
 
-  let scrubHighlight: HTMLSpanElement;
-  let hoverTimeout: ReturnType<typeof setTimeout>;
-  let showVolumeControls = $state(false);
-  let collapsed = $derived(PC.collapsed);
-
-  function handleHoverVolume() {
-    hoverTimeout = setTimeout(() => {
-      showVolumeControls = true;
-    }, 300);
-  }
-
-  function clearHoverVolume() {
-    clearTimeout(hoverTimeout);
-    showVolumeControls = false;
-  }
-
+  /**
+   * Formats seconds into MM:SS format.
+   * @param sec
+   */
   function timeify(sec: number | undefined | null) {
     if (!sec || isNaN(sec)) return "00:00";
     return new Date(sec * 1000).toISOString().substring(14, 19);
@@ -48,6 +38,7 @@
 
 <Audio src={nowPlaying?.url} {controller} />
 
+<!-- Music Controller Button Component (like react FC) -->
 {#snippet controllerButton(
   icon: typeof Play,
   hint: string,
@@ -128,17 +119,20 @@
               <!-- Background of scrubber -->
               <span class="absolute w-full h-1 rounded-lg bg-slate-600 -z-10">
               </span>
+
               <!-- Highlight/change width where mouse points to on scrubber -->
               <span
                 bind:this={scrubHighlight}
                 class="absolute h-1 rounded-lg bg-light-wisteria-600 -z-8"
               ></span>
+
               <!-- Width of scrubber -->
               <span
                 class="absolute h-1 rounded-lg bg-light-wisteria-500 -z-9"
                 style="width: {timeWidth}px"
               ></span>
 
+              <!-- Actual scrubber -->
               <input
                 type="range"
                 min="0"
@@ -174,8 +168,6 @@
               aria-label={volMuted ? "Unmute" : "Mute"}
               title={volMuted ? "Unmute" : "Mute"}
               onclick={() => controller.toggleMute()}
-              onmouseenter={handleHoverVolume}
-              onmouseleave={clearHoverVolume}
             >
               <!-- svelte-ignore svelte_component_deprecated -->
               <svelte:component
@@ -183,11 +175,6 @@
                 size="20px"
                 weight="fill"
               ></svelte:component>
-              {#if showVolumeControls}
-                <div
-                  class="absolute bottom-12 left-1/2 -translate-x-1/2 p-2 bg-light-wisteria-50 border border-light-wisteria-300 rounded-lg shadow-lg"
-                ></div>
-              {/if}
             </button>
           </div>
         </Desktop>
@@ -198,19 +185,19 @@
         {#if Device.md || !collapsed}
           <!-- Rev -->
           {@render controllerButton(SkipBack, "Previous", () =>
-            controller.back()
+            controller.reverse()
           )}
 
           <!-- Play/Pause -->
           {@render controllerButton(
             isPlaying ? Pause : Play,
             isPlaying ? "Pause" : "Play",
-            () => (isPlaying ? controller.pause() : controller.unpause())
+            () => (isPlaying ? controller.pause() : controller.resume())
           )}
 
           <!-- Fwd -->
           {@render controllerButton(SkipForward, "Next", () =>
-            controller.forward()
+            controller.skip()
           )}
         {/if}
 
@@ -220,7 +207,7 @@
             class="rounded-md p-2 hover:scale-110 text-light-wisteria-950 transition-all duration-200 active:scale-95 bg-transparent"
             aria-label={"Collapse Player"}
             title={"Collapse Player"}
-            onclick={() => (PC.collapsed = !PC.collapsed)}
+            onclick={() => (collapsed = !collapsed)}
           >
             <!-- svelte-ignore svelte_component_deprecated -->
             {#if collapsed && Device.lt_md}

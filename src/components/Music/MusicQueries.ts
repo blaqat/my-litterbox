@@ -1,16 +1,25 @@
-import type { MusicItem, Single, RefdSingle } from "./types";
+import type { MusicData, CollectionSingle } from "./types";
 import { MusicType } from "./types";
-import { swapQueue } from "./MusicData.svelte";
 
+/**
+ * Query parameters used by the music features to control search, playlist, and playback behavior.
+ *
+ * - q: Search query string
+ * - s: Comma-separated list of song URLs for playlist playback
+ * - c: Continue playback of a specific song at a given time (format: song_url,time_seconds)
+ * - o: Open modal for a specific song URL ID
+ */
 export interface MusicQueryParams {
-  q?: string; // Search query
-  s?: string; // Playlist of song URLs
-  c?: string; // Continue song at time (song_url,time_seconds)
-  o?: string; // Open modal for specific song URL ID
+  q?: string;
+  s?: string;
+  c?: string;
+  o?: string;
 }
 
 /**
  * Parse URL query parameters for music functionality
+ *
+ * @returns An object containing the parsed query parameters or undefined if not present.
  */
 export function parseMusicQueries(): MusicQueryParams {
   if (typeof window === "undefined") return {};
@@ -25,7 +34,9 @@ export function parseMusicQueries(): MusicQueryParams {
 }
 
 /**
- * Convert a song URL to the expected format: piano_whatever for piano/whatever.mp3
+ * Convert a song URL to the expected format:
+ * @example  "songs/track1.mp3" becomes "songs_track1"
+ * @returns The song ID derived from the URL
  */
 export function urlToSongId(url: string): string {
   // Remove the base domain and file extension
@@ -43,7 +54,9 @@ export function urlToSongId(url: string): string {
 }
 
 /**
- * Convert a song ID back to potential URL matches
+ * Convert a song ID back to potential URL matches:
+ * @example "songs_track1" becomes "songs/track1"
+ * @returns The URL pattern derived from the song ID
  */
 export function songIdToUrlPattern(songId: string): string {
   const [directory, filename] = songId.split("_");
@@ -52,11 +65,14 @@ export function songIdToUrlPattern(songId: string): string {
 
 /**
  * Find songs matching the given song IDs
+ * @param songIds - Array of song IDs to find
+ * @param allSongs - Array of all available songs to search within
+ * @returns Array of matching RefdSingle songs
  */
 export function findSongsByIds(
   songIds: string[],
-  allSongs: RefdSingle[]
-): RefdSingle[] {
+  allSongs: CollectionSingle[]
+): CollectionSingle[] {
   return songIds
     .map((id) => {
       const pattern = songIdToUrlPattern(id);
@@ -64,16 +80,19 @@ export function findSongsByIds(
         .toSorted((a, b) => a.name.localeCompare(b.name))
         .find((song) => song.url && song.url.includes(pattern));
     })
-    .filter(Boolean) as RefdSingle[];
+    .filter(Boolean) as CollectionSingle[];
 }
 
 /**
  * Find a single song by its URL ID from the music list
+ * @param songId - The song ID to find
+ * @param musicList - The full list of MusicData to search within
+ * @returns The matching MusicData item or null if not found
  */
 export function findSongById(
   songId: string,
-  musicList: MusicItem[]
-): MusicItem | null {
+  musicList: MusicData[]
+): MusicData | null {
   // First, create a flat list of all singles from the music collection
   const allSongs = musicList
     .flatMap((item) => (item.type === MusicType.Single ? [item] : item.songs))
@@ -104,6 +123,8 @@ export function findSongById(
 
 /**
  * Generate a playlist URL with the given song IDs
+ * @example "http://example.com/music?s=song1,song2,song3"
+ * @returns The full URL with the playlist query parameter
  */
 export function generatePlaylistUrl(songIds: string[]): string {
   const baseUrl = window.location.origin + window.location.pathname;
@@ -114,6 +135,8 @@ export function generatePlaylistUrl(songIds: string[]): string {
 
 /**
  * Generate a continue URL for a specific song and time
+ * @example "http://example.com/music?c=song1,90" to continue song1 at 90 seconds
+ * @returns The full URL with the continue query parameter
  */
 export function generateContinueUrl(
   songId: string,
@@ -127,6 +150,8 @@ export function generateContinueUrl(
 
 /**
  * Generate a search URL with the given query
+ * @example "http://example.com/music?q=search+term"
+ * @returns The full URL with the search query parameter
  */
 export function generateSearchUrl(query: string): string {
   const baseUrl = window.location.origin + window.location.pathname;
@@ -137,8 +162,9 @@ export function generateSearchUrl(query: string): string {
 
 /**
  * Get song IDs from a MusicItem (handles both singles and collections)
+ * @returns An array of song IDs for the given MusicData item
  */
-export function getSongIds(item: MusicItem): string[] {
+export function getSongIds(item: MusicData): string[] {
   if (item.type === MusicType.Collection) {
     return item.songs
       .filter((song) => song.url)
@@ -149,6 +175,7 @@ export function getSongIds(item: MusicItem): string[] {
 
 /**
  * Copy text to clipboard
+ * @param text - The text to copy to clipboard
  */
 export async function copyToClipboard(text: string): Promise<boolean> {
   try {
@@ -156,7 +183,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       await navigator.clipboard.writeText(text);
       return true;
     } else {
-      // Fallback for older browsers
+      // Fallback for older browsers (AI generated)
       const textArea = document.createElement("textarea");
       textArea.value = text;
       textArea.style.position = "fixed";

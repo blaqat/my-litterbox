@@ -20,11 +20,13 @@
   ];
 
   function toggleCategory(cat: ProjectCategory) {
+    // If category is selected, remove it; if not, add it
     if (selectedCategories.includes(cat)) {
       selectedCategories = selectedCategories.filter((c) => c !== cat);
     } else {
       selectedCategories = [...selectedCategories, cat];
     }
+
     onChange?.(selectedCategories);
   }
 </script>
