@@ -88,15 +88,13 @@ export function matchesInstrumentFilter(
     return true;
   }
 
-  if (item.type === MusicType.Single) {
-    return selectedInstruments.includes(item.instrument as MusicInstrument);
-  }
-
   if (item.type === MusicType.Collection) {
     // Show collection if any of its songs match the filter
     return item.songs.some((song) =>
       selectedInstruments.includes(song.instrument as MusicInstrument)
     );
+  } else {
+    return selectedInstruments.includes(item.instrument as MusicInstrument);
   }
 
   return false;
