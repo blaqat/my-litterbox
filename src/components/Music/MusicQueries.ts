@@ -60,7 +60,9 @@ export function findSongsByIds(
   return songIds
     .map((id) => {
       const pattern = songIdToUrlPattern(id);
-      return allSongs.find((song) => song.url && song.url.includes(pattern));
+      return allSongs
+        .toSorted((a, b) => a.name.localeCompare(b.name))
+        .find((song) => song.url && song.url.includes(pattern));
     })
     .filter(Boolean) as RefdSingle[];
 }
