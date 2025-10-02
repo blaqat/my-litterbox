@@ -4,6 +4,8 @@ My Personal website showcasing projects, music compositions, and ways to get in 
 
 Built with [Astro](https://astro.build) and [Svelte](https://svelte.dev), featuring a responsive design with Tailwind CSS.
 
+View on https://blaqat.net
+
 ## 🚀 Features
 
 - **Projects Portfolio**: Showcase of software engineering projects, including web apps, research, and personal experiments
