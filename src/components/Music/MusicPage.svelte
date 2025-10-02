@@ -146,6 +146,7 @@
 
     if (queries.q) {
       query = queries.q;
+      swapQueue(filtered, { sort: false });
     }
 
     if (queries.c) {
