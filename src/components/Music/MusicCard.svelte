@@ -398,7 +398,7 @@
                 ? 'p-2 hover:scale-120'
                 : 'p-3 hover:scale-110'} hover:shadow-lg {cardHasSongPlaying
                 ? 'border-light-wisteria-400 bg-light-wisteria-200 text-light-wisteria-800'
-                : 'bg-slate-50/40 border-slate-300 text-slate-600'} 
+                : 'bg-slate-50/40 border-slate-300 text-slate-600'}
             border backdrop-blur-xs no-underline transition-all duration-200 hover:border-light-wisteria-400 hover:bg-light-wisteria-300/50 hover:text-light-wisteria-800 active:scale-95"
               onclick={(e) => {
                 e.stopPropagation();
@@ -470,7 +470,7 @@
     {#if collectionOpen && song.type === MusicType.Collection}
       <div
         bind:this={collectionScrollContainer}
-        class="w-full min-w-0 max-w-full overflow-x-auto px-2 py-2 rounded-lg pr-[25%] md:pr-[33%]"
+        class="w-full min-w-0 max-w-full overflow-x-auto px-2 py-2 rounded-lg pr-[25%] md:pr-[33%] flex"
       >
         <div
           class="grid grid-flow-col gap-2 md:auto-cols-[50%] auto-cols-[70%]"
@@ -487,6 +487,7 @@
               class="collection-card"
             />
           {/each}
+          <div class="w-[2px]"></div>
         </div>
       </div>
     {/if}
