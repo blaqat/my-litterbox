@@ -9,16 +9,23 @@
     SpeakerX,
     CaretRight,
     MusicNotes,
+    ShareFat,
   } from "phosphor-svelte";
   import controller from "./MusicData.svelte";
   import Audio from "./Audio.svelte";
   import Desktop from "@components/DeviceType/Desktop.svelte";
   import { Device } from "@lib/device.svelte";
   import Mobile from "@components/DeviceType/Mobile.svelte";
+  import { generateContinueUrl, getSongIds } from "./MusicQueries";
+  import { fade } from "svelte/transition";
 
   // svelte-ignore non_reactive_update
   let scrubHighlight: HTMLSpanElement;
   let collapsed = $state(false);
+  let copyFeedback = $state("");
+  let shareBtn: HTMLButtonElement | null = $state();
+  let outerPlayer: HTMLDivElement | null = $state();
+  let tooltipPos = $state({ left: 0, top: 0 });
 
   const nowPlaying = $derived(
     controller.queue.songs[
@@ -70,6 +77,7 @@
   )}
   {@const parent = nowPlaying?.parentRefData}
   <div
+    bind:this={outerPlayer}
     class="fixed bottom-0 right-0 left-0 flex z-50 mb-3 px-4"
     class:bottom-22={Device.lt_md}
     class:justify-end={Device.lt_md && collapsed}
@@ -199,6 +207,46 @@
           {@render controllerButton(SkipForward, "Next", () =>
             controller.skip()
           )}
+
+          <!-- Share at Current Time -->
+          <button
+            bind:this={shareBtn}
+            class="rounded-full p-2 hover:scale-110 text-light-wisteria-950 transition-all duration-200 active:scale-95 hover:bg-light-wisteria-300/50 bg-transparent"
+            aria-label={"Share at Current Time"}
+            title={"Share at Current Time"}
+            onclick={async () => {
+              const currentTime = Math.floor(controller.queue.time || 0);
+              const song = getSongIds(nowPlaying!)[0];
+              const url = generateContinueUrl(song, currentTime);
+
+              try {
+                await navigator.clipboard.writeText(url);
+                copyFeedback = "Copied!";
+              } catch (e) {
+                copyFeedback = "Failed to copy";
+              }
+
+              // position tooltip relative to outer player container so it isn't clipped
+              try {
+                if (shareBtn && outerPlayer) {
+                  const btnRect = shareBtn.getBoundingClientRect();
+                  const outerRect = outerPlayer.getBoundingClientRect();
+                  tooltipPos.left =
+                    btnRect.left - outerRect.left + btnRect.width / 2;
+                  // put tooltip slightly above the button
+                  tooltipPos.top = btnRect.top - outerRect.top - 8;
+                }
+              } catch (e) {
+                // ignore measurement errors
+              }
+
+              setTimeout(() => (copyFeedback = ""), 2000);
+            }}
+          >
+            <!-- svelte-ignore svelte_component_deprecated -->
+            <svelte:component this={ShareFat} size="1.5em" weight="fill"
+            ></svelte:component>
+          </button>
         {/if}
 
         <!-- Collapse Music Bar for Mobile -->
@@ -219,6 +267,15 @@
         </Mobile>
       </div>
     </div>
+    {#if copyFeedback}
+      <span
+        class="absolute bg-black/80 text-white text-xs px-2 py-1 rounded z-50"
+        style="left: {tooltipPos.left}px; top: {tooltipPos.top}px; transform: translateX(-50%) translateY(-100%);"
+        transition:fade={{ duration: 180 }}
+      >
+        {copyFeedback}
+      </span>
+    {/if}
   </div>
 {/if}
 
