@@ -11,15 +11,15 @@ export type NavigationItem = {
 };
 
 export const navigationItems: NavigationItem[] = [
-  {
-    href: "/contact",
-    label: "Contact",
-    color: "bg-sea-pink-400",
-    hover: "hover:bg-sea-pink-300",
-    text: "text-sea-pink-900",
-    fill: "fill-sea-pink-500",
-    icon: Envelope,
-  },
+  // {
+  //   href: "/contact",
+  //   label: "Contact",
+  //   color: "bg-sea-pink-400",
+  //   hover: "hover:bg-sea-pink-300",
+  //   text: "text-sea-pink-900",
+  //   fill: "fill-sea-pink-500",
+  //   icon: Envelope,
+  // },
   {
     href: "/projects",
     label: "Projects",
@@ -38,15 +38,15 @@ export const navigationItems: NavigationItem[] = [
     text: "text-light-wisteria-900",
     icon: MusicNotes,
   },
-  {
-    href: "/thoughts",
-    label: "Thoughts",
-    color: "bg-harvest-gold-300",
-    hover: "hover:bg-harvest-gold-200",
-    text: "text-harvest-gold-900",
-    fill: "fill-harvest-gold-500",
-    icon: Cloud,
-  },
+  // {
+  //   href: "/thoughts",
+  //   label: "Thoughts",
+  //   color: "bg-harvest-gold-300",
+  //   hover: "hover:bg-harvest-gold-200",
+  //   text: "text-harvest-gold-900",
+  //   fill: "fill-harvest-gold-500",
+  //   icon: Cloud,
+  // },
 ];
 
 export default navigationItems;

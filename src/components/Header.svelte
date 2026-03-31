@@ -43,6 +43,7 @@
   }
 
   export let includeCat = true;
+  export let includeHome = true;
 </script>
 
 <Desktop>
@@ -68,7 +69,7 @@
         </span>
       </a>
 
-      {#if i === 1 && includeCat}
+      {#if i === 0 && includeCat}
         <a href="/" class="mx-2">
           <img src={blaqatLogo.src} alt="Blaqat Logo" class="w-12 h-12" />
         </a>
@@ -81,7 +82,7 @@
   <nav
     class="fixed bottom-0 left-0 right-0 bg-slate-50/40 border-2 backdrop-blur-xs border-slate-200 shadow-lg flex justify-around p-2 z-50 m-3 rounded-full"
   >
-    {#each [home, ...navigationItems] as item}
+    {#each includeHome ? [home, ...navigationItems] : navigationItems as item}
       <a
         href={item.href}
         class="flex flex-col items-center justify-center gap-1 rounded-full p-2 text-gray-500 font-medium hover:bg-gray-300/20 hover:scale-103 w-16"

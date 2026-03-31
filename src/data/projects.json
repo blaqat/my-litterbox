@@ -4,7 +4,12 @@
     "start": "Sep 2025",
     "status": "Ongoing",
     "description": "My personal website, built with Astro and Svelte, showcasing my programming and music projects. It's designed to be feel somewhat playful while also being responsive.\n\n The main challenges faced in making this site (other than learning astro & svelte) was in designing the music page to both be functional and visually appealing with the temporary limitation of using 'cards' as the main interactive element. So exploring different ways to show the state of the music player between single songs and collections was a fun challenge.",
-    "stack": ["Astro", "Svelte", "Tailwind", "Cloudflare"],
+    "stack": [
+      "Astro",
+      "Svelte",
+      "Tailwind",
+      "Cloudflare"
+    ],
     "type": "Personal",
     "view": "https://blaqat.net",
     "github": "https://github.com/blaqat/my-litterbox",
@@ -25,7 +30,13 @@
     "status": "Completed",
     "end": "Aug 2025",
     "description": "This was my **capstone project**. Collaborated with 6 other SWEN seniors on the development of a web based job board platform modeled after dating apps, enabling recruiters and candidates to connect based on skills and location to streamline the job-search to first-interview process.\nEmployed Agile (RAD) process methodology for project planning and iteration including documentation/User Stories, models and mockups, weekly design review/approval check ins, tri-weekly standups, solution development, and acceptance tests.",
-    "stack": ["Next.js", "Supabase", "Tailwind", "Typescript", "React"],
+    "stack": [
+      "Next.js",
+      "Supabase",
+      "Tailwind",
+      "Typescript",
+      "React"
+    ],
     "type": "School",
     "images": [
       {
@@ -44,7 +55,13 @@
     "status": "Completed",
     "end": "Dec 2024",
     "description": "Researched on code vulnerabilities and how much the Rust language mitigates them by default to aid the writing of a related white paper. Categorized and analyzed CWEs based on Rust’s built-in protections.\nDeveloped a set of Python scripts and a Zola based static site to calculate, output, update, and finally display vulnerability metrics efficiently.",
-    "stack": ["Python", "PostgreSQL", "Zola", "Rust", "MongoDB"],
+    "stack": [
+      "Python",
+      "PostgreSQL",
+      "Zola",
+      "Rust",
+      "MongoDB"
+    ],
     "type": "Work",
     "github": "https://github.com/VulnerabilityHistoryProject/rust-are-we-secure-yet",
     "view": "https://rust.vulnerabilityhistory.org/",
@@ -61,7 +78,13 @@
     "status": "Completed",
     "end": "Dec 2023",
     "description": "Engaged in customer discovery to identify market needs, testing the viability and user interaction level of AI and computer vision integrated solutions, enabling further research and potential development for the client.\nUsed Azure and OpenAI services to build a MVP in React/Tailwind/TS, managed communications via a Flask server, and enhanced digital experiences with Unity through a websocket client and blender animations.",
-    "stack": ["Python", "Flask", "React", "OpenAI API", "Azure"],
+    "stack": [
+      "Python",
+      "Flask",
+      "React",
+      "OpenAI API",
+      "Azure"
+    ],
     "type": "Work",
     "images": [
       {
@@ -76,7 +99,11 @@
     "status": "Completed",
     "end": "Oct 2024",
     "description": "Planned, Designed, and Implemented a Peer Evaluation feature inside of a live Project Development Portal to simplify the processes taken by Admins, Coaches, and Students by making the feature in-house instead of relying on third party solutions. Acted as a facilitator and team planner as well as managing project actions via GitHub Projects.",
-    "stack": ["React", "Sqlite3", "Semantic UI"],
+    "stack": [
+      "React",
+      "Sqlite3",
+      "Semantic UI"
+    ],
     "type": "Work",
     "github": "https://github.com/RIT-Software-Engineering/RIT-SE-Senior-Project",
     "view": "https://seniorproject.se.rit.edu/",
@@ -97,7 +124,11 @@
     "status": "Completed",
     "end": "Apr 2024",
     "description": "Developed a FreeRTOS-based real-time simulation of a bank environment, leveraging a multifunction shield on a STM32 microcontroller for displaying and managing customer queues and teller operations on an LCD. Implemented a multithreaded system using FreeRTOS tasks, queues, and semaphore handlers for dynamic customer queuing and secure data handling.\n\n---\n# Project Report\n### **Analysis / Design**\n- This project aims to use a multithreaded Real Time Operating System to simulate the workflow of a typical banking environment.\n - I used `FreeRTOS` and its Task, Queue, and Semaphore handler to run the project using multiple threads. A Queue provides a thread-safe system for customer generation, Tasks handle spawning new threads, and Semaphores create mutexes allowing for safe modification operations such as printing to USART or modifying the global statistics struct.\n- In each Task, when the Task completes its current operation, it yields to the OS, which allows the system to context switch to the next preempted Task.\n\n ### **Project Results**\n- The system successfully runs the simulation in a multithreaded manner with the correct breaks and pauses for customer or teller downtime, and 0 idle hooks read.\n\n ### **Challenges and Learnings**\n- **Learning a new way to run the project:**\n  - Previously, I was using PlatformIO. After many struggles and hardships, I decided to drop that setup and try to figure out how to do it in a more STM32 idiomatic way. I now use STM32’s CLI products to run and build the project, with slight modifications to the generated Makefile MX creates to ensure everything is built correctly.\n- **Learning how to do delays in Tasks correctly:**\n  - At first, my intuition was to just have an infinite loop that doesn’t run if a time condition hasn’t been met, but this was blocking and holding the Tasks.\n  - Later, I learned that using Task delay methods like `TaskDelay` pauses the Task for the exact amount of time and does not hold the Task up. This lets the system switch to a different Task. This was a lot easier to implement and much more functional.",
-    "stack": ["C", "STM32", "FreeRTOS"],
+    "stack": [
+      "C",
+      "STM32",
+      "FreeRTOS"
+    ],
     "type": "School",
     "github": "https://github.com/blaqat/Classes/tree/main/2024-swen563-RealTimeEmbeddedSystems/P3-Bank",
     "images": [
@@ -113,7 +144,9 @@
     "status": "Completed",
     "end": "Jun 2023",
     "description": "Using Rust, I created a program that can understand and run a part of the Forth programming language, which works with an interrior stack of data in memory. I also made a Lexer that turns input strings into tokens, which are easier to process and execute.\n\n## **Project Summary**\n\nThis project involves implementing a basic evaluator for a small subset of the stack-based programming language, [**Forth**](https://en.wikipedia.org/wiki/Forth_%28programming_language%29). The evaluator should support the following words:\n\n- **`+`**, `-`, `*`, **`/`** (integer arithmetic)\n- **`DUP`**, **`DROP`**, **`SWAP`**, **`OVER`** (stack manipulation)\n\nIt should also support defining new words using the customary syntax: **`: word-name definition ;`**.\n\n## **Initial Attempt**\n\nThe initial approach involved binding closures into HashMap, which led to complications with Rust. Additionally, there were unnecessary macros that, while aesthetically pleasing, did not contribute to the functionality of the code. Here's a snippet of the initial code:\n\n```rust\ntype Operation = Rc<dyn Fn(&mut Forth, Option<&str>) -> Result>;\ntype Operations = HashMap<String, Operation>;\n// - - - //\ninstall!(new,\n  \"DROP\" => |forth: &mut Forth, _| {\n      let stack = &mut forth.eval_stack;\n      match stack.pop() {\n          Some(_) => Ok(()),\n          None => Err(Error::StackUnderflow),\n      }\n  };\n\n  \"DUP\" => |forth: &mut Forth, _| {\n      let stack = &mut forth.eval_stack;\n      match stack.last() {\n          Some(last) => {stack.push(*last); Ok(())},\n          None => Err(Error::StackUnderflow),\n      }\n  };\n\n  \"SWAP\" => |forth: &mut Forth, _| {\n      let stack = &mut forth.eval_stack;\n      let a = stack.pop();\n      let b = stack.pop();\n      match (a, b) {\n          (Some(first), Some(last)) => {stack.extend([last, first]); Ok(())},\n          _ => Err(Error::StackUnderflow)\n      }\n  }\n// . . .\n```\n\n> The code above was intended to perform operations such as **`DROP`**, **`DUP`**, and **`SWAP`**. However, the implementation was not as efficient as expected.\n\n## Example\n\nHere's an example of how the code was used:\n\n```rust\nlet x = \"4\";\ninstall!(n, \"foo\" => |forth: &mut Forth, _| {\n    forth.call(\"_VAL\", Some(x))\n});\ncall!(n, \"foo\");\n\nreplace!(n, \"foo\" -> (\"DUP\", \"\")(\"_VAL\", \"1\")(\"+\", \"\"));\ncall!(n, \"foo\");\n\ncall!(n, \"foo\");\n\nreplace!(n, \"foo\" -> (\"foo\", \"\")(\"_VAL\", \"1\")(\"+\", \"\"));\ncall!(n, \"foo\");\n\ndbg!(&n.eval_stack);\n```\n\n> *Output:*\n>\n> `stack = [4, 5, 5, 6]`\n\n---\n\n## **Revised Approach**\n\nThe revised approach involved using a tokenizer instead of binding functions. This approach made the base functions just operations that the stack can perform on itself. Here's a snippet of the revised code:\n\n```rust\ntype Tokens = Vec<TokenTypes>;\ntype Identifiers = HashMap<String, Tokens>;\n// - - - //\nimpl StackOperations for Stack {\n  fn _dupl(&mut self) -> Result {\n      if let Some(&num) = self.iter().last() {\n          self.push(num);\n          Ok(())\n      } else {\n          Err(Error::StackUnderflow)\n      }\n  }\n\n  fn _drop(&mut self) -> Result {\n      self.pop().map_or(Err(Error::StackUnderflow), |_| Ok(()))\n  }\n\n  fn _swap(&mut self) -> Result {\n      let stack_len = self.len();\n\n      if stack_len < 2 {\n          Err(Error::StackUnderflow)\n      } else {\n          self.swap(stack_len - 2, stack_len - 1);\n          Ok(())\n      }\n  }\n```\n\n## Example\n\nThe revised approach simplifies the process by reading a single string and converting it to tokens. When a function is called, it is flattened down, replacing all identifiers with either operations or values. \n\n```rust\nlet x: 132 = 4;\nlet install_foo: String = format!(\"\n: foo {x} ; \nfoo\n\");\nlet replace_foo = \"\n: foo foo 1 + ;\nfoo foo foo foo\n\"\nself.eval(&install_foo, replace_foo)?;\n```\n\n> *Output:*\n>\n> `stack = [4, 5, 6, 7, 8]`\n\n---\n\n## **Tokenizer Conversion**\n\nThe tokenizer conversion was a significant part of the revised approach. Instead of binding functions, which led to complications, the revised approach involved binding a list of tokenized instructions. This made the base functions just operations that the stack could perform on itself.\n\nThe tokenizer reads a single string and converts it into tokens. For example, for the **`replace_foo`** function, the tokenizer reads it as follows:\n\n```rust\n&tokens = [\n\tOpenDef,\n\tIdent(\n\t\"foo\",\n\t),\n\tIdent(\n\t\"foo\",\n\t),\n\tVal(\n\t1,\n\t),\n\tIdent(\n\t\"+\",\n\t),\n\tCloseDef,\n\tIdent(\n\t\"foo\",\n\t),\n\tIdent(\n\t\"foo\",\n\t),\n\tIdent(\n\t\"foo\",\n\t),\n\tIdent(\n\t\"foo\",\n\t),\n]\n```\n\nThe tokenizer then replaces **`foo`** in the identifiers map:\n\n```rust\n&self.idents = {\n    \"*\": [\n        Op(\n            \"_mult\",\n        ),\n    ],\n    \"foo\": [\n        Ident(\n            \"foo\",\n        ),\n        Val(\n            1,\n        ),\n        Ident(\n            \"+\",\n        ),\n    ],\n...\n```\n\nWhen **`foo`** is called again, the function is flattened down, replacing all identifiers with either operations or values:\n\n```rust\n\"foo\":[\n    Val(\n        4,\n    ),\n    Val(\n        1,\n    ),\n    Op(\n        \"_add\",\n    )\n]\n```\n\nThe tokenizer conversion simplifies the process by breaking down the function into a series of tokens. This makes it easier to identify and perform operations, leading to a more efficient and less complicated solution.\n\n## **Conclusion**\n\nThe revised approach proved to be more efficient and less complicated than the initial approach. It simplified the process by using a tokenizer and made the base functions just operations that the stack can perform on itself. This project serves as a good example of how a change in approach can lead to a more efficient and less complicated solution.\n",
-    "stack": ["Rust"],
+    "stack": [
+      "Rust"
+    ],
     "type": "Personal",
     "github": "https://github.com/blaqat/Exercism-Solutions/tree/main/rust/forth",
     "view": "https://exercism.org/tracks/rust/exercises/forth",
@@ -125,7 +158,11 @@
     "status": "Completed",
     "end": "Apr 2023",
     "description": "A Midi Player in C lang, which can interpret midi files and play songs through an STM32 microcontroller using Digital to Analog Conversion. I have also incorporated key controls for the player, such as play, pause, stop, volume control, and sound wave changing. The player has a dual-mode functionality that allows it to receive inputs from both local and terminal sources. Through this project, I have enhanced my skills in microcontroller interfaces ( including UART, GPIO, Interrupts, and Systick) and bit operations",
-    "stack": ["C", "STM32", "DAC"],
+    "stack": [
+      "C",
+      "STM32",
+      "DAC"
+    ],
     "type": "School",
     "github": "https://github.com/blaqat/Classes/tree/main/2023-swen340-ComputingSystems/FP-MidiPlayer",
     "images": [
@@ -141,7 +178,12 @@
     "status": "Completed",
     "end": "Dec 2021",
     "description": "Collaborated with 3 other students to develop a web app of Anglo-American checkers using Java, Javascript, Spark, and Freemarker for the code base and web server connections\nUtilizing Agile (OpenUp) framework to plan the entire development process of the web app. Writing documentation and User Stories, coding solutions for solution tasks, and performing acceptance tests.",
-    "stack": ["Java", "JavaScript", "Spark", "Freemarker"],
+    "stack": [
+      "Java",
+      "JavaScript",
+      "Spark",
+      "Freemarker"
+    ],
     "type": "School",
     "github": "https://github.com/blaqat/Classes/tree/main/2021-swen261-IntroToSE/FP-Webcheckers",
     "images": [
@@ -156,7 +198,12 @@
     "start": "Jun 2024",
     "status": "Paused",
     "description": "A json and toml preprocessor tool that allows users to create a theme language that can be used to create and generate themes for multiple code editors and IDEs from a single source of truth. Currently supports Zed, VSCode, and Textmate. The tool has custom syntax support recursive variables, self referring variables, HSL HSV RGB and HEX modifiable colors e.g. `$color::lightness+10.` This tool was used to create many themes for zed found here: https://github.com/blaqat/zed-themes",
-    "stack": ["Rust", "Python", "TOML", "JSON"],
+    "stack": [
+      "Rust",
+      "Python",
+      "TOML",
+      "JSON"
+    ],
     "type": "Personal",
     "github": "https://github.com/blaqat/theme-generation",
     "view": "https://github.com/blaqat/zed-themes",
@@ -174,17 +221,21 @@
   {
     "name": "Sonata",
     "start": "Dec 2023",
-    "status": "Completed",
+    "status": "Ongoing",
     "end": "Feb 2025",
-    "description": "#### a discord bot thats just like you :)\n\nDeveloped a Discord bot with natural language processing for text and voice interactions, featuring a flexible AI manager that supports integration with multiple AI models (e.g., OpenAI, Perplexity, Claude), a custom generic function calling system for web searches and multimedia retrieval, and a modular plugin system for additional add-ons features.\n\nA major plugin I created was a chat history and personalized memory management system with encrypted serialized files, allowing the bot to retain context, manage conversation threads, note feelings about users, and persist data across sessions and servers for seamless user experience.\n> Note:\n> This project existed to test the early AI tooling (2023), a lot of the tools have evolved to have features I made for the bot directly built in (e.g function calling)",
-    "stack": ["Python", "Discord.py", "Cloudbased LLM Provider APIs"],
+    "description": "#### a discord bot thats just like me :)\n\nDeveloped a Discord bot with natural language processing for text and voice interactions, featuring a flexible AI manager that supports integration with multiple AI models (e.g., OpenAI, Perplexity, Claude), a custom generic function calling system for web searches and multimedia retrieval, and a modular plugin system for additional add-ons features.\n\nA major plugin I created was a chat history and personalized memory management system with encrypted serialized files, allowing the bot to retain context, manage conversation threads, note feelings about users, and persist data across sessions and servers for seamless user experience.\n> Note:\n> This project existed to test the early AI tooling (2023), a lot of the tools have evolved to have features I made for the bot directly built in (e.g function calling)",
+    "stack": [
+      "Python",
+      "Discord.py",
+      "Cloudbased LLM Provider APIs"
+    ],
     "type": "Personal",
     "github": "https://github.com/blaqat/sonata",
     "view": "https://discord.com/oauth2/authorize?client_id=1187145990931763250",
     "images": [
       {
-        "src": "https://dqy38fnwh4fqs.cloudfront.net/UHLKNQOGQKRDBLEFEPQA7OAQJODB/projects/sona-discord-bot89624963-bf12-4726-b3d5-8519ab0f9e07.webp",
-        "alt": "What's Sona's perogative?"
+        "src": "/media/sona-different.png",
+        "alt": ""
       },
       {
         "src": "/media/sona.png",
@@ -206,7 +257,12 @@
     "status": "Completed",
     "end": "Apr 2021",
     "description": "I had been working on a project that involves creating a Discord bot using node.js. The bot can take a song link from https://www.beepbox.co/ or a shortened link that redirects to it, and convert it into a ReadableStream that can be played in Discord voice chats. The bot also has a queue system that shows the songs that are currently playing or waiting to be played.\nAnother feature of the bot is that it can search for songs from Google Sheets that contain song submissions from users.\n\nThe bot uses the Google Sheets API to parse through the sheets and find the links by Title, Artist Name, or other criteria. The bot then displays the results in a vertical list format for the user to choose from.\nSome of the challenges I faced while developing this project were reverse engineering existing code, parsing user input commands, and pulling data from websites with HTTP requests. I learned a lot from this project and I am proud of the outcome.",
-    "stack": ["Node.js", "Discord.js", "Google Sheets API", "Beepbox"],
+    "stack": [
+      "Node.js",
+      "Discord.js",
+      "Google Sheets API",
+      "Beepbox"
+    ],
     "type": "Personal",
     "images": [
       {
