@@ -17,16 +17,8 @@
   let mouseOverChild = $state(false);
   let dismissHint = $state(false);
 
-  function handleMouseEnterChild() {
-    mouseOverChild = true;
-  }
-
-  function handleMouseLeaveCHild() {
-    mouseOverChild = false;
-  }
-
-  function handleCardClick(e: MouseEvent) {
-    e.stopPropagation();
+  function openCard() {
+    console.log("openCard", project);
     openProject(project);
 
     // Dismiss "click me" hint when card is clicked
@@ -37,14 +29,36 @@
       }
     }
   }
+
+  function handleMouseEnterChild() {
+    mouseOverChild = true;
+  }
+
+  function handleMouseLeaveCHild() {
+    mouseOverChild = false;
+  }
+
+  function handleCardClick(e: MouseEvent) {
+    e.stopPropagation();
+    openCard();
+  }
+
+  function handleCardKeydown(e: KeyboardEvent) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openCard();
+    }
+  }
 </script>
 
 <div class="relative group min-w-0">
-  <button
-    type="button"
+  <div
+    role="button"
+    tabindex="0"
     class="border-gray-300 text-left h-full w-full relative border p-4 rounded-xl transition cursor-pointer hover:bg-slate-50 hover:shadow-sm hover:shadow-slate-200 bg-white hover:scale-102 {!mouseOverChild &&
       'active:scale-99'}"
     onclick={handleCardClick}
+    onkeydown={handleCardKeydown}
     data-project-slug={project.slug}
     aria-controls="project-modal"
   >
@@ -95,7 +109,9 @@
     </p>
 
     <!-- description -->
-    <article class="mt-2 text-gray-700 line-clamp-5 prose prose-sm">
+    <article
+      class="mt-2 text-gray-700 line-clamp-5 prose prose-sm max-w-full [&_*]:max-w-full"
+    >
       {@html marked(project.description)}
     </article>
 
@@ -153,7 +169,7 @@
         </div>
       </div>
     </footer>
-  </button>
+  </div>
 </div>
 
 <style>
