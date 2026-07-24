@@ -207,6 +207,11 @@ function revPure() {
     (queue.currentIndex + queue.songs.length - 1) % queue.songs.length;
 }
 
+/** Goes to the previous song in the queue (wraps around). */
+export function previous() {
+  revPure();
+}
+
 const controller = {
   playSong,
   play,
@@ -214,6 +219,7 @@ const controller = {
   resume,
   skip,
   reverse,
+  previous,
   queue,
   toggleMute,
 };

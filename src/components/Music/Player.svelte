@@ -43,7 +43,7 @@
   }
 </script>
 
-<Audio src={nowPlaying?.url} {controller} />
+<Audio src={nowPlaying?.url} song={nowPlaying} {controller} />
 
 <!-- Music Controller Button Component (like react FC) -->
 {#snippet controllerButton(
