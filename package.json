@@ -13,6 +13,7 @@
     "@astrojs/svelte": "^7.1.0",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
+    "bigger-picture": "^1.1.20",
     "marked": "^16.3.0",
     "phosphor-svelte": "^3.0.1",
     "prism-themes": "^1.9.0",
@@ -22,7 +23,9 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@astrojs/cloudflare": "^12.6.7",
-    "@tailwindcss/typography": "^0.5.16"
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/prismjs": "^1.26.6"
   }
 }

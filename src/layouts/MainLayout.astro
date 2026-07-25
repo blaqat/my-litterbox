@@ -9,9 +9,10 @@ import convertHoverToFingerDown from "@lib/hover-to-tap";
 
 export interface Props {
   pageTitle?: string;
+  wide?: boolean;
 }
 
-const { pageTitle } = Astro.props;
+const { pageTitle, wide = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -52,7 +53,13 @@ const { pageTitle } = Astro.props;
 
     <Player client:only desktop={Device.gt_sm} />
 
-    <main class="flex-1 p-6 max-w-4xl mx-auto">
+    <main
+      style={wide ? "width: 100%; max-width: 72rem;" : "width: 100%; max-width: 56rem;"}
+      class:list={[
+        "flex-1 p-6 mx-auto",
+        wide ? "max-w-6xl" : "max-w-4xl",
+      ]}
+    >
       {pageTitle && <h1 class="text-2xl font-bold mb-4">{pageTitle}</h1>}
       <slot />
     </main>
